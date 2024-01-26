@@ -1,0 +1,30 @@
+{{- if and .Values.persistence.docs.enabled (not .Values.persistence.docs.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "matatika-www.fullname" . }}-docs
+{{- with .Values.persistence.docs.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ template "matatika-www.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ .Values.persistence.docs.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.docs.size | quote }}
+{{- if .Values.persistence.storageClass }}
+{{- if (eq "-" .Values.persistence.storageClass) }}
+  storageClassName: ""
+{{- else if (eq "custom" .Values.persistence.storageClass) }}
+  storageClassName: "{{ include "matatika-www.fullname" . }}-{{ .Values.persistence.storageClass }}"
+{{- else }}
+  storageClassName: "{{ .Values.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

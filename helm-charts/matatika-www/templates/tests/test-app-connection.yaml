@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "matatika-www.fullname" . }}-test-app-connection"
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-www.name" . }}
+    helm.sh/chart: {{ include "matatika-www.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "matatika-www.fullname" . }}:{{ .Values.appService.port }}']
+  restartPolicy: Never

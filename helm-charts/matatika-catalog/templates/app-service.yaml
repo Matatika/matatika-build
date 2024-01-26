@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "matatika-catalog.fullname" . }}-{{ .Values.appService.name }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  type: {{ .Values.appService.type }}
+  ports:
+  - name: http
+    port: {{ .Values.appService.httpPort }}
+    targetPort: app-http
+    protocol: TCP
+  selector:
+    app: {{ template "matatika-catalog.fullname" . }}-app

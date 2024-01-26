@@ -1,0 +1,152 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "matatika-www.fullname" . }}-app
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-www.name" . }}-app
+    helm.sh/chart: {{ include "matatika-www.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/certificateFiles-configmap.yaml") . | sha256sum }}
+    checksum/values: {{ (print $.Values) | sha256sum }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: {{ include "matatika-www.fullname" . }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ include "matatika-www.fullname" . }}-app
+        version: "v{{ .Values.appService.version }}"
+    spec:
+{{- if .Values.image.private }}
+      imagePullSecrets:
+        - name: {{ .Chart.Name }}-acr-secret
+{{- end }}
+{{- if .Values.appService.nodePool }}
+      nodeSelector:
+        agentpool: "{{ .Values.appService.nodePool }}"
+{{- end }}
+      initContainers:
+      - name: init-chown
+        image: busybox
+        securityContext:
+          runAsUser: 0
+        command: ["sh", "-c", "whoami && ls -al /opt/app-root/src/wp-content/uploads && adduser -u 1001 -D default && chown -R 1001 /opt/app-root/src/wp-content/uploads && ls -al /opt/app-root/src/wp-content/uploads"]
+        volumeMounts:
+        - name: uploads
+          mountPath: /opt/app-root/src/wp-content/uploads
+      containers:
+      - name: {{ .Chart.Name }}-app
+      {{ if .Values.image.tag }}
+        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+      {{- else }}
+        image: "{{ .Values.image.name }}:{{ .Chart.AppVersion }}"
+      {{ end }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: DB_HOST
+            {{- if .Values.externalDbHost }}
+            value:  "{{ .Values.externalDbHost }}"
+            {{- else }}
+            value:  "{{ .Release.Name }}-mysql"
+            {{- end }}
+          - name: DB_PORT
+            {{- if .Values.externalDbHost }}
+            value:  "{{ .Values.externalDbPort }}"
+            {{- else }}
+            value:  "3306"
+            {{- end }}
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-mysql
+                key: mysql-password
+          - name: "AUTH0_CLIENT_SECRET"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-auth0
+                key:  auth0_client_secret
+          - name: "MATATIKA_CATALOG_CLIENT_SECRET"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-catalog
+                key:  catalog_client_secret
+{{ toYaml .Values.appService.environments | indent 10 }}
+        ports:
+        - name: app-http
+          containerPort: {{ .Values.appService.internalHttpPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        ## Configure extra options for liveness and readiness probes
+        ## We are using an HTTPS-terminating load-balancer, ensure the probes behave
+        ## like the balancer to prevent HTTP 302 responses.
+        livenessProbe:
+          httpGet:
+            path: /robots.txt
+            port: {{ .Values.appService.internalHttpPort }}
+            httpHeaders:
+            - name: Host
+              value: {{ .Values.appService.hostName }}
+            - name: X-Forwarded-Proto
+              value: https
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          timeoutSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.appService.internalHttpPort }}
+            httpHeaders:
+            - name: Host
+              value: {{ .Values.appService.hostName }}
+            - name: X-Forwarded-Proto
+              value: https
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          timeoutSeconds: 30
+          failureThreshold: 3
+          successThreshold: 1
+        volumeMounts:
+        - name: uploads
+          mountPath: /opt/app-root/src/wp-content/uploads
+        - name: docs
+          mountPath: /opt/app-root/src/docs
+        {{- if .Values.certificateFiles }}
+        - name: certs
+          mountPath: /config/certs
+        {{- end }}
+      securityContext:
+        runAsUser: 1001
+        fsGroup: 33
+      volumes:
+        - name: uploads
+        {{- if .Values.persistence.uploads.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.uploads.existingClaim | default (include "matatika-www.fullname" .) }}-uploads
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        - name: docs
+        {{- if .Values.persistence.docs.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.docs.existingClaim | default (include "matatika-www.fullname" .) }}-docs
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        {{- if .Values.certificateFiles }}
+        - name: certs
+          configMap:
+            name: {{ template "matatika-www.fullname" . }}-configuration
+        {{- end }}
+

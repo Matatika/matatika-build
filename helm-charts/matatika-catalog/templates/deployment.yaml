@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "matatika-catalog.fullname" . }}-app
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-catalog.name" . }}-app
+    helm.sh/chart: {{ include "matatika-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/values: {{ (print $.Values) | sha256sum }}
+    checksum/config: {{ include (print $.Template.BasePath "/application-config.yaml") . | sha256sum }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: {{ include "matatika-catalog.fullname" . }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ include "matatika-catalog.fullname" . }}-app
+        version: "v{{ .Values.appService.version }}"
+    spec:
+{{- if .Values.image.private }}
+      imagePullSecrets:
+        - name: {{ .Chart.Name }}-acr-secret
+{{- end }}
+{{- if .Values.appService.nodePool }}
+      nodeSelector:
+        agentpool: "{{ .Values.appService.nodePool }}"
+{{- end }}
+      volumes:
+      - configMap:
+          name: {{ include "matatika-catalog.fullname" . }}-application-config
+        name: application-config
+      containers:
+      - name: {{ .Chart.Name }}-app
+      {{- if .Values.image.tag }}
+        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+      {{- else }}
+        image: "{{ .Values.image.name }}:{{ .Chart.AppVersion }}"
+      {{- end }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - name: application-config
+          mountPath: /config/application-deploy.properties
+          subPath: application-deploy.properties
+          readOnly: true
+        env:
+          - name: "AUTH0_CLIENT_SECRET"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  auth0_client_secret
+          - name: "GITHUB_API_PRIVATE_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  github_api_private_key
+          - name: "GITHUB_API_WORKSPACES_PRIVATE_KEY"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  github_api_workspaces_private_key
+          - name: "PERSISTENCE_WAREHOUSE_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  persistence_warehouse_pass
+          - name: "PERSISTENCE_CATALOG_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  persistence_catalog_pass
+          - name: "ELASTICSEARCH_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  es_elastic_pass
+          - name: "MATATIKA_ENCRYPTOR_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  encryptor_pass
+          - name: "SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY-CONFIGURATIONS_AZURECR__SECRET"
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-appsecrets
+                key:  azurecr_registry_secret
+{{ toYaml .Values.appService.environments | indent 10 }}
+        ports:
+        - name: app-http
+          containerPort: {{ .Values.appService.internalHttpPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        readinessProbe:
+          httpGet:
+            path: /api/actuator/health/readiness
+            port: {{ .Values.appService.internalHttpPort }}
+          initialDelaySeconds: 90
+          failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /api/actuator/health/liveness
+            port: {{ .Values.appService.internalHttpPort }}
+          initialDelaySeconds: 60
+          failureThreshold: 2

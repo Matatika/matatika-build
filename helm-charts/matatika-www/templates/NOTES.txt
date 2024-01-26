@@ -1,0 +1,42 @@
+1. Get the application URL by running these commands:
+{{- if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+  {{- range $.Values.ingress.paths }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host }}{{ . }}
+  {{- end }}
+{{- end }}
+{{- else if contains "NodePort" .Values.appService.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "matatika-www.fullname" . }}-nginx)
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.appService.type }}
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get svc -w {{ include "matatika-www.fullname" . }}-app'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "matatika-www.fullname" . }}-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  echo http://$SERVICE_IP:{{ .Values.appService.port }}
+{{- else if contains "ClusterIP" .Values.appService.type }}
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "matatika-www.name" . }}-app,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl port-forward $POD_NAME 8080:80
+{{- end }}
+
+To get your mysql password run:
+
+    MYSQL_USER={{ .Values.mysql.mysqlUser }}
+    MYSQL_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ .Release.Name }}-mysql -o jsonpath="{.data.mysql-password}" | base64 --decode; echo)
+
+To connect to your database directly from outside the K8s cluster:
+    {{- if contains "NodePort" .Values.mysql.service.type }}
+    MYSQL_HOST=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath='{.items[0].status.addresses[0].address}')
+    MYSQL_PORT=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-mysql -o jsonpath='{.spec.ports[0].nodePort}')
+
+    {{- else if contains "ClusterIP" .Values.mysql.service.type }}
+    MYSQL_HOST=127.0.0.1
+    MYSQL_PORT={{ .mysql.Values.service.port }}
+
+    # Execute the following command to route the connection:
+    kubectl port-forward svc/{{ template "mysql.fullname" . }} {{ .Values.mysql.service.port }}
+
+    {{- end }}
+
+    mysql -h ${MYSQL_HOST} -P${MYSQL_PORT} -u ${MYSQL_USER} -p${MYSQL_PASSWORD}

@@ -1,0 +1,181 @@
+# Default values for matatika-www.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+mysql:
+  mysqlUser: admin
+## must set the passwords as an helm upgrade will blow them away until this issue is fixed  :-(
+## https://github.com/helm/charts/issues/5167#issuecomment-415851970
+##  mysqlPassword: test
+##  mysqlRootPassword:  test
+  mysqlDatabase: www
+  service:
+    type:  NodePort
+  # Custom mysql configuration files used to override default mysql settings
+  configurationFiles:
+    mysql_custom.cnf: |-
+      [server]
+      # Allow us to upload large files
+      max_allowed_packet = 100M
+
+image:
+  name: local/matatika-www
+  # Specify a specific image version to override default ({{ .Release.appVersion }})
+  #tag: latest
+  private: false
+  #password: [your docker registry password]
+  ## Specify an imagePullPolicy (Required)
+  ## Use 'Never' if this is local development, 'Always' if the image is deployed using latest
+  ## ref: http://kubernetes.io/docs/user-guide/images/#updating-images
+  ##
+  pullPolicy: Never
+
+appService:
+  name: app
+  type: ClusterIP
+  httpPort: 80
+  internalHttpPort: 80
+  # Sets AUTH0_CLIENT_SECRET environment, for production this is usually set as a secure property deploy script and passed in from Azure DevOps
+  auth0ClientSecret: PLACEHOLDER
+  environments:
+    - name: APACHE2_LOG_LEVEL
+      value: "debug"
+    - name: PHP_ERROR_REPORTING
+      value: "E_ALL"
+    - name: PHP_DISPLAY_ERRORS
+      value: "On"
+    - name: PHP_HTML_ERRORS
+      value: "On"
+    # ENVIRONMENT either DEV or PROD
+    - name: ENVIRONMENT
+      value: "DEV"
+    - name: MATATIKA_APP_URL
+      value: "http://app.local.matatika.com/"
+    - name: MATATIKA_AUTH0_CONNECTION
+      value: "DB-Matatika-Staging"
+    - name: AUTH0_DOMAIN
+      value: "matatika-staging.eu.auth0.com"
+    - name: AUTH0_CLIENT_ID
+      value: "get from auth0 management dashboard"
+
+ingress:
+  enabled: true
+  paths:
+    - /
+  # Used to create Ingress record (should used with service.type: ClusterIP).
+  hosts:
+    - www-localhost.matatika.com
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+    # this flag ssl-redirect disables the default 308 redirect if the traffic is http
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # kubernetes.io/tls-acme: "true"
+  tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    - hosts:
+      - www-localhost.matatika.com
+
+# Custom certificates
+certificateFiles:
+  localhost-cert.pem: |-
+    -----BEGIN CERTIFICATE-----
+    MIIFZTCCBE2gAwIBAgISBJJwBzOC0RkIQCCOIWX1ZNG/MA0GCSqGSIb3DQEBCwUA
+    MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD
+    ExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0yMDA0MDgxMzA0MTRaFw0y
+    MDA3MDcxMzA0MTRaMCExHzAdBgNVBAMTFmxvY2FsaG9zdC5tYXRhdGlrYS5jb20w
+    ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCzAImsaawix6oUXiISQAsK
+    9HskT3uqTHFMMLuuuOTgex9SxDg89yu0s/97v+njo+dTN71bs5KkYOGFDxIJJtK3
+    3Hz8C767KwZeHIyPd3pwScdsWKm4XzxpvnxaT4TSnnvqFHl9bP5rzDRf+yusXywf
+    mlHhQElpAe0ggEpbgyd/KZjN/LHDoTl4LOSUv1vn9tx5Pba+MkY+B+dNKsyrgr1C
+    NDgg5hG/wj5oLO9QGbmNreA+D4BGSGR/LpTpvLP6OGcWK1U2vupNuRbURaQx1yEA
+    aTH3G4/ZspdnZtkSreADxcLD3oUDq158xjxqUwzR+FwBXArecGD+eUKs+TD7zzBx
+    AgMBAAGjggJsMIICaDAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUH
+    AwEGCCsGAQUFBwMCMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFDuA++8LKtlQTyFk
+    AZz/n8LTVn7HMB8GA1UdIwQYMBaAFKhKamMEfd265tE5t6ZFZe/zqOyhMG8GCCsG
+    AQUFBwEBBGMwYTAuBggrBgEFBQcwAYYiaHR0cDovL29jc3AuaW50LXgzLmxldHNl
+    bmNyeXB0Lm9yZzAvBggrBgEFBQcwAoYjaHR0cDovL2NlcnQuaW50LXgzLmxldHNl
+    bmNyeXB0Lm9yZy8wIQYDVR0RBBowGIIWbG9jYWxob3N0Lm1hdGF0aWthLmNvbTBM
+    BgNVHSAERTBDMAgGBmeBDAECATA3BgsrBgEEAYLfEwEBATAoMCYGCCsGAQUFBwIB
+    FhpodHRwOi8vY3BzLmxldHNlbmNyeXB0Lm9yZzCCAQUGCisGAQQB1nkCBAIEgfYE
+    gfMA8QB3AF6nc/nfVsDntTZIfdBJ4DJ6kZoMhKESEoQYdZaBcUVYAAABcVobC7YA
+    AAQDAEgwRgIhAJVGqe1Md7j7hM/1qDjL10vCzqN55M0yDd7AOeDrvel+AiEAgnWu
+    b1pzrtYUgiJpSuiAWyHk+zLXnr9kYMaGc56l/jEAdgAHt1wb5X1o//Gwxh0jFce6
+    5ld8V5S3au68YToaadOiHAAAAXFaGwvcAAAEAwBHMEUCIQDehEYfywTokTOQ/kkm
+    0Awk1lJfXr9F051QdJhjcAMPaAIgd6I8SZRF25LoPooAWAgXtkJcqucezCOvnD3C
+    RdCAl+cwDQYJKoZIhvcNAQELBQADggEBAHprkkzbmSMAsXSQstmAynxxKLXNRmCM
+    1Iiz26KMJmlgMVrPfVKiYnMeFGiLWKQsllaDtiIy0xDppr8o9SsmZKYzmE/5YnD7
+    GaLw1cVfbGWa4NLn/yzU4OE5bda8ILQhtYPPqTHSpweyNM8AAmHxMCecBJAIx9io
+    ACnwzjt+dqqEqSggb7bGkTC+i2nLHv90zqq1CRp7HVNFAnVgz0em/rWdIly4JSIn
+    4GMwWUZ9ryRGTZ8DZ10Su4XJ6N0guNWgqIJsiyr/8dm5jMBi8BTy/bcsexW3PwtN
+    YeZ9ErPCnGUxcNwwUE/6bFhS3SeSLlgePdOnBFtWZOVhUMQmzRcVHo4=
+    -----END CERTIFICATE-----
+  localhost-key.rsa: |-
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEAswCJrGmsIseqFF4iEkALCvR7JE97qkxxTDC7rrjk4HsfUsQ4
+    PPcrtLP/e7/p46PnUze9W7OSpGDhhQ8SCSbSt9x8/Au+uysGXhyMj3d6cEnHbFip
+    uF88ab58Wk+E0p576hR5fWz+a8w0X/srrF8sH5pR4UBJaQHtIIBKW4MnfymYzfyx
+    w6E5eCzklL9b5/bceT22vjJGPgfnTSrMq4K9QjQ4IOYRv8I+aCzvUBm5ja3gPg+A
+    Rkhkfy6U6byz+jhnFitVNr7qTbkW1EWkMdchAGkx9xuP2bKXZ2bZEq3gA8XCw96F
+    A6tefMY8alMM0fhcAVwK3nBg/nlCrPkw+88wcQIDAQABAoIBAFtZSej/4IW7SVOt
+    mkuf/UKw82rbWSvWaPdN42nOF5drndeaJW0PYnGMbjQUA2NVkMbKKkty/8H9YvmJ
+    cFXVRzHnRq1FvSc9VLmQbjcE7SoCrM/hC3P4vhbkzAc2j30AvhH+MuXMSqZuhsf4
+    oRgNVbInCeQe75e0EPRGJCxBaVWd5Px7sttLpvICJStDBYpVQ/mImpwdAcNlpOhp
+    UuTqlZ0r1whM3B8sci66SqDgOs7lB1rU9SbTozitljxrWJqVIHaQ5ZlDE08UFAGD
+    LUg02KlHLWiOhBATurrkEThzhnJU9q5cCOqKc9hK+pmXHhwKubsNIYgvmAO2ysKu
+    1+aDzPUCgYEA4dvaOlH7+gHb/EfEfXCF9mKXjyoPG1EksE5ze6RB7lpxkEN+8DwM
+    apaZGkr7XkoDHbT+ihSFJr6eG1J6g+qSiFOB2hIrJ5b4EoXGPKWj9emvP54yg/vR
+    kNHz1Tpxvz2pszwtsk90JsXeH5a4j6b2+LgxjngR6qfjt0rmy0Qt4O8CgYEAyuPk
+    bOdnZhqdu5yHvcedPus4sEPDC5HriGQYpaFPCpC0MfDUl7hxxwbi7fTkdhtx0ytd
+    6zJcfxRpYoNOjKIrci2TSi80NPYuw60map8sjlOaSmey+pgMxZfyNttj8l/OVJ+a
+    6BIOKB3pqNvTj+eWTCX80r8LNEtHuA7VcPN/RJ8CgYB08/M839cqzmurZz5H9kxo
+    GQWCDLVl386vvO/vxk6drhfALDM/EtkbGICPLOSdHpYee+qSda29MleMrljilkTq
+    ctN6qI3QIkyyyrKsFNmiLS+iMbjWvz71TsKEV48vCC8nsLG484uhyDQNB27qc/rP
+    MBH5RBOC/wzbjN2Vw+g94QKBgQDHwqWPDC9j+mS+6ZlEo5sQ7eu8sJsDc0Jh4Zva
+    x/3YuyyP1zyZvUJY4VDhVTLzjoX9kj9AaS9k96XjFsFp+emo23KfoeZXFuRoSL0A
+    UYQ/BdVt2LgBv18j1TzoAg5f/zBZZWPRhqVlnj4GwZmFoFD83JIWtX7EmDIe6IwC
+    T9xIpQKBgFUel77qwiv8wKJqN9VXgVmGTivL2HBju7hbS4ICqaC6lNVa6xzJa22c
+    Uoz492KXnYAEsk/dIF1EW6Qqw33A3IRA6rJmYDrm5Ktf6HJXW17KLnQ7vhhGMvGz
+    NC0z9hSic5jPr5nEdn+Mx6ToeOjM1u3YJMTz/Sfs1EvDM621nYRD
+    -----END RSA PRIVATE KEY-----
+
+## Persist data to a persistent volume
+persistence:
+  # Persistent Volume Storage Class
+  storageClass: azurefile
+  storageAccount: matatika
+  resourceGroup: MC_DEMOS_DEMOAKS_eastus
+  uploads:
+    enabled: true
+    ## wp-content/uploads data
+    accessMode: ReadWriteOnce
+    size: 512Mi
+    annotations: {}
+  docs:
+    enabled: true
+    ## docs data
+    accessMode: ReadWriteOnce
+    size: 64Mi
+    annotations: {}
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

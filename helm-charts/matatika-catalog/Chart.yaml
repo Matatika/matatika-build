@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: latest-dev
+description: The matatika-catalog helm chart for Kubernetes
+name: matatika-catalog
+version: 0.1.0

@@ -1,0 +1,10 @@
+{{- $serviceName := include "matatika-catalog.fullname" . -}}
+
+# Configuration for Catalog spring boot app, 'deploy' spring active profile
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $serviceName }}-application-config
+data:
+  application-deploy.properties: |
+{{ .Values.applicationProperties | indent 4 }}

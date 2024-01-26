@@ -1,0 +1,98 @@
+{{- if .Values.rbac.create -}}
+{{- $serviceName := include "matatika-catalog.fullname" . -}}
+
+# This role is used to allow Matatika Catalog to read configuration from config maps via Kubernetes plugin.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $serviceName }}-dataflow-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-catalog.name" . }}-dataflow-config
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/values: {{ (print $.Values) | sha256sum }}
+rules:
+  - apiGroups: ["", "extensions", "apps"]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch"]
+
+---
+
+# We bind the role to the service account, in the namespace where the Catalog is released.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $serviceName }}-dataflow-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-catalog.name" . }}-dataflow-config
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/values: {{ (print $.Values) | sha256sum }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $serviceName }}-dataflow-config
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.appService.dataflowTasksServiceAccountName }}
+  namespace: {{ .Release.Namespace }}
+
+---
+
+# This role is used to allow Matatika Catalog to run DataFlow tasks via Kubernetes plugin.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $serviceName }}-dataflow-tasks
+  namespace: {{ .Values.appService.dataflowTasksNamespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-catalog.name" . }}-dataflow-tasks
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/values: {{ (print $.Values) | sha256sum }}
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/exec", "persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "create", "delete", "deletecollection", "patch", "update"]
+
+---
+
+# We bind the role to the service account. The role binding is created in the namespace
+# where the dataflow tasks are run.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $serviceName }}-dataflow-tasks
+  namespace: {{ .Values.appService.dataflowTasksNamespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-catalog.name" . }}-dataflow-tasks
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/values: {{ (print $.Values) | sha256sum }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $serviceName }}-dataflow-tasks
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.appService.dataflowTasksServiceAccountName }}
+  namespace: {{ .Values.appService.dataflowTasksNamespace }}
+- kind: ServiceAccount
+  name: {{ .Values.appService.dataflowTasksServiceAccountName }}
+  namespace: {{ .Release.Namespace }}
+
+{{- end }}

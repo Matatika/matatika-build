@@ -1,0 +1,11 @@
+{{- if .Values.certificateFiles }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "matatika-www.fullname" . }}-configuration
+data:
+{{- range $key, $val := .Values.certificateFiles }}
+  {{ $key }}: |-
+{{ $val | indent 4}}
+{{- end }}
+{{- end -}}

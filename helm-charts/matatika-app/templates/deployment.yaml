@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "matatika-app.fullname" . }}-app
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-app.name" . }}-app
+    helm.sh/chart: {{ include "matatika-app.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  annotations:
+    checksum/values: {{ (print $.Values) | sha256sum }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: {{ include "matatika-app.fullname" . }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ include "matatika-app.fullname" . }}-app
+        version: "v{{ .Values.appService.version }}"
+    spec:
+{{- if .Values.image.private }}
+      imagePullSecrets:
+        - name: {{ .Chart.Name }}-acr-secret
+{{- end }}
+{{- if .Values.appService.nodePool }}
+      nodeSelector:
+        agentpool: "{{ .Values.appService.nodePool }}"
+{{- end }}
+      containers:
+      - name: {{ .Chart.Name }}-app
+      {{- if .Values.image.tag }}
+        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+      {{- else }}
+        image: "{{ .Values.image.name }}:{{ .Chart.AppVersion }}"
+      {{- end }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+{{ toYaml .Values.appService.environments | indent 10 }}
+        ports:
+        - name: app-http
+          containerPort: {{ .Values.appService.internalHttpPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.appService.internalHttpPort }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+        lifecycle:
+          preStop:
+            exec:
+              # SIGTERM triggers a quick exit; gracefully terminate instead
+              command:
+                - "/bin/bash"
+                - "-c"
+                - |
+                  sleep 30;
+                  /usr/sbin/nginx -s quit;
+      terminationGracePeriodSeconds: 60

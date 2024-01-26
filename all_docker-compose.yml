@@ -1,0 +1,153 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: ../matatika-app
+      args:
+        # NODE_ENV: controls the build settings
+        - NODE_ENV=development
+#    user: root
+    image: local/matatika-app
+    ports:
+      - '3080:80'
+      - '3443:443'
+    tty: true
+    environment:
+      - REACT_APP_ENV=development
+      #- "APP_SERVER_URI=http://localhost:8080"
+    depends_on:
+      - catalog
+
+  catalog:
+    build:
+      context: ../matatika-catalog
+#    user: root
+    image: local/matatika-catalog
+    ports:
+      - '8080:8080'
+    tty: true
+    environment:
+      # Define DEVELOPMENT mode environments like debug settings etc
+      - ACTIVE_PROFILES=default
+      - BERT_HOST=bert
+      - ELASTICSEARCH_HOST=search
+#    depends_on:
+#      - warehouse_db
+#      - search
+#      - bert
+  meltano:
+    image: meltano/meltano
+    working_dir: /project
+    volumes:
+    - ${PWD}/../demo-meltano:/project
+    environment:
+      PG_ADDRESS: warehouse_db
+      PG_PORT: 5432
+    ports:
+      - '5000:5000'
+      - '5010:5010'
+  warehouse_db:
+    image: postgres:11
+    volumes:
+      - matatika-catalog_postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: warehouse
+      POSTGRES_PASSWORD: warehouse
+      POSTGRES_USER: warehouse
+    ports:
+      - '5502:5432'
+  pgadmin:
+    image: dpage/pgadmin4
+    links:
+      - warehouse_db
+    depends_on:
+      - warehouse_db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: support@matatika.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - matatika-catalog_pgadmin:/root/.pgadmin
+    ports:
+      - '5050:80'
+      
+  www:
+    build: ../matatika-www
+    user: root
+    image: local/matatika-www
+    depends_on:
+      - db
+    volumes:
+      # If I want to manage volumes manually for 'mariadb_data' in a directory of my choosing, be sure
+      # to setup docker shared drives on windows with a 'docker' local admin user.
+      # docker volume create -d local -o type=none -o o=bind -o device=/c/temp/matatika-www/uploads matatika-www_uploads
+      #
+      # or do this instead to let docker manage the volume
+      # $ docker volume create matatika-www_uploads
+      - matatika-www_uploads:/opt/app-root/src/wp-content/uploads
+      # certs mounted to /config required to run httpd
+      - ${PWD}/../matatika-www/local-conf/:/opt/app-root/src/app/config
+#
+# Development mounts require 'user: root', to mount the local source directories
+#
+#      - ${PWD}/../matatika-www/conf/root/etc/apache2/sites-available/:/etc/apache2/sites-available
+#      - ${PWD}/../matatika-www/app/.htaccess:/opt/app-root/src/.htaccess
+      - ${PWD}/../matatika-www/app/wp-content/plugins/:/opt/app-root/src/wp-content/plugins
+      - ${PWD}/../matatika-www/app/wp-content/themes/:/opt/app-root/src/wp-content/themes
+    ports:
+      - '80:80'
+      - '443:443'
+    tty: true
+    environment:
+      # Define DEVELOPMENT mode environments
+      - APACHE2_LOG_LEVEL=debug
+      - PHP_ERROR_REPORTING=E_ALL
+      - PHP_DISPLAY_ERRORS=On
+      - PHP_TRACK_ERRORS=On
+      - PHP_HTML_ERRORS=On
+      - ENVIRONMENT=DEV
+      - MATATIKA_WWW_FEATURES=beta
+      - MATATIKA_APP_URL=https://app-localhost.matatika.com:3443
+      - MATATIKA_AUTH0_CONNECTION=DB-Matatika-Staging
+      - AUTH0_DOMAIN=matatika-staging.eu.auth0.com
+      - AUTH0_CLIENT_ID=gB9LlzLLj00LMRNakVjuF4eutJGE0i8p
+      - AUTH0_CLIENT_SECRET=<client_secret>
+      - DB_NAME=www
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=admin
+      - DB_PASSWORD=mysqldb_password
+    networks:
+      - frontend
+      - backend
+    mem_limit: 256M
+
+  db:
+    image: mariadb:5.5
+    volumes:
+      # If I want to manage volumes manually for 'mariadb_data' in a directory of my choosing, be sure
+      # to setup docker shared drives on windows with a 'docker' local admin user.
+      # $ docker volume create -d local -o type=none -o o=bind -o device=/c/temp/matatika-www/mariadb-data matatika-www_mariadb_data
+      #
+      # or do this instead to let docker manage the volume
+      # $ docker volume create matatika-www_mariadb_data
+      - matatika-www_mariadb_data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: www
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: mysqldb_password
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  matatika-www_mariadb_data:
+  matatika-www_uploads:
+  matatika-catalog_postgres:
+  matatika-catalog_pgadmin:

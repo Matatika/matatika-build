@@ -1,0 +1,18 @@
+{{- if and (eq .Values.persistence.storageClass "custom") (not .Values.persistence.existingClaim) }}
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: {{ include "matatika-www.fullname" . }}-{{ .Values.persistence.storageClass }}
+provisioner: kubernetes.io/azure-file
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0644
+  - uid=1001
+  - gid=33
+  - mfsymlinks
+  - cache=strict
+parameters:
+  skuName: Standard_LRS
+  storageAccount: {{ .Values.persistence.storageAccount }} 
+  resourceGroup: {{ .Values.persistence.resourceGroup }}
+{{- end }}

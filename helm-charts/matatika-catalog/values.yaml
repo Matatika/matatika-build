@@ -1,0 +1,81 @@
+# Default values for matatika-catalog.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  name: local/matatika-catalog
+  # Specify a specific image version to override default ({{ .Release.appVersion }})
+  #tag: latest
+  private: false
+  #password: [your docker registry password]
+  ## Specify an imagePullPolicy (Required)
+  ## Use 'Never' if this is local development, 'Always' if the image is deployed using latest
+  ## ref: http://kubernetes.io/docs/user-guide/images/#updating-images
+  ##
+  pullPolicy: Never
+
+appService:
+  name: springboot
+  type: ClusterIP
+  httpPort: 8080
+  httpsPort: 8443
+  internalHttpPort: 8080
+  #
+  # Set these PLACEHOLDER values set in deployment script, for production this is usually set as a secure property deploy script and passed in from Azure DevOps
+  #
+  # Sets AUTH0_CLIENT_SECRET environment
+  auth0ClientSecret: PLACEHOLDER
+  # Sets GITHUB_API_PRIVATE_KEY environment
+  githubApiPrivateKey: PLACEHOLDER
+  # Sets GITHUB_API_WORKSPACES_PRIVATE_KEY environment
+  githubApiWorkspacesPrivateKey: PLACEHOLDER
+  # Sets PERSISTENCE_WAREHOUSE_PASSWORD environment
+  persistenceWarehousePass: PLACEHOLDER
+  # Sets PERSISTENCE_CATALOG_PASSWORD environment
+  persistenceCatalogPass: PLACEHOLDER
+  # Sets MATATIKA_ES_ELASTIC_PASSWORD environment
+  elasticSearchPassword: PLACEHOLDER
+  # Sets MATATIKA_ENCRYPTOR_PASSWORD environment
+  encryptorPassword: PLACEHOLDER
+  environments:
+    - name: BERT_HOST
+      value: "bert"
+    - name: ELASTICSEARCH_HOST
+      value: "search"
+
+ingress:
+  enabled: true
+  paths:
+    - /
+  # Used to create Ingress record (should used with service.type: ClusterIP).
+  hosts:
+    - catalog-staging.matatika.com
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    # kubernetes.io/ingress.class: addon-http-application-routing  
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # kubernetes.io/tls-acme: "true"
+  tls:
+    - hosts:
+      - catalog-staging.matatika.com
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
