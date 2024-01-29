@@ -24,14 +24,15 @@ Edit the files:
 
 | File Name | Description |
 | --------- | ----------- |
-| example_deploy.json | ADO pipeline that needs to be edited with your secrets, DNS, configuration. |
+| example_deploy.json | ADO pipeline that needs to be edited with your secrets, DNS, configuration.|
 | example/application-example.properties | contains platform properties files, that needs to be edited. |
 | example-*-values.yaml files | contains helm charts values that will be used. Please edit also those files. |
 
 As a general rule, inside each file, "example" word needs to be replaced with your company name.
 
 Create a new release pipeline in your ADO project. Import the pipeline from this json file example_deploy.json.
-Click create new release on the pipeline.
+Agent specifications - Azure hosted and Ubuntu-20.04. Fill the missing secrets and configurations.
+Save and click create new release on the pipeline.
 
 
 # Manual Deploy the Platform
