@@ -24,7 +24,7 @@ Edit the files:
 
 | File Name | Description |
 | --------- | ----------- |
-| example_deploy.json | ADO pipeline that needs to be edited with your secrets, DNS, configuration.|
+| example_deploy.json | ADO pipeline that needs to be edited with your secrets, DNS, configuration. |
 | example/application-example.properties | contains platform properties files, that needs to be edited. |
 | example-*-values.yaml files | contains helm charts values that will be used. Please edit also those files. |
 
