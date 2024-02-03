@@ -1,6 +1,7 @@
 #!/bin/bash
 
 [[ -z "$BUILD_HELM_HOME" ]] && { echo "Error: BUILD_HELM_HOME not found in env"; exit 1; }
+[[ -z "$BUILD_CONFIG_HOME" ]] && { echo "Error: BUILD_CONFIG_HOME not found in env"; exit 1; }
 [[ -z "$STAGE" ]] && { echo "Error: STAGE not found in env"; exit 1; }
 [[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
 [[ -z "$WWW_AUTH0_CLIENT_SECRET" ]] && { echo "Error: WWW_AUTH0_CLIENT_SECRET not found in env"; exit 1; }
@@ -46,5 +47,5 @@ helm upgrade \
 	--set appService.catalogClientSecret=${WWW_CATALOG_CLIENT_SECRET} \
 	--set mysql.mysqlPassword=test,mysql.mysqlRootPassword=test \
 	--debug \
-	--values ./${STAGE}-matatika-www-values.yaml \
+	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-www-values.yaml \
 	$BUILD_HELM_HOME/matatika-www/
