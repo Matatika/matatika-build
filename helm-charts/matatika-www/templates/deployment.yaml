@@ -35,15 +35,6 @@ spec:
       nodeSelector:
         agentpool: "{{ .Values.appService.nodePool }}"
 {{- end }}
-      initContainers:
-      - name: init-chown
-        image: busybox
-        securityContext:
-          runAsUser: 0
-        command: ["sh", "-c", "whoami && ls -al /opt/app-root/src/wp-content/uploads && adduser -u 1001 -D default && chown -R 1001 /opt/app-root/src/wp-content/uploads && ls -al /opt/app-root/src/wp-content/uploads"]
-        volumeMounts:
-        - name: uploads
-          mountPath: /opt/app-root/src/wp-content/uploads
       containers:
       - name: {{ .Chart.Name }}-app
       {{ if .Values.image.tag }}
@@ -128,7 +119,9 @@ spec:
         {{- end }}
       securityContext:
         runAsUser: 1001
+        runAsGroup: 33
         fsGroup: 33
+        fsGroupChangePolicy: "OnRootMismatch"
       volumes:
         - name: uploads
         {{- if .Values.persistence.uploads.enabled }}

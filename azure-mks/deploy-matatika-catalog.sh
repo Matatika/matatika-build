@@ -1,6 +1,7 @@
 #!/bin/bash
 
 [[ -z "$BUILD_HELM_HOME" ]] && { echo "Error: BUILD_HELM_HOME not found in env"; exit 1; }
+[[ -z "$BUILD_CONFIG_HOME" ]] && { echo "Error: BUILD_CONFIG_HOME not found in env"; exit 1; }
 [[ -z "$STAGE" ]] && { echo "Error: STAGE not found in env"; exit 1; }
 [[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
 [[ -z "$CATALOG_AUTH0_CLIENT_SECRET" ]] && { echo "Error: CATALOG_AUTH0_CLIENT_SECRET not found in env"; exit 1; }
@@ -50,7 +51,7 @@ helm upgrade \
 	--set appService.persistenceCatalogPass=${CATALOG_PERSISTENCE_CATALOG_PASSWORD} \
 	--set appService.elasticSearchPassword=${CATALOG_MATATIKA_ES_ELASTIC_PASSWORD} \
 	--set appService.encryptorPassword=${CATALOG_MATATIKA_ENCRYPTOR_PASSWORD} \
-	--set-file applicationProperties="./${STAGE}/application-${STAGE}.properties" \
+	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \
-	--values ./${STAGE}-matatika-catalog-values.yaml \
+	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-catalog-values.yaml \
 	$BUILD_HELM_HOME/matatika-catalog/

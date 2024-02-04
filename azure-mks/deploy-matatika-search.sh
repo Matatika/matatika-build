@@ -1,6 +1,7 @@
 #!/bin/bash
 
 [[ -z "$BUILD_HELM_HOME" ]] && { echo "Error: BUILD_HELM_HOME not found in env"; exit 1; }
+[[ -z "$BUILD_CONFIG_HOME" ]] && { echo "Error: BUILD_CONFIG_HOME not found in env"; exit 1; }
 [[ -z "$CATALOG_HOME" ]] && { echo "Error: CATALOG_HOME not found in env"; exit 1; }
 [[ -z "$STAGE" ]] && { echo "Error: STAGE not found in env"; exit 1; }
 [[ -z "$CATALOG_MATATIKA_ES_ELASTIC_PASSWORD" ]] && { echo "Error: CATALOG_MATATIKA_ES_ELASTIC_PASSWORD not found in env"; exit 1; }
@@ -46,5 +47,5 @@ helm upgrade \
 	--set extraEnvs[0].value=${CATALOG_MATATIKA_ES_ELASTIC_PASSWORD} \
 	--debug \
 	--values /tmp/esConfig-values.yaml \
-	--values ./${STAGE}-matatika-search-values.yaml \
+	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-search-values.yaml \
 	elastic/elasticsearch
