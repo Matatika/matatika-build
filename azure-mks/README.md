@@ -1,4 +1,5 @@
 # azure-mks container
+
 This README.md explains hows to run a complete container for working with our kubernetes cluster.
 
 NB - the ReadMe.txt file is displayed inside the container to help you run the first few commands that setup your local environment.
@@ -6,14 +7,15 @@ NB - the ReadMe.txt file is displayed inside the container to help you run the f
 ### To use our azure-mks container to install our whole application into kubernetes and start directly using the helm charts
 
 To configure kubectl to connect to your Kubernetes cluster, run
+
 ```
 az aks get-credentials -g DEMOS --name DEMOAKS
 ```
 
 Within a linux helm container (https://hub.docker.com/r/alpine/helm)
 
-
 Powershell (windows)
+
 ```
     ps$ cd azure-mks
     ps$ kubectl config use-context DEMOAKS
@@ -23,6 +25,7 @@ Powershell (windows)
 ```
 
 Linux
+
 ```
 cd azure-mks
 kubectl config use-context DEMOAKS
@@ -31,7 +34,8 @@ docker build --build-arg REGISTRY_PASSWORD=$REGISTRY_PASSWORD -t local/azure-mks
 docker run -ti --rm -v `pwd`/../:/apps/matatika-build -v `pwd`/../../matatika-www:/apps/matatika-www -v ~/.kube/config:/root/.kube/config local/azure-mks
 ```
 
-or 
+or
+
 ```
 ./start_container.sh
 ```
@@ -46,6 +50,7 @@ export APP_VERSION=1
 export IMAGE_TAG=latest
 /apps/matatika-build/azure-mks/deploy-matatika-www.sh
 ```
+
 or
 
 ```
@@ -62,5 +67,3 @@ $ helm upgrade [YOUR APP NAME] .
 Delete your release
 
 $ helm delete [YOUR APP NAME]
-
-
