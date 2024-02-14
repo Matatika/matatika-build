@@ -44,28 +44,19 @@ Install helm (https://helm.sh/docs/intro/install/) and set the environment to fi
 ```console
 export BUILD_HELM_HOME=../helm-charts
 export STAGE=dev
-# This needs to be done only if not done already
+# Login to azure and use AKS container registry
 # az login
 export REGISTRY_PASSWORD=`az acr credential show -n matatika --query passwords[0].value | sed -e 's/^"//' -e 's/"$//'`
 ```
 
-Execute the deploy scripts to deploy one of the demo applications.
+Execute the deploy scripts to deploy the applications.
 
 ```console
 ## NB - you can force the container to deploy the latest image by incrementing APP_VERSION
 export APP_VERSION=1
 export IMAGE_TAG=latest
 cd azure-mks
-./deploy-matatika-www.sh
-```
-
-Manually undeploy by starting helm tiller plugin and delete with purge
-
-```console
-helm tiller start dev
-helm list
-helm delete --purge dev-matatika-www
-exit
+./deploy-matatika-catalog.sh
 ```
 
 # Other useful commands

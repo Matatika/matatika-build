@@ -1,10 +1,8 @@
-# azure-mks container
+# azure-mks
 
-This README.md explains hows to run a complete container for working with our kubernetes cluster.
+This README.md explains hows to run our app in a kubernetes cluster.
 
-NB - the ReadMe.txt file is displayed inside the container to help you run the first few commands that setup your local environment.
-
-### To use our azure-mks container to install our whole application into kubernetes and start directly using the helm charts
+### Setup and deploy
 
 To configure kubectl to connect to your Kubernetes cluster, run
 
@@ -12,52 +10,24 @@ To configure kubectl to connect to your Kubernetes cluster, run
 az aks get-credentials -g DEMOS --name DEMOAKS
 ```
 
-Within a linux helm container (https://hub.docker.com/r/alpine/helm)
+Install helm (https://helm.sh/docs/intro/install/) and set the environment to find the helm charts, etc.
 
-Powershell (windows)
-
-```
-    ps$ cd azure-mks
-    ps$ kubectl config use-context DEMOAKS
-    ps$ az acr credential show -n matatika --query passwords[0].value
-    ps$ docker build --build-arg REGISTRY_PASSWORD=[THE TOKEN] -t local/azure-mks .
-    ps$ docker run -ti --rm -v ${PWD}/../:/apps/matatika-build -v ${PWD}/../../matatika-www:/apps/matatika-www -v ~/.kube/config:/root/.kube/config local/azure-mks
-```
-
-Linux
-
-```
-cd azure-mks
-kubectl config use-context DEMOAKS
+```console
+export BUILD_HELM_HOME=../helm-charts
+export STAGE=dev
+# Login to azure and use AKS container registry
+# az login
 export REGISTRY_PASSWORD=`az acr credential show -n matatika --query passwords[0].value | sed -e 's/^"//' -e 's/"$//'`
-docker build --build-arg REGISTRY_PASSWORD=$REGISTRY_PASSWORD -t local/azure-mks .
-docker run -ti --rm -v `pwd`/../:/apps/matatika-build -v `pwd`/../../matatika-www:/apps/matatika-www -v ~/.kube/config:/root/.kube/config local/azure-mks
 ```
 
-or
+Execute the deploy scripts to deploy the applications.
 
-```
-./start_container.sh
-```
-
-Follow the ReadMe.txt steps shown
-
-(Inside running azure-mks container) start tiller plugin (https://rimusz.net/tillerless-helm/)
-
-```
+```console
 ## NB - you can force the container to deploy the latest image by incrementing APP_VERSION
 export APP_VERSION=1
 export IMAGE_TAG=latest
-/apps/matatika-build/azure-mks/deploy-matatika-www.sh
-```
-
-or
-
-```
-helm tiller start
-cd /apps/matatika-www/helm-charts/matatika-www
-helm upgrade --install --set image.password=${REGISTRY_PASSWORD} --set mysql.mysqlPassword=test,mysql.mysqlRootPassword=test [YOUR APP NAME] .
-helm tiller stop
+cd azure-mks
+./deploy-matatika-catalog.sh
 ```
 
 Make a change and then upgrade
