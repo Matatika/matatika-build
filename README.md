@@ -1,8 +1,8 @@
 # matatika-build
 
-Scripts and helm charts for development and production services.
+Scripts and helm charts for deployment of the Matatika Platform services.
 
-# PRODUCTION
+# Azure AKS
 
 Production scripts for Azure managed kubernetes service can be found in ./azure-mks
 
