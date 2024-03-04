@@ -33,6 +33,9 @@ echo "Upgrading to CHART_VERSION: $CHART_VERSION, APP_VERSION: $APP_VERSION, IMA
 
 # Download certificates from elastic search
 kubectl -n $STAGE cp matatika-search-master-0:/usr/share/elasticsearch/config/certs/ca/ca.crt ./ca.crt
+# Download certificates from secure external elastic search (R3 signed in this case)
+#$CATALOG_HOME/elastic-logstash/certs/downloadcerts.sh
+#mv r3.pem ca.crt
 
 [[ ! -f ./ca.crt ]] && { echo "Error: cannot create logstashSecrets-values.yaml, ./ca.crt not found"; exit 1; }
 { echo "secrets:"; } > /tmp/logstashSecrets-values.yaml
