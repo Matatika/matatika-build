@@ -154,17 +154,23 @@ extraInitContainers:
   - |
     #!/usr/bin/env bash
     set -euo pipefail
-    echo ${NODE_NAME},${POD_SERVICE_NAME},${POD_SERVICE_NAME_HEADLESS},${NODE_NAME}.${POD_SERVICE_NAME},${NODE_NAME}.${POD_SERVICE_NAME_HEADLESS}
-    elasticsearch-certutil cert \
-      --silent \
-      --name ${NODE_NAME} \
-      --ip ${POD_IP} \
-      --dns localhost,${NODE_NAME},${POD_SERVICE_NAME},${POD_SERVICE_NAME_HEADLESS},${NODE_NAME}.${POD_SERVICE_NAME},${NODE_NAME}.${POD_SERVICE_NAME_HEADLESS} \
-      --pass "" \
-      --out $ES_PATH_CONF/certs/keystore.p12
-    # create CA for clients to verify certificates
-    mkdir -p $ES_PATH_CONF/certs/ca
-    openssl pkcs12 -in $ES_PATH_CONF/certs/keystore.p12 -out $ES_PATH_CONF/certs/ca/ca.crt -clcerts -nokeys -passin pass:""
+    if [ ! -f "/usr/share/elasticsearch/data/certs/ca/ca.crt" ]; then
+      echo ${NODE_NAME},${POD_SERVICE_NAME},${POD_SERVICE_NAME_HEADLESS},${NODE_NAME}.${POD_SERVICE_NAME},${NODE_NAME}.${POD_SERVICE_NAME_HEADLESS}
+      elasticsearch-certutil cert \
+        --silent \
+        --name ${NODE_NAME} \
+        --ip ${POD_IP} \
+        --dns localhost,${NODE_NAME},${POD_SERVICE_NAME},${POD_SERVICE_NAME_HEADLESS},${NODE_NAME}.${POD_SERVICE_NAME},${NODE_NAME}.${POD_SERVICE_NAME_HEADLESS} \
+        --pass "" \
+        --out $ES_PATH_CONF/certs/keystore.p12
+      # create CA for clients to verify certificates
+      mkdir -p $ES_PATH_CONF/certs/ca
+      openssl pkcs12 -in $ES_PATH_CONF/certs/keystore.p12 -out $ES_PATH_CONF/certs/ca/ca.crt -clcerts -nokeys -passin pass:""
+      # save for later, do not re-create certs on restart
+      cp -R $ES_PATH_CONF/certs /usr/share/elasticsearch/data/certs
+    else
+      cp -R /usr/share/elasticsearch/data/certs/* $ES_PATH_CONF/certs
+    fi
   env:
   - name: ES_PATH_CONF
     value: /usr/share/elasticsearch/config
@@ -183,6 +189,8 @@ extraInitContainers:
   volumeMounts:
   - name: tls-certificates
     mountPath: /usr/share/elasticsearch/config/certs
+  - name: matatika-search-master
+    mountPath: /usr/share/elasticsearch/data
 
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
