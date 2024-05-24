@@ -101,13 +101,13 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
         readinessProbe:
           httpGet:
-            path: /api/actuator/health/readiness
+            path: /actuator/health/readiness
             port: {{ .Values.appService.internalHttpPort }}
           initialDelaySeconds: 90
           failureThreshold: 2
         livenessProbe:
           httpGet:
-            path: /api/actuator/health/liveness
+            path: /actuator/health/liveness
             port: {{ .Values.appService.internalHttpPort }}
           initialDelaySeconds: 60
           failureThreshold: 2
