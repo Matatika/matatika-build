@@ -31,6 +31,7 @@ echo "Upgrading to CHART_VERSION: $CHART_VERSION, APP_VERSION: $APP_VERSION, IMA
 { echo "esConfig:"; } > /tmp/esConfig-values.yaml
 { echo "  elasticsearch.yml: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/elasticsearch.yml; } >> /tmp/esConfig-values.yaml
 { echo "  setup.sh: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/setup.sh; } >> /tmp/esConfig-values.yaml
+{ echo "  es_template_default.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_template_default.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_datasets_index_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_datasets_index_config.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_logstash_policy_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_logstash_policy_config.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_profiles_datasets_likes_index_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_profiles_datasets_likes_index_config.json; } >> /tmp/esConfig-values.yaml
