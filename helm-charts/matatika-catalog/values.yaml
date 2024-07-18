@@ -51,7 +51,7 @@ ingress:
     - /
   # Used to create Ingress record (should used with service.type: ClusterIP).
   hosts:
-    - catalog-staging.matatika.com
+    - staging.matatika.com
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     # kubernetes.io/ingress.class: addon-http-application-routing  
@@ -60,7 +60,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   tls:
     - hosts:
-      - catalog-staging.matatika.com
+      - staging.matatika.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

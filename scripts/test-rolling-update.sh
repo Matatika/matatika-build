@@ -1,7 +1,7 @@
 #!/bin/bash
 TEST_URL=$1
 if [ -z "$TEST_URL" ]; then
-	TEST_URL=https://app-staging.matatika.com
+	TEST_URL=https://staging.matatika.com
 	echo "INFO: no test url argument supplied using $TEST_URL";
 fi
 

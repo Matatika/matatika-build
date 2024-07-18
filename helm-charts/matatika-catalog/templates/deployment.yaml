@@ -54,7 +54,7 @@ spec:
           readOnly: true
         env:
           - name: "APP_VERSION"
-            value: {{ .Values.appService.version }}
+            value: "v{{ .Values.appService.version }}"
           - name: "AUTH0_CLIENT_SECRET"
             valueFrom:
               secretKeyRef:

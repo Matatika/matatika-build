@@ -226,36 +226,6 @@
                          
                       },
                       "taskId":"46e4be58-730b-4389-8a2f-ea10b3e5e815",
-                      "version":"1.*",
-                      "name":"Deploy matatika-app",
-                      "refName":"",
-                      "enabled":true,
-                      "alwaysRun":false,
-                      "continueOnError":false,
-                      "timeoutInMinutes":0,
-                      "retryCountOnTaskFailure":0,
-                      "definitionType":"task",
-                      "overrideInputs":{
-                         
-                      },
-                      "condition":"succeeded()",
-                      "inputs":{
-                         "connectedServiceNameARM":"3f0b1832-3c82-4772-9060-b5ce71841010",
-                         "scriptLocation":"inlineScript",
-                         "scriptPath":"",
-                         "inlineScript":"az aks get-credentials -n EXAMPLEAKS-g cs-uks-matatika-example-rg\nkubectl cluster-info\n\nexport BUILD_HELM_HOME=$(System.DefaultWorkingDirectory)/matatika-build/helm-charts\nexport STAGE=example\nexport REGISTRY_PASSWORD=$(REGISTRY_PASSWORD)\nexport APP_IDENTITY_CLIENT_ID=BcfXRdijQVlfhlNRotuQAQIBVTg5nfyJ\nexport AUTH0_CLIENT_AUDIENCE=https://catalog-example.matatika.com/api\nexport APP_URL=https://example.matatika.com\n\nexport APP_VERSION=$(Release.Artifacts.matatika-app.BuildId)\n\nchmod +x ./deploy-matatika-app.sh\n./deploy-matatika-app.sh",
-                         "args":"",
-                         "addSpnToEnvironment":"false",
-                         "useGlobalConfig":"false",
-                         "cwd":"$(System.DefaultWorkingDirectory)/matatika-build/azure-mks",
-                         "failOnStandardError":"false"
-                      }
-                   },
-                   {
-                      "environment":{
-                         
-                      },
-                      "taskId":"46e4be58-730b-4389-8a2f-ea10b3e5e815",
                       "version":"2.*",
                       "name":"Deploy Elastic Search",
                       "refName":"",
@@ -774,54 +744,6 @@
              }
           },
           "isPrimary":true,
-          "isRetained":false
-       },
-       {
-          "sourceId":"34650084-a2ff-4566-87fb-d90b051edfa7:7",
-          "type":"Build",
-          "alias":"matatika-app",
-          "definitionReference":{
-             "artifactSourceDefinitionUrl":{
-                "id":"https://dev.azure.com/matatika/_permalink/_build/index?collectionId=daa3b3cf-6de9-4d68-ae17-1f47e741cd25&projectId=34650084-a2ff-4566-87fb-d90b051edfa7&definitionId=7",
-                "name":""
-             },
-             "defaultVersionBranch":{
-                "id":"master",
-                "name":"master"
-             },
-             "defaultVersionSpecific":{
-                "id":"",
-                "name":""
-             },
-             "defaultVersionTags":{
-                "id":"",
-                "name":""
-             },
-             "defaultVersionType":{
-                "id":"latestWithBranchAndTagsType",
-                "name":"Latest from a specific branch with tags"
-             },
-             "definition":{
-                "id":"7",
-                "name":"app"
-             },
-             "definitions":{
-                "id":"",
-                "name":""
-             },
-             "IsMultiDefinitionType":{
-                "id":"False",
-                "name":"False"
-             },
-             "project":{
-                "id":"34650084-a2ff-4566-87fb-d90b051edfa7",
-                "name":"Matatika.com"
-             },
-             "repository":{
-                "id":"",
-                "name":""
-             }
-          },
           "isRetained":false
        },
        {
