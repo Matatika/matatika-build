@@ -2,6 +2,8 @@ param containerAppEnvironmentPrefix string
 param location string = resourceGroup().location
 param containerRegistryName string
 param reactAppEnv string
+param javaOpts string
+param activeProfiles string
 param persistenceWarehouseUrl string
 param persistenceWarehouseUsername string
 
@@ -27,6 +29,7 @@ param githubApiPrivateKey string
 param githubApiWorkspacesPrivateKey string
 
 param elasticsearchHost string
+param elasticsearchUser string
 
 @secure()
 param elasticsearchPassword string
@@ -56,6 +59,8 @@ module catalog 'modules/catalog.bicep' = {
     location: location
     containerRegistryName: empty(containerRegistryName) ? 'matatika' : containerRegistryName
     reactAppEnv: reactAppEnv
+    javaOpts: javaOpts
+    activeProfiles: activeProfiles
     persistenceWarehouseUrl: persistenceWarehouseUrl
     persistenceWarehouseUsername: persistenceWarehouseUsername
     persistenceWarehousePassword: persistenceWarehousePassword
@@ -67,6 +72,7 @@ module catalog 'modules/catalog.bicep' = {
     githubApiPrivateKey: githubApiPrivateKey
     githubApiWorkspacesPrivateKey: githubApiWorkspacesPrivateKey
     elasticsearchHost: elasticsearchHost
+    elasticsearchUser: elasticsearchUser
     elasticsearchPassword: elasticsearchPassword
     logstashEndpoint: '${logstash.outputs.containerName}:5000'
   }
