@@ -2,6 +2,8 @@ param environmentId string
 param location string
 param containerRegistryName string
 param reactAppEnv string
+param javaOpts string
+param activeProfiles string
 param persistenceWarehouseUrl string
 param persistenceWarehouseUsername string
 
@@ -27,6 +29,7 @@ param githubApiPrivateKey string
 param githubApiWorkspacesPrivateKey string
 
 param elasticsearchHost string
+param elasticsearchUser string
 
 @secure()
 param elasticsearchPassword string
@@ -124,11 +127,11 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             }
             {
               name: 'JAVA_OPTS'
-              value: '-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K'
+              value: javaOpts
             }
             {
               name: 'ACTIVE_PROFILES'
-              value: 'default,deploy'
+              value: activeProfiles
             }
             {
               name: 'PERSISTENCE_WAREHOUSE_URL'
@@ -176,7 +179,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             }
             {
               name: 'ELASTICSEARCH_USER'
-              value: 'elastic'
+              value: elasticsearchUser
             }
             {
               name: 'ELASTICSEARCH_PASSWORD'
