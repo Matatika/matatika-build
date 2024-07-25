@@ -1,0 +1,16 @@
+using '../main.bicep'
+
+param containerAppEnvironmentPrefix = readEnvironmentVariable('CONTAINER_APP_ENVIRONMENT_PREFIX', '')
+param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV')
+param persistenceWarehouseUrl = readEnvironmentVariable('PERSISTENCE_WAREHOUSE_URL')
+param persistenceWarehouseUsername = readEnvironmentVariable('PERSISTENCE_WAREHOUSE_USERNAME')
+param persistenceWarehousePassword = readEnvironmentVariable('PERSISTENCE_WAREHOUSE_PASSWORD')
+param persistenceCatalogUrl = readEnvironmentVariable('PERSISTENCE_CATALOG_URL')
+param persistenceCatalogUsername = readEnvironmentVariable('PERSISTENCE_CATALOG_USERNAME')
+param persistenceCatalogPassword = readEnvironmentVariable('PERSISTENCE_CATALOG_PASSWORD')
+param auth0ClientSecret = readEnvironmentVariable('AUTH0_CLIENT_SECRET')
+param githubApiPrivateKey = readEnvironmentVariable('GITHUB_API_PRIVATE_KEY')
+param githubApiWorkspacesPrivateKey = readEnvironmentVariable('GITHUB_API_WORKSPACES_PRIVATE_KEY')
+param elasticsearchHost = readEnvironmentVariable('ELASTICSEARCH_HOST', 'elasticsearch:9200')
+param elasticsearchPassword = readEnvironmentVariable('ELASTICSEARCH_PASSWORD')
+param encryptorPassword = readEnvironmentVariable('MATATIKA_ENCRYPTOR_PASSWORD')
