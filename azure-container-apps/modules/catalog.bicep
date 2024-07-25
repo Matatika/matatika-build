@@ -1,5 +1,6 @@
 param environmentId string
 param location string
+param containerRegistryName string
 param reactAppEnv string
 param persistenceWarehouseUrl string
 param persistenceWarehouseUsername string
@@ -32,6 +33,10 @@ param elasticsearchPassword string
 
 param logstashEndpoint string
 
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
+  name: containerRegistryName
+}
+
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
   name: 'catalog'
   location: location
@@ -39,6 +44,10 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     managedEnvironmentId: environmentId
     configuration: {
       secrets: [
+        {
+          name: 'container-registry-password'
+          value: containerRegistry.listCredentials().passwords[0].value
+        }
         {
           name: 'persistence-warehouse-pass'
           value: persistenceWarehousePassword
@@ -72,6 +81,13 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
           value: loadTextContent('../config/catalog/application.properties')
         }
       ]
+      registries: [
+        {
+          server: containerRegistry.properties.loginServer
+          username: containerRegistry.name
+          passwordSecretRef: 'container-registry-password'
+        }
+      ]
     }
     template: {
       volumes: [
@@ -89,7 +105,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       containers: [
         {
           name: 'catalog'
-          image: 'docker.io/matatika/catalog:latest'
+          image: '${containerRegistry.properties.loginServer}/matatika-catalog:latest'
           resources: {
             cpu: 2
             memory: '4Gi'

@@ -1,5 +1,6 @@
 param containerAppEnvironmentPrefix string
 param location string = resourceGroup().location
+param containerRegistryName string
 param reactAppEnv string
 param persistenceWarehouseUrl string
 param persistenceWarehouseUsername string
@@ -53,6 +54,7 @@ module catalog 'modules/catalog.bicep' = {
   params: {
     environmentId: appEnvironment.id
     location: location
+    containerRegistryName: empty(containerRegistryName) ? 'matatika' : containerRegistryName
     reactAppEnv: reactAppEnv
     persistenceWarehouseUrl: persistenceWarehouseUrl
     persistenceWarehouseUsername: persistenceWarehouseUsername
