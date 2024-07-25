@@ -1,6 +1,7 @@
 using '../main.bicep'
 
 param containerAppEnvironmentPrefix = readEnvironmentVariable('CONTAINER_APP_ENVIRONMENT_PREFIX', '')
+param containerRegistryName = readEnvironmentVariable('CONTAINER_REGISTRY_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV')
 param persistenceWarehouseUrl = readEnvironmentVariable('PERSISTENCE_WAREHOUSE_URL')
 param persistenceWarehouseUsername = readEnvironmentVariable('PERSISTENCE_WAREHOUSE_USERNAME')
