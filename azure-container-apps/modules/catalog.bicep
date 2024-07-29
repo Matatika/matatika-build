@@ -51,6 +51,10 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     configuration: {
       secrets: [
         {
+          name: 'container-registry-password'
+          value: containerRegistry.listCredentials().passwords[0].value
+        }
+        {
           name: 'persistence-warehouse-pass'
           value: persistenceWarehousePassword
         }
@@ -86,7 +90,8 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       registries: [
         {
           server: containerRegistry.properties.loginServer
-          identity: 'system'
+          username: containerRegistry.name
+          passwordSecretRef: 'container-registry-password'
         }
       ]
     }
