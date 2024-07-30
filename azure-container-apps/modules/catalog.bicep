@@ -202,16 +202,3 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     }
   }
 }
-
-// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/containers#acrpull
-resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
-  name: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
-}
-
-resource acrPullRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('acrpull-role-assignment')
-  properties: {
-    principalId: app.identity.principalId
-    roleDefinitionId: acrPullRoleDefinition.id
-  }
-}
