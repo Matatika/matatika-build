@@ -49,6 +49,10 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
   properties: {
     managedEnvironmentId: environmentId
     configuration: {
+      ingress: {
+        external: true  // https://github.com/microsoft/azure-container-apps/discussions/1033#discussioncomment-7997192
+        targetPort: 8080
+      }
       secrets: [
         {
           name: 'container-registry-password'
