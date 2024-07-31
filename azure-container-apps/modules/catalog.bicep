@@ -118,7 +118,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       containers: [
         {
           name: 'catalog'
-          image: '${containerRegistry.properties.loginServer}/matatika-catalog:latest'
+          image: '${containerRegistry.properties.loginServer}/matatika-catalog:latest-dev'
           resources: {
             cpu: 2
             memory: '4Gi'
@@ -198,6 +198,10 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             {
               name: 'MATATIKA_LOGSTASH_ENDPOINT'
               value: logstashEndpoint
+            }
+            {
+              name: 'SPRING_CLOUD_LOCAL_ENABLED'
+              value: 'true'
             }
           ]
         }
