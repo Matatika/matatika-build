@@ -1,6 +1,6 @@
 using '../main.bicep'
 
-param containerAppEnvironmentPrefix = readEnvironmentVariable('CONTAINER_APP_ENVIRONMENT_PREFIX', '')
+param deploymentNamePrefix = readEnvironmentVariable('DEPLOYMENT_NAME_PREFIX', '')
 param containerRegistryName = readEnvironmentVariable('CONTAINER_REGISTRY_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV')
 param javaOpts = readEnvironmentVariable('JAVA_OPTS')

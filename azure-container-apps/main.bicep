@@ -1,4 +1,4 @@
-param containerAppEnvironmentPrefix string
+param deploymentNamePrefix string
 param location string = resourceGroup().location
 param containerRegistryName string
 param reactAppEnv string
@@ -34,13 +34,25 @@ param elasticsearchUser string
 @secure()
 param elasticsearchPassword string
 
+var deploymentName = empty(deploymentNamePrefix) ? 'matatika' : '${deploymentNamePrefix}-matatika'
 var useManagedDb = empty(persistenceWarehouseUrl) && empty(persistenceCatalogUrl)
 
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+  name: deploymentName
+  location: location
+}
+
 resource appEnvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
-  name: empty(containerAppEnvironmentPrefix) ? 'matatika' : '${containerAppEnvironmentPrefix}-matatika'
+  name: deploymentName
   location: location
   properties: {
-    appLogsConfiguration: {}
+    appLogsConfiguration: {
+      destination: 'log-analytics'
+      logAnalyticsConfiguration: {
+        customerId: logAnalyticsWorkspace.properties.customerId
+        sharedKey: logAnalyticsWorkspace.listKeys().primarySharedKey
+      }
+    }
   }
 }
 
