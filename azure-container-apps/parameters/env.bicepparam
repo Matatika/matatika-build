@@ -2,6 +2,7 @@ using '../main.bicep'
 
 param deploymentNamePrefix = readEnvironmentVariable('DEPLOYMENT_NAME_PREFIX', '')
 param containerRegistryName = readEnvironmentVariable('CONTAINER_REGISTRY_NAME', '')
+param customDomainName = readEnvironmentVariable('CUSTOM_DOMAIN_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV')
 param javaOpts = readEnvironmentVariable('JAVA_OPTS')
 param activeProfiles = readEnvironmentVariable('ACTIVE_PROFILES')

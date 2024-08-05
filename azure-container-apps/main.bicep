@@ -1,6 +1,8 @@
 param deploymentNamePrefix string
 param location string = resourceGroup().location
 param containerRegistryName string
+param managedCertificateExists bool = false
+param customDomainName string = ''
 param reactAppEnv string
 param javaOpts string
 param activeProfiles string
@@ -56,6 +58,11 @@ resource appEnvironment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   }
 }
 
+resource managedCerficate 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' existing = if (managedCertificateExists) {
+  parent: appEnvironment
+  name: customDomainName
+}
+
 module logstash 'modules/logstash.bicep' = {
   name: 'logstash'
   params: {
@@ -79,6 +86,8 @@ module catalog 'modules/catalog.bicep' = {
   params: {
     environmentId: appEnvironment.id
     location: location
+    managedCertificateId: managedCertificateExists ? managedCerficate.id : ''
+    customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName
     containerRegistryName: empty(containerRegistryName) ? 'matatika' : containerRegistryName
     reactAppEnv: reactAppEnv
     javaOpts: javaOpts
@@ -99,3 +108,7 @@ module catalog 'modules/catalog.bicep' = {
     logstashEndpoint: '${logstash.outputs.containerName}:5000'
   }
 }
+
+output deploymentName string = deploymentName
+output cname string = '${catalog.outputs.containerName}.${appEnvironment.properties.defaultDomain}'
+output txt string = appEnvironment.properties.customDomainConfiguration.customDomainVerificationId
