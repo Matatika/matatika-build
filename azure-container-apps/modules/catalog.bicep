@@ -1,5 +1,7 @@
 param environmentId string
 param location string
+param customDomainName string = ''
+param managedCertificateId string = ''
 param containerRegistryName string
 param reactAppEnv string
 param javaOpts string
@@ -52,6 +54,15 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       ingress: {
         external: true  // https://github.com/microsoft/azure-container-apps/discussions/1033#discussioncomment-7997192
         targetPort: 8080
+        customDomains: empty(customDomainName)
+          ? null
+          : [
+            {
+              name: customDomainName
+              bindingType: empty(managedCertificateId) ? 'Disabled' : 'SniEnabled'
+              certificateId: empty(managedCertificateId) ? null : managedCertificateId
+            }
+          ]
       }
       secrets: [
         {
@@ -209,3 +220,5 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     }
   }
 }
+
+output containerName string = app.properties.template.containers[0].name
