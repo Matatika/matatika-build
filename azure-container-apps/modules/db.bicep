@@ -25,6 +25,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     template: {
       scale: {
         minReplicas: 1
+        maxReplicas: 1
       }
       containers: [
         {
