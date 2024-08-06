@@ -102,9 +102,6 @@ module catalog 'modules/catalog.bicep' = {
     auth0ClientSecret: auth0ClientSecret
     githubApiPrivateKey: githubApiPrivateKey
     githubApiWorkspacesPrivateKey: githubApiWorkspacesPrivateKey
-    elasticsearchHost: elasticsearchHost
-    elasticsearchUser: elasticsearchUser
-    elasticsearchPassword: elasticsearchPassword
     logstashEndpoint: '${logstash.outputs.containerName}:5000'
   }
 }
