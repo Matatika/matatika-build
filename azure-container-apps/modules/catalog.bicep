@@ -205,6 +205,34 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_ENVVARSTOINHERIT'
               value: 'HOME,TMP,LANG,LANGUAGE,LC_.*,PATH,SPRING_APPLICATION_JSON,MATATIKA_LOGSTASH_ENABLED,MATATIKA_LOGSTASH_ENDPOINT,MATATIKA_ENCRYPTOR_PASSWORD'
             }
+            ...empty(customDomainName)
+              ? []
+              : [
+              {
+                name: 'APP_URL'
+                value: 'https://${customDomainName}'
+              }
+              {
+                name: 'CATALOG_URL'
+                value: 'https://${customDomainName}/api'
+              }
+              {
+                name: 'CATALOG_ALLOWED_ORIGINS'
+                value: 'https://${customDomainName}'
+              }
+              {
+                name: 'AUTH0_CLIENT_AUDIENCE'
+                value: 'https://${customDomainName}/api'
+              }
+              {
+                name: 'AUTH0_RESULTURL'
+                value: 'https://${customDomainName}'
+              }
+              {
+                name: 'APP_SERVER_URI'
+                value: 'https://${customDomainName}/api'
+              }
+            ]
           ]
         }
       ]
