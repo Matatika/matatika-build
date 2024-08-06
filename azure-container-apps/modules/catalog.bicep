@@ -30,12 +30,6 @@ param githubApiPrivateKey string
 @secure()
 param githubApiWorkspacesPrivateKey string
 
-param elasticsearchHost string
-param elasticsearchUser string
-
-@secure()
-param elasticsearchPassword string
-
 param logstashEndpoint string
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
@@ -92,10 +86,6 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
         {
           name: 'github-api-workspaces-private-key'
           value: githubApiWorkspacesPrivateKey
-        }
-        {
-          name: 'es-elastic-pass'
-          value: elasticsearchPassword
         }
         {
           name: 'application-properties'
@@ -196,16 +186,8 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               secretRef: 'github-api-workspaces-private-key'
             }
             {
-              name: 'ELASTICSEARCH_HOST'
-              value: elasticsearchHost
-            }
-            {
-              name: 'ELASTICSEARCH_USER'
-              value: elasticsearchUser
-            }
-            {
-              name: 'ELASTICSEARCH_PASSWORD'
-              secretRef: 'es-elastic-pass'
+              name: 'ELASTICSEARCH_ENABLED'
+              value: 'false'
             }
             {
               name: 'MATATIKA_LOGSTASH_ENDPOINT'
@@ -214,6 +196,14 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             {
               name: 'SPRING_CLOUD_LOCAL_ENABLED'
               value: 'true'
+            }
+            {
+              name: 'DATAFLOW_SHELLTASKNAME'
+              value: 'matatika-catalog-shelltask-maven'
+            }
+            {
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_ENVVARSTOINHERIT'
+              value: 'HOME,TMP,LANG,LANGUAGE,LC_.*,PATH,SPRING_APPLICATION_JSON,MATATIKA_LOGSTASH_ENABLED,MATATIKA_LOGSTASH_ENDPOINT,MATATIKA_ENCRYPTOR_PASSWORD'
             }
           ]
         }
