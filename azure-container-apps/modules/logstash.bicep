@@ -6,7 +6,7 @@ param elasticsearchHost string
 param elasticsearchPassword string
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'logstash'
+  name: 'logstash-${uniqueString(environmentId)}'
   location: location
   properties: {
     managedEnvironmentId: environmentId
