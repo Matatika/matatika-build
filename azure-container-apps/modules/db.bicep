@@ -3,16 +3,17 @@ param location string
 
 var user = 'warehouse'
 var password = 'warehouse'
+var port = 5432
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'db'
+  name: 'db-${uniqueString(environmentId)}'
   location: location
   properties: {
     managedEnvironmentId: environmentId
     configuration: {
       ingress: {
         external: false  // https://github.com/microsoft/azure-container-apps/discussions/1033#discussioncomment-7997192
-        targetPort: 5432
+        targetPort: port
         transport: 'tcp'
       }
       secrets: [
@@ -51,7 +52,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
   }
 }
 
-output jdbcUrl string = 'jdbc:postgresql://${app.properties.template.containers[0].name}:5432/warehouse'
+output jdbcUrl string = 'jdbc:postgresql://${app.name}:${port}/warehouse'
 output user string = user
 
 #disable-next-line outputs-should-not-contain-secrets

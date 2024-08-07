@@ -37,7 +37,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' e
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'catalog'
+  name: 'catalog-${uniqueString(environmentId)}'
   location: location
   identity: {
     type: 'SystemAssigned'
