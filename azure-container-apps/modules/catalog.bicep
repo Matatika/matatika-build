@@ -33,11 +33,6 @@ param githubApiWorkspacesPrivateKey string
 
 param logstashEndpoint string
 
-// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/general#contributor
-resource contributorRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
-  name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
-}
-
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
   name: containerRegistryName
 }
@@ -293,11 +288,29 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
   }
 }
 
+resource containerappsTaskPlatformRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
+  name: guid('containerapps-task-platform')
+  properties: {
+    roleName: 'ContainerApps Task Platform'
+    description: 'ContainerApps task platform for Spring Cloud Data Flow'
+    assignableScopes: [resourceGroup().id]
+    permissions: [
+      {
+        actions: [
+          'microsoft.app/jobs/*'
+          'microsoft.app/managedenvironments/join/action'
+          'Microsoft.OperationalInsights/*/read'
+        ]
+      }
+    ]
+  }
+}
+
 resource catalogRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid('catalog-role-assignment')
   properties: {
     principalId: app.identity.principalId
-    roleDefinitionId: contributorRole.id
+    roleDefinitionId: containerappsTaskPlatformRole.id
   }
 }
 
