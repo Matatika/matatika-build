@@ -85,6 +85,7 @@ module catalog 'modules/catalog.bicep' = {
   name: 'catalog'
   params: {
     environmentId: appEnvironment.id
+    logAnalyticsWorkspaceId: logAnalyticsWorkspace.properties.customerId
     location: location
     managedCertificateId: managedCertificateExists ? managedCerficate.id : ''
     customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName

@@ -1,4 +1,5 @@
 param environmentId string
+param logAnalyticsWorkspaceId string
 param location string
 param customDomainName string = ''
 param managedCertificateId string = ''
@@ -31,6 +32,11 @@ param githubApiPrivateKey string
 param githubApiWorkspacesPrivateKey string
 
 param logstashEndpoint string
+
+// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/general#contributor
+resource contributorRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' existing = {
+  name: 'b24988ac-6180-42a0-ab88-20f7382dd24c'
+}
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
   name: containerRegistryName
@@ -90,6 +96,23 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
         {
           name: 'application-properties'
           value: loadTextContent('../config/catalog/application.properties')
+        }
+        {
+          name: 'shelltask-secrets'
+          value: string([
+            {
+              name: 'container-registry-password'
+              value: containerRegistry.listCredentials().passwords[0].value
+            }
+          ])
+        }
+        {
+          name: 'shelltask-environment'
+          value: join([
+            'JAVA_OPTS=${javaOpts}'
+            'MATATIKA_ENCRYPTOR_PASSWORD=${encryptorPassword}'
+            'MATATIKA_LOGSTASH_ENDPOINT=${logstashEndpoint}'
+          ], ',')
         }
       ]
       registries: [
@@ -194,16 +217,46 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: logstashEndpoint
             }
             {
-              name: 'SPRING_CLOUD_LOCAL_ENABLED'
+              name: 'AZURE_SUBSCRIPTION_ID'
+              value: subscription().subscriptionId
+            }
+            {
+              name: 'SPRING_CLOUD_CONTAINERAPPS_ENABLED'
               value: 'true'
             }
             {
-              name: 'DATAFLOW_SHELLTASKNAME'
-              value: 'matatika-catalog-shelltask-maven'
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT'
+              value: environmentId
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_ENVVARSTOINHERIT'
-              value: 'HOME,TMP,LANG,LANGUAGE,LC_.*,PATH,SPRING_APPLICATION_JSON,MATATIKA_LOGSTASH_ENABLED,MATATIKA_LOGSTASH_ENDPOINT,MATATIKA_ENCRYPTOR_PASSWORD'
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_RESOURCEGROUP'
+              value: resourceGroup().name
+            }
+            {
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOCATION'
+              value: location
+            }
+            {
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOGANALYTICSWORKSPACEID'
+              value: logAnalyticsWorkspaceId
+            }
+            {
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_SECRETS'
+              secretRef: 'shelltask-secrets'
+            }
+            {
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_REGISTRIES'
+              value: string([
+                {
+                  server: containerRegistry.properties.loginServer
+                  username: containerRegistry.name
+                  passwordSecretRef: 'container-registry-password'
+                }
+              ])
+            }
+            {
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENTVARIABLES'
+              secretRef: 'shelltask-environment' 
             }
             ...empty(customDomainName)
               ? []
@@ -237,6 +290,14 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
         }
       ]
     }
+  }
+}
+
+resource catalogRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('catalog-role-assignment')
+  properties: {
+    principalId: app.identity.principalId
+    roleDefinitionId: contributorRole.id
   }
 }
 
