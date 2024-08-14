@@ -4,6 +4,7 @@ param containerRegistryName string
 param managedCertificateExists bool = false
 param customDomainName string = ''
 param reactAppEnv string
+param appIdentityClientId string = ''
 param javaOpts string
 param activeProfiles string
 param persistenceWarehouseUrl string = ''
@@ -91,6 +92,7 @@ module catalog 'modules/catalog.bicep' = {
     customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName
     containerRegistryName: empty(containerRegistryName) ? 'matatika' : containerRegistryName
     reactAppEnv: reactAppEnv
+    appIdentityClientId: appIdentityClientId
     javaOpts: javaOpts
     activeProfiles: activeProfiles
     persistenceWarehouseUrl: useManagedDb ? db.outputs.jdbcUrl : persistenceWarehouseUrl
