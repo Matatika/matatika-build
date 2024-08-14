@@ -4,6 +4,7 @@ param deploymentNamePrefix = readEnvironmentVariable('DEPLOYMENT_NAME_PREFIX', '
 param containerRegistryName = readEnvironmentVariable('CONTAINER_REGISTRY_NAME', '')
 param customDomainName = readEnvironmentVariable('CUSTOM_DOMAIN_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV')
+param appIdentityClientId = readEnvironmentVariable('APP_IDENTITY_CLIENT_ID', '')
 param javaOpts = readEnvironmentVariable('JAVA_OPTS')
 param activeProfiles = readEnvironmentVariable('ACTIVE_PROFILES')
 param persistenceWarehouseUrl = readEnvironmentVariable('PERSISTENCE_WAREHOUSE_URL', '')

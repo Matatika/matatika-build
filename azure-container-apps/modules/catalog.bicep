@@ -5,6 +5,7 @@ param customDomainName string = ''
 param managedCertificateId string = ''
 param containerRegistryName string
 param reactAppEnv string
+param appIdentityClientId string
 param javaOpts string
 param activeProfiles string
 param persistenceWarehouseUrl string
@@ -155,6 +156,14 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'REACT_APP_ENV'
               value: reactAppEnv
             }
+            ...empty(appIdentityClientId)
+              ? []
+              : [
+                {
+                  name: 'APP_IDENTITY_CLIENT_ID'
+                  value: appIdentityClientId
+                }
+              ]
             {
               name: 'JAVA_OPTS'
               value: javaOpts
