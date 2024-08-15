@@ -1,6 +1,6 @@
 param deploymentNamePrefix string
 param location string = resourceGroup().location
-param containerRegistryName string
+param containerRegistryName string = ''
 param managedCertificateExists bool = false
 param customDomainName string = ''
 param reactAppEnv string
@@ -90,7 +90,7 @@ module catalog 'modules/catalog.bicep' = {
     location: location
     managedCertificateId: managedCertificateExists ? managedCerficate.id : ''
     customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName
-    containerRegistryName: empty(containerRegistryName) ? 'matatika' : containerRegistryName
+    containerRegistryName: containerRegistryName
     reactAppEnv: reactAppEnv
     appIdentityClientId: appIdentityClientId
     javaOpts: javaOpts
