@@ -3,7 +3,7 @@ param logAnalyticsWorkspaceId string
 param location string
 param customDomainName string = ''
 param managedCertificateId string = ''
-param containerRegistryName string
+param containerRegistryName string = ''
 param reactAppEnv string
 param appIdentityClientId string
 param javaOpts string
@@ -34,7 +34,9 @@ param githubApiWorkspacesPrivateKey string
 
 param logstashEndpoint string
 
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
+var useContainerRegistry = !empty(containerRegistryName)
+
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = if (useContainerRegistry) {
   name: containerRegistryName
 }
 
@@ -63,7 +65,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       secrets: [
         {
           name: 'container-registry-password'
-          value: containerRegistry.listCredentials().passwords[0].value
+          value: useContainerRegistry ? containerRegistry.listCredentials().passwords[0].value : 'null'
         }
         {
           name: 'persistence-warehouse-pass'
@@ -96,10 +98,12 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
         {
           name: 'shelltask-secrets'
           value: string([
-            {
-              name: 'container-registry-password'
-              value: containerRegistry.listCredentials().passwords[0].value
-            }
+            ...useContainerRegistry ? [
+              {
+                name: 'container-registry-password'
+                value: containerRegistry.listCredentials().passwords[0].value
+              }
+            ] : []
           ])
         }
         {
@@ -112,11 +116,13 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
         }
       ]
       registries: [
-        {
-          server: containerRegistry.properties.loginServer
-          username: containerRegistry.name
-          passwordSecretRef: 'container-registry-password'
-        }
+        ...useContainerRegistry ? [
+          {
+            server: containerRegistry.properties.loginServer
+            username: containerRegistry.name
+            passwordSecretRef: 'container-registry-password'
+          }
+        ] : []
       ]
     }
     template: {
@@ -139,7 +145,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       containers: [
         {
           name: 'catalog'
-          image: '${containerRegistry.properties.loginServer}/matatika-catalog:latest-dev'
+          image: useContainerRegistry ? '${containerRegistry.properties.loginServer}/matatika-catalog:latest-dev' : 'docker.io/matatika/catalog:latest-dev'
           resources: {
             cpu: 2
             memory: '4Gi'
@@ -221,6 +227,10 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: logstashEndpoint
             }
             {
+              name: 'MATATIKA_DATAFLOW_DOCKERREGISTRY'
+              value: useContainerRegistry ? containerRegistry.properties.loginServer : 'docker.io'
+            }
+            {
               name: 'AZURE_SUBSCRIPTION_ID'
               value: subscription().subscriptionId
             }
@@ -251,11 +261,13 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_REGISTRIES'
               value: string([
-                {
-                  server: containerRegistry.properties.loginServer
-                  username: containerRegistry.name
-                  passwordSecretRef: 'container-registry-password'
-                }
+                ...useContainerRegistry ? [
+                  {
+                    server: containerRegistry.properties.loginServer
+                    username: containerRegistry.name
+                    passwordSecretRef: 'container-registry-password' 
+                  }
+                ] : []
               ])
             }
             {
