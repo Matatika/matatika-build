@@ -2,6 +2,7 @@ param deploymentNamePrefix string
 param location string = resourceGroup().location
 param containerRegistryName string = ''
 param managedCertificateExists bool = false
+param catalogUserAssignedIdentityName string = ''
 param customDomainName string = ''
 param reactAppEnv string
 param appIdentityClientId string = ''
@@ -90,6 +91,7 @@ module catalog 'modules/catalog.bicep' = {
     location: location
     managedCertificateId: managedCertificateExists ? managedCerficate.id : ''
     customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName
+    userAssignedIdentityName: catalogUserAssignedIdentityName
     containerRegistryName: containerRegistryName
     reactAppEnv: reactAppEnv
     appIdentityClientId: appIdentityClientId

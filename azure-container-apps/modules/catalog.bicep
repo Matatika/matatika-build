@@ -2,6 +2,7 @@ param environmentId string
 param logAnalyticsWorkspaceId string
 param location string
 param customDomainName string = ''
+param userAssignedIdentityName string = ''
 param managedCertificateId string = ''
 param containerRegistryName string = ''
 param reactAppEnv string
@@ -34,7 +35,12 @@ param githubApiWorkspacesPrivateKey string
 
 param logstashEndpoint string
 
+var useUserAssignedIdentity = !empty(userAssignedIdentityName)
 var useContainerRegistry = !empty(containerRegistryName)
+
+resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = if (useUserAssignedIdentity) {
+  name: userAssignedIdentityName
+}
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = if (useContainerRegistry) {
   name: containerRegistryName
@@ -44,7 +50,12 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
   name: 'catalog-${uniqueString(environmentId)}'
   location: location
   identity: {
-    type: 'SystemAssigned'
+    type: useUserAssignedIdentity ? 'UserAssigned' : 'SystemAssigned'
+    ...useUserAssignedIdentity ? {
+      userAssignedIdentities: {
+        '${userAssignedIdentity.id}': {}
+      }
+    } : {}
   }
   properties: {
     managedEnvironmentId: environmentId
@@ -234,6 +245,12 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'AZURE_SUBSCRIPTION_ID'
               value: subscription().subscriptionId
             }
+            ...useUserAssignedIdentity ? [
+              {
+                name: 'AZURE_CLIENT_ID'
+                value: userAssignedIdentity.properties.clientId
+              }
+            ] : []
             {
               name: 'SPRING_CLOUD_CONTAINERAPPS_ENABLED'
               value: 'true'
@@ -309,7 +326,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
   }
 }
 
-resource containerappsTaskPlatformRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
+resource containerappsTaskPlatformRole 'Microsoft.Authorization/roleDefinitions@2022-04-01' = if (!useUserAssignedIdentity)  {
   name: guid('containerapps-task-platform')
   properties: {
     roleName: 'ContainerApps Task Platform'
@@ -327,7 +344,7 @@ resource containerappsTaskPlatformRole 'Microsoft.Authorization/roleDefinitions@
   }
 }
 
-resource catalogRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource catalogRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!useUserAssignedIdentity) {
   name: guid('catalog-role-assignment')
   properties: {
     principalId: app.identity.principalId
