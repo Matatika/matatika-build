@@ -51,6 +51,7 @@ helm upgrade \
 	--set appService.persistenceCatalogPass=${CATALOG_PERSISTENCE_CATALOG_PASSWORD} \
 	--set appService.elasticSearchPassword=${CATALOG_MATATIKA_ES_ELASTIC_PASSWORD} \
 	--set appService.encryptorPassword=${CATALOG_MATATIKA_ENCRYPTOR_PASSWORD} \
+	--set elasticsearch.rebuild="${ELASTICSEARCH_REBUILD}" \
 	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-catalog-values.yaml \

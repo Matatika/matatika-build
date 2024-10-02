@@ -95,6 +95,10 @@ spec:
               secretKeyRef:
                 name: {{ .Release.Name }}-appsecrets
                 key:  azurecr_registry_secret
+{{- if .Values.elasticsearch.rebuild }}
+          - name: ELASTICSEARCH_REBUILD
+            value: "{{ .Values.elasticsearch.rebuild }}"
+{{- end }}
 {{ toYaml .Values.appService.environments | indent 10 }}
         ports:
         - name: app-http
