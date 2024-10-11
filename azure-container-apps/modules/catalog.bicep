@@ -9,17 +9,17 @@ param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
 param javaOpts string = '-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K'
 param activeProfiles string = 'default,deploy'
-param persistenceWarehouseUrl string
-param persistenceWarehouseUsername string
-
-@secure()
-param persistenceWarehousePassword string
-
 param persistenceCatalogUrl string
 param persistenceCatalogUsername string
 
 @secure()
 param persistenceCatalogPassword string
+
+param persistenceWarehouseUrl string = persistenceCatalogUrl
+param persistenceWarehouseUsername string = persistenceCatalogUsername
+
+@secure()
+param persistenceWarehousePassword string = persistenceCatalogPassword
 
 @secure()
 param encryptorPassword string
