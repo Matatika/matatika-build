@@ -4,10 +4,10 @@ param containerRegistryName string = ''
 param managedCertificateExists bool = false
 param catalogUserAssignedIdentityName string = ''
 param customDomainName string = ''
-param reactAppEnv string
+param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
-param javaOpts string
-param activeProfiles string
+param javaOpts string = '-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K'
+param activeProfiles string = 'default,deploy'
 param persistenceWarehouseUrl string = ''
 param persistenceWarehouseUsername string = ''
 
