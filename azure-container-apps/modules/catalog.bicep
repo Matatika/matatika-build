@@ -1,5 +1,5 @@
-param environmentId string
-param logAnalyticsWorkspaceId string
+param environmentName string
+param logAnalyticsWorkspaceName string
 param location string
 param customDomainName string = ''
 param userAssignedIdentityName string = ''
@@ -38,6 +38,14 @@ param logstashEndpoint string
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
 var useContainerRegistry = !empty(containerRegistryName)
 
+resource environment 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
+  name: environmentName
+}
+
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
+  name: logAnalyticsWorkspaceName
+}
+
 resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = if (useUserAssignedIdentity) {
   name: userAssignedIdentityName
 }
@@ -47,7 +55,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' e
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'catalog-${uniqueString(environmentId)}'
+  name: 'catalog-${uniqueString(environment.id)}'
   location: location
   identity: {
     type: useUserAssignedIdentity ? 'UserAssigned' : 'SystemAssigned'
@@ -58,7 +66,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     } : {}
   }
   properties: {
-    managedEnvironmentId: environmentId
+    managedEnvironmentId: environment.id
     configuration: {
       ingress: {
         external: true  // https://github.com/microsoft/azure-container-apps/discussions/1033#discussioncomment-7997192
@@ -257,7 +265,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             }
             {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT'
-              value: environmentId
+              value: environment.id
             }
             {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_RESOURCEGROUP'
@@ -269,7 +277,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             }
             {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOGANALYTICSWORKSPACEID'
-              value: logAnalyticsWorkspaceId
+              value: logAnalyticsWorkspace.properties.customerId
             }
             {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_SECRETS'
