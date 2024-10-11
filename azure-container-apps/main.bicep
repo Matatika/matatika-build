@@ -86,8 +86,8 @@ module db 'modules/db.bicep' = if (useManagedDb) {
 module catalog 'modules/catalog.bicep' = {
   name: 'catalog'
   params: {
-    environmentId: appEnvironment.id
-    logAnalyticsWorkspaceId: logAnalyticsWorkspace.properties.customerId
+    environmentName: appEnvironment.name
+    logAnalyticsWorkspaceName: logAnalyticsWorkspace.name
     location: location
     managedCertificateId: managedCertificateExists ? managedCerficate.id : ''
     customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName
