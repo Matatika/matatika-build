@@ -32,6 +32,15 @@ param githubApiPrivateKey string
 @secure()
 param githubApiWorkspacesPrivateKey string
 
+@secure()
+param oauthTrelloConsumerSecret string = ''
+
+@secure()
+param oauth2GoogleClientSecret string = ''
+
+@secure()
+param sendgridApiKey string = ''
+
 param elasticsearchHost string
 param elasticsearchUser string
 
@@ -107,6 +116,9 @@ module catalog 'modules/catalog.bicep' = {
     auth0ClientSecret: auth0ClientSecret
     githubApiPrivateKey: githubApiPrivateKey
     githubApiWorkspacesPrivateKey: githubApiWorkspacesPrivateKey
+    oauthTrelloConsumerSecret: oauthTrelloConsumerSecret
+    oauth2GoogleClientSecret: oauth2GoogleClientSecret
+    sendgridApiKey: sendgridApiKey
     logstashEndpoint: '${logstash.outputs.containerName}:5000'
   }
 }

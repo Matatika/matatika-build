@@ -33,6 +33,15 @@ param githubApiPrivateKey string
 @secure()
 param githubApiWorkspacesPrivateKey string
 
+@secure()
+param oauthTrelloConsumerSecret string = ''
+
+@secure()
+param oauth2GoogleClientSecret string = ''
+
+@secure()
+param sendgridApiKey string = ''
+
 param logstashEndpoint string
 
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
@@ -109,6 +118,18 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
         {
           name: 'github-api-workspaces-private-key'
           value: githubApiWorkspacesPrivateKey
+        }
+        {
+          name: 'oauth-trello-consumer-secret'
+          value: oauthTrelloConsumerSecret
+        }
+        {
+          name: 'oauth2-google-client-secret'
+          value: oauth2GoogleClientSecret
+        }
+        {
+          name: 'sendgrid-api-key'
+          value: sendgridApiKey
         }
         {
           name: 'application-properties'
@@ -237,6 +258,30 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'GITHUB_API_WORKSPACES_PRIVATE_KEY'
               secretRef: 'github-api-workspaces-private-key'
             }
+            ...empty(oauthTrelloConsumerSecret)
+              ? []
+              : [
+                {
+                  name: 'OAUTH_TRELLO_CONSUMER_SECRET'
+                  secretRef: 'oauth-trello-consumer-secret'
+                }
+              ]
+            ...empty(oauth2GoogleClientSecret)
+              ? []
+              : [
+                {
+                  name: 'OAUTH2_GOOGLE_CLIENT_SECRET'
+                  secretRef: 'oauth2-google-client-secret'
+                }
+              ]
+            ...empty(sendgridApiKey)
+              ? []
+              : [
+                {
+                  name: 'SENDGRID_API_KEY'
+                  secretRef: 'sendgrid-api-key'
+                }
+              ]
             {
               name: 'ELASTICSEARCH_ENABLED'
               value: 'false'
