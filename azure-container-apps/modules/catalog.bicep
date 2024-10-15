@@ -42,7 +42,7 @@ param oauth2GoogleClientSecret string = ''
 @secure()
 param sendgridApiKey string = ''
 
-param logstashEndpoint string
+param logstashEndpoint string = ''
 
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
 var useContainerRegistry = !empty(containerRegistryName)
@@ -151,7 +151,11 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
           value: join([
             'JAVA_OPTS=${javaOpts}'
             'MATATIKA_ENCRYPTOR_PASSWORD=${encryptorPassword}'
-            'MATATIKA_LOGSTASH_ENDPOINT=${logstashEndpoint}'
+            ...empty(logstashEndpoint)
+              ? []
+              : [
+                'MATATIKA_LOGSTASH_ENDPOINT=${logstashEndpoint}'
+              ]
           ], ',')
         }
       ]
@@ -286,10 +290,14 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'ELASTICSEARCH_ENABLED'
               value: 'false'
             }
-            {
-              name: 'MATATIKA_LOGSTASH_ENDPOINT'
-              value: logstashEndpoint
-            }
+            ...empty(logstashEndpoint)
+              ? []
+              : [
+                {
+                  name: 'MATATIKA_LOGSTASH_ENDPOINT'
+                  value: logstashEndpoint
+                }
+              ]
             {
               name: 'MATATIKA_DATAFLOW_DOCKERREGISTRY'
               value: useContainerRegistry ? containerRegistry.properties.loginServer : 'docker.io'
