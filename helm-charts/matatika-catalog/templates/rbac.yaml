@@ -63,7 +63,7 @@ metadata:
     checksum/values: {{ (print $.Values) | sha256sum }}
 rules:
   - apiGroups: [""]
-    resources: ["pods", "pods/exec", "persistentvolumeclaims"]
+    resources: ["pods", "pods/exec", "pods/log", "persistentvolumeclaims"]
     verbs: ["get", "list", "watch", "create", "delete", "deletecollection", "patch", "update"]
 
 ---
