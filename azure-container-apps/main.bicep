@@ -1,11 +1,9 @@
-type ContainerRegistryConfig = {
-  name: string?
-  resourceGroupName: string?
-}
-
 param deploymentNamePrefix string
 param location string = resourceGroup().location
-param containerRegistryConfig ContainerRegistryConfig = {}
+param containerRegistryConfig object = {
+  // name: string?
+  // resourceGroupName: string?
+}
 param managedCertificateExists bool = false
 param catalogUserAssignedIdentityName string = ''
 param customDomainName string = ''

@@ -1,15 +1,13 @@
-type ContainerRegistryConfig = {
-  name: string?
-  resourceGroupName: string?
-}
-
 param environmentName string
 param logAnalyticsWorkspaceName string
 param location string
 param customDomainName string = ''
 param userAssignedIdentityName string = ''
 param managedCertificateId string = ''
-param containerRegistryConfig ContainerRegistryConfig = {}
+param containerRegistryConfig object = {
+  // name: string?
+  // resourceGroupName: string?
+}
 param containerAppName string = ''
 param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
@@ -66,8 +64,8 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 }
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = if (useContainerRegistry) {
-  name: containerRegistryConfig.name!
-  scope: !empty(containerRegistryConfig.resourceGroupName) ? resourceGroup(containerRegistryConfig.resourceGroupName!) : resourceGroup()
+  name: containerRegistryConfig.name
+  scope: !empty(containerRegistryConfig.resourceGroupName) ? resourceGroup(containerRegistryConfig.resourceGroupName) : resourceGroup()
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
