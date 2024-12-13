@@ -5,6 +5,7 @@ param customDomainName string = ''
 param userAssignedIdentityName string = ''
 param managedCertificateId string = ''
 param containerRegistryName string = ''
+param containerAppName string = ''
 param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
 param javaOpts string = '-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K'
@@ -64,7 +65,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' e
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
-  name: 'catalog-${uniqueString(environment.id)}'
+  name: !empty(containerAppName) ? containerAppName : 'catalog-${uniqueString(environment.id)}'
   location: location
   identity: {
     type: useUserAssignedIdentity ? 'UserAssigned' : 'SystemAssigned'
