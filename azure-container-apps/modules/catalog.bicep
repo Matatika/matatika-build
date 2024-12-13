@@ -120,30 +120,18 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'github-api-workspaces-private-key'
           value: githubApiWorkspacesPrivateKey
         }
-        ...empty(oauthTrelloConsumerSecret)
-          ? []
-          : [
-            {
-              name: 'oauth-trello-consumer-secret'
-              value: oauthTrelloConsumerSecret
-            }
-          ]
-        ...empty(oauth2GoogleClientSecret)
-          ? []
-          : [
-            {
-              name: 'oauth2-google-client-secret'
-              value: oauth2GoogleClientSecret
-            }
-          ]
-        ...empty(sendgridApiKey)
-          ? []
-          : [
-            {
-              name: 'sendgrid-api-key'
-              value: sendgridApiKey
-            }
-          ]
+        {
+          name: 'oauth-trello-consumer-secret'
+          value: oauthTrelloConsumerSecret
+        }
+        {
+          name: 'oauth2-google-client-secret'
+          value: oauth2GoogleClientSecret
+        }
+        {
+          name: 'sendgrid-api-key'
+          value: sendgridApiKey
+        }
         {
           name: 'application-properties'
           value: loadTextContent('../config/catalog/application.properties')
