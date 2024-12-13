@@ -1,10 +1,15 @@
+type ContainerRegistryConfig = {
+  name: string?
+  resourceGroupName: string?
+}
+
 param environmentName string
 param logAnalyticsWorkspaceName string
 param location string
 param customDomainName string = ''
 param userAssignedIdentityName string = ''
 param managedCertificateId string = ''
-param containerRegistryName string = ''
+param containerRegistryConfig ContainerRegistryConfig = {}
 param containerAppName string = ''
 param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
@@ -46,7 +51,7 @@ param sendgridApiKey string = ''
 param logstashEndpoint string = ''
 
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
-var useContainerRegistry = !empty(containerRegistryName)
+var useContainerRegistry = !empty(containerRegistryConfig)
 
 resource environment 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
   name: environmentName
@@ -61,7 +66,8 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 }
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = if (useContainerRegistry) {
-  name: containerRegistryName
+  name: containerRegistryConfig.name!
+  scope: !empty(containerRegistryConfig.resourceGroupName) ? resourceGroup(containerRegistryConfig.resourceGroupName!) : resourceGroup()
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {

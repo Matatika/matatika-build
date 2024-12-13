@@ -1,7 +1,10 @@
 using '../main.bicep'
 
 param deploymentNamePrefix = readEnvironmentVariable('DEPLOYMENT_NAME_PREFIX', '')
-param containerRegistryName = readEnvironmentVariable('CONTAINER_REGISTRY_NAME', '')
+param containerRegistryConfig = {
+  name: readEnvironmentVariable('CONTAINER_REGISTRY_NAME')
+  resourceGroupName: readEnvironmentVariable('CONTAINER_REGISTRY_RESOURCE_GROUP_NAME', '')
+}
 param customDomainName = readEnvironmentVariable('CUSTOM_DOMAIN_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV', 'production')
 param appIdentityClientId = readEnvironmentVariable('APP_IDENTITY_CLIENT_ID', '')
