@@ -5,6 +5,10 @@ param containerRegistryConfig = {
   name: readEnvironmentVariable('CONTAINER_REGISTRY_NAME')
   resourceGroupName: readEnvironmentVariable('CONTAINER_REGISTRY_RESOURCE_GROUP_NAME', '')
 }
+param imageConfig = {
+  name: readEnvironmentVariable('IMAGE_CONFIG', 'matatika/catalog')
+  tag: readEnvironmentVariable('IMAGE_TAG', 'latest')
+}
 param customDomainName = readEnvironmentVariable('CUSTOM_DOMAIN_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV', 'production')
 param appIdentityClientId = readEnvironmentVariable('APP_IDENTITY_CLIENT_ID', '')

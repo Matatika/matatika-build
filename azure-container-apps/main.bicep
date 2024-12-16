@@ -4,6 +4,10 @@ param containerRegistryConfig object = {
   // name: string?
   // resourceGroupName: string?
 }
+param imageConfig object = {
+  name: 'matatika/catalog'
+  tag: 'latest'
+}
 param managedCertificateExists bool = false
 param catalogUserAssignedIdentityName string = ''
 param customDomainName string = ''
@@ -105,6 +109,7 @@ module catalog 'modules/catalog.bicep' = {
     customDomainName: managedCertificateExists ? managedCerficate.properties.subjectName : customDomainName
     userAssignedIdentityName: catalogUserAssignedIdentityName
     containerRegistryConfig: containerRegistryConfig
+    imageConfig: imageConfig
     reactAppEnv: reactAppEnv
     appIdentityClientId: appIdentityClientId
     javaOpts: javaOpts

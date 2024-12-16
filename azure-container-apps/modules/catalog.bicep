@@ -8,6 +8,10 @@ param containerRegistryConfig object = {
   // name: string?
   // resourceGroupName: string?
 }
+param imageConfig object = {
+  name: 'matatika/catalog'
+  tag: 'latest'
+}
 param containerAppName string = ''
 param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
@@ -194,7 +198,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
       containers: [
         {
           name: 'catalog'
-          image: useContainerRegistry ? '${containerRegistry.properties.loginServer}/matatika-catalog:latest-dev' : 'docker.io/matatika/catalog:latest-dev'
+          image: useContainerRegistry ? '${containerRegistry.properties.loginServer}/${imageConfig.name}:${imageConfig.tag}' : 'docker.io/${imageConfig.name}:${imageConfig.tag}'
           resources: {
             cpu: 2
             memory: '4Gi'
