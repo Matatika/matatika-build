@@ -65,7 +65,7 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = if (useContainerRegistry) {
   name: containerRegistryConfig.name
-  scope: !empty(containerRegistryConfig.resourceGroupName) ? resourceGroup(containerRegistryConfig.resourceGroupName) : resourceGroup()
+  scope: resourceGroup(!empty(containerRegistryConfig.resourceGroupName) ? containerRegistryConfig.resourceGroupName : resourceGroup().name)
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
