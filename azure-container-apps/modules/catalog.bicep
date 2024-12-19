@@ -212,10 +212,6 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
           ]
           env: [
             {
-              name: 'SPRING_FLYWAY_SKIP_EXECUTING_MIGRATIONS'
-              value: 'true'
-            }
-            {
               name: 'REACT_APP_ENV'
               value: reactAppEnv
             }
