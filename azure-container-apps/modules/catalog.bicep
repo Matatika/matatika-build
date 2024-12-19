@@ -87,6 +87,12 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
     managedEnvironmentId: environment.id
     configuration: {
       ingress: {
+        traffic: [
+          {
+            latestRevision: true
+            weight: 100
+          }
+        ]
         external: true  // https://github.com/microsoft/azure-container-apps/discussions/1033#discussioncomment-7997192
         targetPort: 8080
         customDomains: empty(customDomainName)
