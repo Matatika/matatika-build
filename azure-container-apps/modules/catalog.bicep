@@ -17,8 +17,8 @@ param reactAppEnv string = 'production'
 param appIdentityClientId string = ''
 param javaOpts string = '-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K'
 param activeProfiles string = 'default,deploy'
-param persistenceCatalogUrl string
-param persistenceCatalogUsername string
+param persistenceCatalogUrl string = ''
+param persistenceCatalogUsername string = ''
 
 @secure()
 param persistenceCatalogPassword string
@@ -231,29 +231,45 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'ACTIVE_PROFILES'
               value: activeProfiles
             }
-            {
-              name: 'PERSISTENCE_WAREHOUSE_URL'
-              value: persistenceWarehouseUrl
-            }
-            {
-              name: 'PERSISTENCE_WAREHOUSE_USERNAME'
-              value: persistenceWarehouseUsername
-            }
-            {
-              name: 'PERSISTENCE_WAREHOUSE_PASSWORD'
-              secretRef: 'persistence-warehouse-pass'
-            }
-            {
-              name: 'PERSISTENCE_CATALOG_URL'
-              value: persistenceCatalogUrl
-            }
-            {
-              name: 'PERSISTENCE_CATALOG_USERNAME'
-              value: persistenceCatalogUsername
-            }
+            ...empty(persistenceCatalogUrl)
+              ? []
+              : [
+                {
+                  name: 'PERSISTENCE_CATALOG_URL'
+                  value: persistenceCatalogUrl
+                }
+              ]
+            ...empty(persistenceCatalogUsername)
+              ? []
+              : [
+                {
+                  name: 'PERSISTENCE_CATALOG_USERNAME'
+                  value: persistenceCatalogUsername
+                }
+              ]
             {
               name: 'PERSISTENCE_CATALOG_PASSWORD'
               secretRef: 'persistence-catalog-pass'
+            }
+            ...empty(persistenceWarehouseUrl)
+              ? []
+              : [
+                {
+                  name: 'PERSISTENCE_WAREHOUSE_URL'
+                  value: persistenceWarehouseUrl
+                }
+              ]
+            ...empty(persistenceWarehouseUsername)
+              ? []
+              : [
+                {
+                  name: 'PERSISTENCE_WAREHOUSE_USERNAME'
+                  value: persistenceWarehouseUsername
+                }
+              ]
+            {
+              name: 'PERSISTENCE_WAREHOUSE_PASSWORD'
+              secretRef: 'persistence-warehouse-pass'
             }
             {
               name: 'MATATIKA_ENCRYPTOR_PASSWORD'
