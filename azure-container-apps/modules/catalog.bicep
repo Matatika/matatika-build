@@ -324,7 +324,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
                 }
               ]
             {
-              name: 'MATATIKA_DATAFLOW_DOCKERREGISTRY'
+              name: 'DATAFLOW_DOCKER_REGISTRY'
               value: useContainerRegistry ? containerRegistry.properties.loginServer : 'docker.io'
             }
             {
