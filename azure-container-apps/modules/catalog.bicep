@@ -346,7 +346,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: environment.id
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_RESOURCEGROUP'
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_RESOURCE_GROUP'
               value: resourceGroup().name
             }
             {
@@ -354,7 +354,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: location
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOGANALYTICSWORKSPACEID'
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOG_ANALYTICS_WORKSPACE_ID'
               value: logAnalyticsWorkspace.properties.customerId
             }
             {
@@ -374,7 +374,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               ])
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENTVARIABLES'
+              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT_VARIABLES'
               secretRef: 'shelltask-environment' 
             }
             ...empty(customDomainName)
