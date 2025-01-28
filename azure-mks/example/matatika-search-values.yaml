@@ -150,7 +150,7 @@ extraVolumeMounts:
 # define container to build the certs
 extraInitContainers:
 - name: setup-tls-cert
-  image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+  image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
   command:
   - sh
   - -c
