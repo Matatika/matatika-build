@@ -9,11 +9,11 @@ masterService: ""
 # Elasticsearch roles that will be applied to this nodeGroup
 # These will be set as environment variables. E.g. node.master=true
 roles:
-  master: "true"
-  ingest: "true"
-  data: "true"
-  remote_cluster_client: "true"
-  ml: "true"
+  - master
+  - ingest
+  - data
+  - remote_cluster_client
+  - ml
 
 replicas: 1
 minimumMasterNodes: 1
@@ -27,6 +27,9 @@ esMajorVersion: ""
 # Set es_logstash_policy_config.json in deploy script from matatika-catalog/elastic-search/config/es_logstash_policy_config.json
 # Set es_profiles_datasets_likes_index_config.json in deploy script from matatika-catalog/elastic-search/config/es_profiles_datasets_likes_index_config.json
 #esConfig: {}
+
+# We create our own certs in init containers
+createCert: false
 
 esJvmOptions: {}
 #  processors.options: |
@@ -156,16 +159,18 @@ extraInitContainers:
     set -euo pipefail
     if [ ! -f "/usr/share/elasticsearch/data/certs/ca/ca.crt" ]; then
       echo ${NODE_NAME},${POD_SERVICE_NAME},${POD_SERVICE_NAME_HEADLESS},${NODE_NAME}.${POD_SERVICE_NAME},${NODE_NAME}.${POD_SERVICE_NAME_HEADLESS}
+      # create CA and certs for clients
+      elasticsearch-certutil ca --silent --pem --pass "" --out $ES_PATH_CONF/certs/ca.zip;
+      unzip $ES_PATH_CONF/certs/ca.zip -d $ES_PATH_CONF/certs;
       elasticsearch-certutil cert \
         --silent \
+        --ca-cert $ES_PATH_CONF/certs/ca/ca.crt \
+        --ca-key $ES_PATH_CONF/certs/ca/ca.key \
         --name ${NODE_NAME} \
         --ip ${POD_IP} \
         --dns localhost,${NODE_NAME},${POD_SERVICE_NAME},${POD_SERVICE_NAME_HEADLESS},${NODE_NAME}.${POD_SERVICE_NAME},${NODE_NAME}.${POD_SERVICE_NAME_HEADLESS} \
         --pass "" \
         --out $ES_PATH_CONF/certs/keystore.p12
-      # create CA for clients to verify certificates
-      mkdir -p $ES_PATH_CONF/certs/ca
-      openssl pkcs12 -in $ES_PATH_CONF/certs/keystore.p12 -out $ES_PATH_CONF/certs/ca/ca.crt -clcerts -nokeys -passin pass:""
       # save for later, do not re-create certs on restart
       cp -R $ES_PATH_CONF/certs /usr/share/elasticsearch/data/certs
     else
