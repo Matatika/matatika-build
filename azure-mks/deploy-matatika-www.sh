@@ -45,6 +45,8 @@ helm upgrade \
 	--set appService.version=${APP_VERSION} \
 	--set appService.auth0ClientSecret=${WWW_AUTH0_CLIENT_SECRET} \
 	--set appService.catalogClientSecret=${WWW_CATALOG_CLIENT_SECRET} \
+	--set persistence.storageAccount=${WWW_STORAGE_ACCOUNT} \
+	--set persistence.resourceGroup=${WWW_RESOURCE_GROUP} \
 	--set mysql.mysqlPassword=test,mysql.mysqlRootPassword=test \
 	--debug \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-www-values.yaml \
