@@ -62,6 +62,7 @@ appService:
 
 ingress:
   enabled: true
+  className: webapprouting.kubernetes.azure.com
   paths:
     - /
   # Used to create Ingress record (should used with service.type: ClusterIP).
