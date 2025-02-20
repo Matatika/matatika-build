@@ -69,12 +69,8 @@ ingress:
   hosts:
     - www-localhost.matatika.com
   annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
     # this flag ssl-redirect disables the default 308 redirect if the traffic is http
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    # kubernetes.io/ingress.class: nginx
-    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    # kubernetes.io/tls-acme: "true"
   tls:
     # Secrets must be manually created in the namespace.
     # - secretName: chart-example-tls
