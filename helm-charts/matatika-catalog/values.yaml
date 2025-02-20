@@ -47,7 +47,6 @@ appService:
 
 ingress:
   enabled: true
-  className: webapprouting.kubernetes.azure.com
   paths:
     - /
   # Used to create Ingress record (should used with service.type: ClusterIP).
@@ -55,6 +54,10 @@ ingress:
     - staging.matatika.com
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    # kubernetes.io/ingress.class: addon-http-application-routing  
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # kubernetes.io/tls-acme: "true"
   tls:
     - hosts:
       - staging.matatika.com

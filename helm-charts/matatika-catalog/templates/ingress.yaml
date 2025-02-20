@@ -1,7 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "matatika-catalog.fullname" . -}}
 {{- $ingressPaths := .Values.ingress.paths -}}
-{{- $ingressClassName := .Values.ingress.className -}}
 {{- $httpPort := .Values.appService.httpPort -}}
 {{- $serviceName := .Values.appService.name -}}
 apiVersion: networking.k8s.io/v1
@@ -18,7 +17,6 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  ingressClassName: {{ $ingressClassName }}
 #  backend:
 #    serviceName: {{ include "matatika-catalog.fullname" . }}-{{ .Values.appService.name }}
 #    servicePort: http
