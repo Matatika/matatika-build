@@ -342,19 +342,19 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: 'true'
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT'
-              value: environment.id
+              name: 'CONTAINERAPPS_ENVIRONMENT'
+              value: environment.name
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_RESOURCE_GROUP'
+              name: 'CONTAINERAPPS_RESOURCE_GROUP'
               value: resourceGroup().name
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOCATION'
+              name: 'CONTAINERAPPS_LOCATION'
               value: location
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_LOG_ANALYTICS_WORKSPACE_ID'
+              name: 'CONTAINERAPPS_LOG_ANALYTICS_WORKSPACE_ID'
               value: logAnalyticsWorkspace.properties.customerId
             }
             {
