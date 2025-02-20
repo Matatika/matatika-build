@@ -146,9 +146,9 @@ certificateFiles:
 ## Persist data to a persistent volume
 persistence:
   # Persistent Volume Storage Class
-  storageClass: azurefile
-  storageAccount: matatika
-  resourceGroup: MC_DEMOS_DEMOAKS_eastus
+  storageClass: custom
+  storageAccount: PLACEHOLDER
+  resourceGroup: PLACEHOLDER
   uploads:
     enabled: true
     ## wp-content/uploads data
