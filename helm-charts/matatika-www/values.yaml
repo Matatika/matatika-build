@@ -62,15 +62,18 @@ appService:
 
 ingress:
   enabled: true
-  className: webapprouting.kubernetes.azure.com
   paths:
     - /
   # Used to create Ingress record (should used with service.type: ClusterIP).
   hosts:
     - www-localhost.matatika.com
   annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
     # this flag ssl-redirect disables the default 308 redirect if the traffic is http
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # kubernetes.io/tls-acme: "true"
   tls:
     # Secrets must be manually created in the namespace.
     # - secretName: chart-example-tls
@@ -143,9 +146,9 @@ certificateFiles:
 ## Persist data to a persistent volume
 persistence:
   # Persistent Volume Storage Class
-  storageClass: custom
-  storageAccount: PLACEHOLDER
-  resourceGroup: PLACEHOLDER
+  storageClass: azurefile
+  storageAccount: matatika
+  resourceGroup: MC_DEMOS_DEMOAKS_eastus
   uploads:
     enabled: true
     ## wp-content/uploads data
