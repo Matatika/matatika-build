@@ -6,6 +6,8 @@
 [[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
 [[ -z "$WWW_AUTH0_CLIENT_SECRET" ]] && { echo "Error: WWW_AUTH0_CLIENT_SECRET not found in env"; exit 1; }
 [[ -z "$WWW_CATALOG_CLIENT_SECRET" ]] && { echo "Error: WWW_CATALOG_CLIENT_SECRET not found in env"; exit 1; }
+[[ -z "$WWW_STORAGE_ACCOUNT" ]] && { echo "Error: WWW_STORAGE_ACCOUNT not found in env"; exit 1; }
+[[ -z "$WWW_RESOURCE_GROUP" ]] && { echo "Error: WWW_RESOURCE_GROUP not found in env"; exit 1; }
 
 helm repo rm stable
 helm repo add stable https://charts.helm.sh/stable
