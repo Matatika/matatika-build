@@ -147,8 +147,8 @@ persistence:
   storageAccount: PLACEHOLDER
   storageAccountKey: PLACEHOLDER
   resourceGroup: PLACEHOLDER
-  # shareName must already exist
-  shareName: www
+  # Optional. shareName must already exist is specified and is shared between pvc's
+  #shareName: www
   uploads:
     enabled: true
     ## wp-content/uploads data

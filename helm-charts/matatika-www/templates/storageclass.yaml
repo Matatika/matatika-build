@@ -14,9 +14,12 @@ mountOptions:
 parameters:
   skuName: Standard_LRS
   storageAccount: {{ .Values.persistence.storageAccount }}
+  {{- if .Values.persistence.shareName }}
   shareName: {{ .Values.persistence.shareName }}
+  {{- end }}
   {{- if .Values.persistence.storageAccountKey }}
   secretName: {{ .Release.Name }}-azurefile
   {{- end }}
   resourceGroup: {{ .Values.persistence.resourceGroup }}
 {{- end }}
+reclaimPolicy: Retain

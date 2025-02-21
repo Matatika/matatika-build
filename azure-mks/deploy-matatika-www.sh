@@ -50,7 +50,6 @@ helm upgrade \
 	--set appService.catalogClientSecret=${WWW_CATALOG_CLIENT_SECRET} \
 	--set persistence.storageAccount=${WWW_STORAGE_ACCOUNT} \
 	--set persistence.storageAccountKey=${WWW_STORAGE_ACCOUNT_KEY} \
-	--set persistence.shareName=www-${STAGE} \
 	--set persistence.resourceGroup=${WWW_STORAGE_RESOURCE_GROUP} \
 	--set mysql.mysqlPassword=test,mysql.mysqlRootPassword=test \
 	--debug \
