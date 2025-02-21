@@ -145,7 +145,10 @@ persistence:
   # Persistent Volume Storage Class
   storageClass: custom
   storageAccount: PLACEHOLDER
+  storageAccountKey: PLACEHOLDER
   resourceGroup: PLACEHOLDER
+  # shareName must already exist
+  shareName: www
   uploads:
     enabled: true
     ## wp-content/uploads data

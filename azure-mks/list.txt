@@ -1,0 +1,964 @@
+[
+  {
+    "aadProfile": null,
+    "addonProfiles": {
+      "httpApplicationRouting": {
+        "config": {
+          "HTTPApplicationRoutingZoneName": "b085503aa8914dd19cae.eastus.aksapp.io"
+        },
+        "enabled": true,
+        "identity": {
+          "clientId": "d2343577-dd71-4134-9108-63b98113adad",
+          "objectId": "4e22a552-7603-46c1-96d6-6b08b4988c98",
+          "resourceId": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourcegroups/MC_SERVICES_GREENAKS_eastus/providers/Microsoft.ManagedIdentity/userAssignedIdentities/httpapplicationrouting-greenaks"
+        }
+      }
+    },
+    "agentPoolProfiles": [
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 1,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.29.11",
+        "eTag": "58146fa5-9181-434a-92c3-d639e9fd46bc",
+        "enableAutoScaling": false,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": null,
+        "maxPods": 110,
+        "messageOfTheDay": null,
+        "minCount": null,
+        "mode": "User",
+        "name": "appspool",
+        "networkProfile": null,
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202501.12.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.29.11",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": null
+      },
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 2,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.29.11",
+        "eTag": "a4127159-1db5-4237-bf87-34b7b23d5383",
+        "enableAutoScaling": true,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": 4,
+        "maxPods": 110,
+        "messageOfTheDay": null,
+        "minCount": 2,
+        "mode": "System",
+        "name": "nodepool1",
+        "networkProfile": null,
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202501.12.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.29.11",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": null
+      },
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 1,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.29.11",
+        "eTag": "d82aeff4-e6ad-4223-a381-a7ccf09f0d96",
+        "enableAutoScaling": false,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": null,
+        "maxPods": 110,
+        "messageOfTheDay": null,
+        "minCount": null,
+        "mode": "User",
+        "name": "stagingapps",
+        "networkProfile": null,
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202501.12.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.29.11",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": null
+      },
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 1,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.29.11",
+        "eTag": "ef0210e2-27a4-492d-8074-5502b0252d2b",
+        "enableAutoScaling": false,
+        "enableCustomCaTrust": null,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": null,
+        "maxPods": 110,
+        "messageOfTheDay": null,
+        "minCount": null,
+        "mode": "System",
+        "name": "esystempool",
+        "networkProfile": null,
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202501.12.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": [
+          "CriticalAddonsOnly=true:NoSchedule"
+        ],
+        "orchestratorVersion": "1.29.11",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": null
+      }
+    ],
+    "aiToolchainOperatorProfile": null,
+    "apiServerAccessProfile": null,
+    "autoScalerProfile": {
+      "balanceSimilarNodeGroups": "false",
+      "daemonsetEvictionForEmptyNodes": false,
+      "daemonsetEvictionForOccupiedNodes": true,
+      "expander": "random",
+      "ignoreDaemonsetsUtilization": false,
+      "maxEmptyBulkDelete": "10",
+      "maxGracefulTerminationSec": "600",
+      "maxNodeProvisionTime": "15m",
+      "maxTotalUnreadyPercentage": "45",
+      "newPodScaleUpDelay": "0s",
+      "okTotalUnreadyCount": "3",
+      "scaleDownDelayAfterAdd": "10m",
+      "scaleDownDelayAfterDelete": "10s",
+      "scaleDownDelayAfterFailure": "3m",
+      "scaleDownUnneededTime": "10m",
+      "scaleDownUnreadyTime": "20m",
+      "scaleDownUtilizationThreshold": "0.5",
+      "scanInterval": "10s",
+      "skipNodesWithLocalStorage": "false",
+      "skipNodesWithSystemPods": "true"
+    },
+    "autoUpgradeProfile": {
+      "nodeOsUpgradeChannel": null,
+      "upgradeChannel": "none"
+    },
+    "azureMonitorProfile": null,
+    "azurePortalFqdn": "greenaks-services-fcf81f-f9qmmyqi.portal.hcp.eastus.azmk8s.io",
+    "bootstrapProfile": {
+      "artifactSource": "Direct",
+      "containerRegistryId": null
+    },
+    "creationData": null,
+    "currentKubernetesVersion": "1.29.11",
+    "disableLocalAccounts": false,
+    "diskEncryptionSetId": null,
+    "dnsPrefix": "GREENAKS-SERVICES-fcf81f",
+    "eTag": "5113bacd-eb72-4a12-ad6e-1b297aead719",
+    "enableNamespaceResources": null,
+    "enablePodSecurityPolicy": null,
+    "enableRbac": true,
+    "extendedLocation": null,
+    "fqdn": "greenaks-services-fcf81f-f9qmmyqi.hcp.eastus.azmk8s.io",
+    "fqdnSubdomain": null,
+    "httpProxyConfig": null,
+    "id": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourcegroups/SERVICES/providers/Microsoft.ContainerService/managedClusters/GREENAKS",
+    "identity": {
+      "delegatedResources": null,
+      "principalId": "28346a5f-eeaa-4b43-997f-01b17c463cb8",
+      "tenantId": "0d6225a7-c523-4291-b82f-d16b9464cbee",
+      "type": "SystemAssigned",
+      "userAssignedIdentities": null
+    },
+    "identityProfile": {
+      "kubeletidentity": {
+        "clientId": "e70311b0-9b12-4d69-ae13-816db3516fda",
+        "objectId": "4dacc9cb-46de-4d94-b37e-65a3143c743b",
+        "resourceId": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourcegroups/MC_SERVICES_GREENAKS_eastus/providers/Microsoft.ManagedIdentity/userAssignedIdentities/GREENAKS-agentpool"
+      }
+    },
+    "ingressProfile": null,
+    "kind": "Base",
+    "kubernetesVersion": "1.29.11",
+    "linuxProfile": {
+      "adminUsername": "azureuser",
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDF4OpXo3O9GucfzMduyrB9Yk9gkALpEJCxBnWaNaUXSyUkv8CeNdpwlo6rt86cLvcDFGATV/vBfNo9S0h51UZr7p2XoNPDC2eRmv2O8Ov35NRtiKG6F0DzlX4/iAy7G3kn9iMQ23idU8zES6qkMcA3TboiPK2M5LO7NLKKQmCYFV+ATpY1bQm03RnOpkSHdJJD7y0bi4qqEKlKaCB7sxC3KTUNoG66CI24DX6UJ/pyy3jwXZzV6zOyfz7ocf1fyGhAhbDsRFV8BocmMjLUihBNDFoOTQVMv14ljBxf+kR52jqYooFcm7jjrFw4wnJnbhqvJ8qzlDWUz4ShUeWwH35DoZdMiKMvn0jqAJgVuR3Ezz4w9wvNaWXL0BrBmSs00XkyhEFaGfGbfb3s4WpZe6XADRYAFlaHNdQ/o/N2MlBuRDv1ef7j2Td2JygcunQ7V/Rb01ocrCgpvJWgWaa/fCu7vFe5VOzrePWMre9FYKZiWonlJijYEholLwdOaQ6UHJebVcjLQINPjlZbXYVcURRHT3etygrPPJumpBsIOHvXmaSpfqWmCHhHr4snMDi/FF9hdzqo2sjKbfLokvS4Cug9NtZkOQL+Z48uJVBiDK10QUYvj45Fhrve7FAzLwlROJzGsDjTgamKEE2hUp3pt+OV+PL0kyKPCij3Bo35k+jomw== gabriel@matatika.com\n"
+          }
+        ]
+      }
+    },
+    "location": "eastus",
+    "maxAgentPools": 100,
+    "metricsProfile": {
+      "costAnalysis": {
+        "enabled": false
+      }
+    },
+    "name": "GREENAKS",
+    "networkProfile": {
+      "advancedNetworking": null,
+      "dnsServiceIp": "10.0.0.10",
+      "ipFamilies": [
+        "IPv4"
+      ],
+      "kubeProxyConfig": null,
+      "loadBalancerProfile": {
+        "allocatedOutboundPorts": null,
+        "backendPoolType": "nodeIPConfiguration",
+        "clusterServiceLoadBalancerHealthProbeMode": null,
+        "effectiveOutboundIPs": [
+          {
+            "id": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourceGroups/MC_SERVICES_GREENAKS_eastus/providers/Microsoft.Network/publicIPAddresses/42a44ee7-9f7a-49b2-b208-54ae1a32cb92",
+            "resourceGroup": "MC_SERVICES_GREENAKS_eastus"
+          }
+        ],
+        "enableMultipleStandardLoadBalancers": null,
+        "idleTimeoutInMinutes": null,
+        "managedOutboundIPs": {
+          "count": 1,
+          "countIpv6": null
+        },
+        "outboundIPs": null,
+        "outboundIpPrefixes": null
+      },
+      "loadBalancerSku": "Standard",
+      "natGatewayProfile": null,
+      "networkDataplane": null,
+      "networkMode": null,
+      "networkPlugin": "kubenet",
+      "networkPluginMode": null,
+      "networkPolicy": "none",
+      "outboundType": "loadBalancer",
+      "podCidr": "10.244.0.0/16",
+      "podCidrs": [
+        "10.244.0.0/16"
+      ],
+      "podLinkLocalAccess": "IMDS",
+      "serviceCidr": "10.0.0.0/16",
+      "serviceCidrs": [
+        "10.0.0.0/16"
+      ],
+      "staticEgressGatewayProfile": null
+    },
+    "nodeProvisioningProfile": {
+      "mode": "Manual"
+    },
+    "nodeResourceGroup": "MC_SERVICES_GREENAKS_eastus",
+    "nodeResourceGroupProfile": null,
+    "oidcIssuerProfile": {
+      "enabled": false,
+      "issuerUrl": null
+    },
+    "podIdentityProfile": null,
+    "powerState": {
+      "code": "Running"
+    },
+    "privateFqdn": null,
+    "privateLinkResources": null,
+    "provisioningState": "Succeeded",
+    "publicNetworkAccess": null,
+    "resourceGroup": "SERVICES",
+    "resourceUid": "6450f9636010d70001d97283",
+    "safeguardsProfile": null,
+    "securityProfile": {
+      "azureKeyVaultKms": null,
+      "customCaTrustCertificates": null,
+      "defender": null,
+      "imageCleaner": null,
+      "imageIntegrity": null,
+      "nodeRestriction": null,
+      "workloadIdentity": null
+    },
+    "serviceMeshProfile": null,
+    "servicePrincipalProfile": {
+      "clientId": "msi"
+    },
+    "sku": {
+      "name": "Base",
+      "tier": "Free"
+    },
+    "storageProfile": {
+      "blobCsiDriver": null,
+      "diskCsiDriver": {
+        "enabled": true,
+        "version": "v1"
+      },
+      "fileCsiDriver": {
+        "enabled": true
+      },
+      "snapshotController": {
+        "enabled": true
+      }
+    },
+    "supportPlan": "KubernetesOfficial",
+    "systemData": null,
+    "type": "Microsoft.ContainerService/ManagedClusters",
+    "upgradeSettings": null,
+    "windowsProfile": null,
+    "workloadAutoScalerProfile": {
+      "keda": null,
+      "verticalPodAutoscaler": null
+    }
+  },
+  {
+    "aadProfile": null,
+    "addonProfiles": null,
+    "agentPoolProfiles": [
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 1,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.30.9",
+        "eTag": "3363688a-a82c-4f9d-946f-893367a0746e",
+        "enableAutoScaling": false,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": null,
+        "maxPods": 250,
+        "messageOfTheDay": null,
+        "minCount": null,
+        "mode": "System",
+        "name": "esystempool",
+        "networkProfile": {
+          "allowedHostPorts": null,
+          "applicationSecurityGroups": null,
+          "nodePublicIpTags": null
+        },
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202502.03.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": [
+          "CriticalAddonsOnly=true:NoSchedule"
+        ],
+        "orchestratorVersion": "1.30",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": "OCIContainer"
+      },
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 1,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.30.9",
+        "eTag": "02f82a87-e2b4-473b-9269-35588155d98c",
+        "enableAutoScaling": true,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": 3,
+        "maxPods": 250,
+        "messageOfTheDay": null,
+        "minCount": 1,
+        "mode": "User",
+        "name": "appspool",
+        "networkProfile": {
+          "allowedHostPorts": null,
+          "applicationSecurityGroups": null,
+          "nodePublicIpTags": null
+        },
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202502.03.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.30",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": "OCIContainer"
+      },
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 1,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.30.9",
+        "eTag": "b4835978-30a2-430a-b337-b0dcd17296bc",
+        "enableAutoScaling": true,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": 1,
+        "maxPods": 250,
+        "messageOfTheDay": null,
+        "minCount": 1,
+        "mode": "User",
+        "name": "stagingapps",
+        "networkProfile": {
+          "allowedHostPorts": null,
+          "applicationSecurityGroups": null,
+          "nodePublicIpTags": null
+        },
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202502.03.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.30",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": "OCIContainer"
+      },
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 2,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.30.9",
+        "eTag": "304306aa-d106-4ead-9d4c-03669fc0dae6",
+        "enableAutoScaling": true,
+        "enableCustomCaTrust": false,
+        "enableEncryptionAtHost": false,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableUltraSsd": false,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "maxCount": 3,
+        "maxPods": 250,
+        "messageOfTheDay": null,
+        "minCount": 2,
+        "mode": "User",
+        "name": "nodepool1",
+        "networkProfile": {
+          "allowedHostPorts": null,
+          "applicationSecurityGroups": null,
+          "nodePublicIpTags": null
+        },
+        "nodeImageVersion": "AKSUbuntu-2204gen2containerd-202502.03.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.30",
+        "osDiskSizeGb": 128,
+        "osDiskType": "Ephemeral",
+        "osSku": "Ubuntu",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "provisioningState": "Succeeded",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "LocalUser"
+        },
+        "spotMaxPrice": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxSurge": null,
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_DS3_v2",
+        "windowsProfile": null,
+        "workloadRuntime": "OCIContainer"
+      }
+    ],
+    "aiToolchainOperatorProfile": null,
+    "apiServerAccessProfile": null,
+    "autoScalerProfile": null,
+    "autoUpgradeProfile": {
+      "nodeOsUpgradeChannel": "NodeImage",
+      "upgradeChannel": null
+    },
+    "azureMonitorProfile": null,
+    "azurePortalFqdn": "blueaks-services-fcf81f-g7tuyyn2.portal.hcp.ukwest.azmk8s.io",
+    "bootstrapProfile": {
+      "artifactSource": "Direct",
+      "containerRegistryId": null
+    },
+    "creationData": null,
+    "currentKubernetesVersion": "1.30.9",
+    "disableLocalAccounts": false,
+    "diskEncryptionSetId": null,
+    "dnsPrefix": "BLUEAKS-SERVICES-fcf81f",
+    "eTag": "003368ff-5291-4368-8cbd-8efbe58c059a",
+    "enableNamespaceResources": null,
+    "enablePodSecurityPolicy": false,
+    "enableRbac": true,
+    "extendedLocation": null,
+    "fqdn": "blueaks-services-fcf81f-g7tuyyn2.hcp.ukwest.azmk8s.io",
+    "fqdnSubdomain": null,
+    "httpProxyConfig": null,
+    "id": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourcegroups/SERVICES/providers/Microsoft.ContainerService/managedClusters/BLUEAKS",
+    "identity": {
+      "delegatedResources": null,
+      "principalId": "01f210c0-5860-4cb2-95b4-49c82b75e805",
+      "tenantId": "0d6225a7-c523-4291-b82f-d16b9464cbee",
+      "type": "SystemAssigned",
+      "userAssignedIdentities": null
+    },
+    "identityProfile": {
+      "kubeletidentity": {
+        "clientId": "fc8a8c6e-a3a6-40b0-843d-2fc9d6f3a560",
+        "objectId": "fe5e25ed-3696-43fe-91e2-beed66c162cb",
+        "resourceId": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourcegroups/MC_SERVICES_BLUEAKS_ukwest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/BLUEAKS-agentpool"
+      }
+    },
+    "ingressProfile": {
+      "webAppRouting": {
+        "dnsZoneResourceIds": null,
+        "enabled": true,
+        "identity": {
+          "clientId": "25f1c4a6-8516-4ef0-b8cf-37ee1f3666f7",
+          "objectId": "1fc022cb-3809-480f-9642-13997e668eb5",
+          "resourceId": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourcegroups/MC_SERVICES_BLUEAKS_ukwest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/webapprouting-blueaks"
+        },
+        "nginx": {
+          "defaultIngressControllerType": "AnnotationControlled"
+        }
+      }
+    },
+    "kind": "Base",
+    "kubernetesVersion": "1.30",
+    "linuxProfile": {
+      "adminUsername": "azureuser",
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgML1OP9FtNUHGkPcTB239ntfpsBQXveOKEkG8xDIn/SZ+6FVi4DtADHxS/9DRmoTgNbtLxGrzYlx99L6pC5AgmuVUJWKcWet2VGFB5RgHPCijLa0z+52XoKKfRjhzjCqt1ArbrqH+K61kXZclm0K0o2VzxQo+PlLPPXcusFAA86+8E/9hmjyTwv2QpBioxZgErv3FHT172ulkdEB8Ky32Qs4+czuoRlL5JPBasR/BACzTzIlrsW5bZ0A3aHnSEEhV1jmFj+FYbJIC5Np+G+4dIhE8wEKBDoIGI/uLHqUaFOUz2GDcN7GnKjmYigdWAxX5oLbC8V6CPFzqOVZzUa51"
+          }
+        ]
+      }
+    },
+    "location": "ukwest",
+    "maxAgentPools": 100,
+    "metricsProfile": {
+      "costAnalysis": {
+        "enabled": false
+      }
+    },
+    "name": "BLUEAKS",
+    "networkProfile": {
+      "advancedNetworking": null,
+      "dnsServiceIp": "10.0.0.10",
+      "ipFamilies": [
+        "IPv4"
+      ],
+      "kubeProxyConfig": null,
+      "loadBalancerProfile": {
+        "allocatedOutboundPorts": null,
+        "backendPoolType": "nodeIPConfiguration",
+        "clusterServiceLoadBalancerHealthProbeMode": null,
+        "effectiveOutboundIPs": [
+          {
+            "id": "/subscriptions/fcf81f41-2998-49a9-8d21-e3165710e0bb/resourceGroups/MC_SERVICES_BLUEAKS_ukwest/providers/Microsoft.Network/publicIPAddresses/f572dc0b-be4d-427a-81c0-db23e0ed90e6",
+            "resourceGroup": "MC_SERVICES_BLUEAKS_ukwest"
+          }
+        ],
+        "enableMultipleStandardLoadBalancers": null,
+        "idleTimeoutInMinutes": null,
+        "managedOutboundIPs": {
+          "count": 1,
+          "countIpv6": null
+        },
+        "outboundIPs": null,
+        "outboundIpPrefixes": null
+      },
+      "loadBalancerSku": "standard",
+      "natGatewayProfile": null,
+      "networkDataplane": "azure",
+      "networkMode": null,
+      "networkPlugin": "azure",
+      "networkPluginMode": "overlay",
+      "networkPolicy": "none",
+      "outboundType": "loadBalancer",
+      "podCidr": "10.244.0.0/16",
+      "podCidrs": [
+        "10.244.0.0/16"
+      ],
+      "podLinkLocalAccess": "IMDS",
+      "serviceCidr": "10.0.0.0/16",
+      "serviceCidrs": [
+        "10.0.0.0/16"
+      ],
+      "staticEgressGatewayProfile": null
+    },
+    "nodeProvisioningProfile": {
+      "mode": "Manual"
+    },
+    "nodeResourceGroup": "MC_SERVICES_BLUEAKS_ukwest",
+    "nodeResourceGroupProfile": null,
+    "oidcIssuerProfile": {
+      "enabled": false,
+      "issuerUrl": null
+    },
+    "podIdentityProfile": null,
+    "powerState": {
+      "code": "Running"
+    },
+    "privateFqdn": null,
+    "privateLinkResources": null,
+    "provisioningState": "Succeeded",
+    "publicNetworkAccess": null,
+    "resourceGroup": "SERVICES",
+    "resourceUid": "67b76cae8785b6000188e13d",
+    "safeguardsProfile": null,
+    "securityProfile": {
+      "azureKeyVaultKms": null,
+      "customCaTrustCertificates": null,
+      "defender": null,
+      "imageCleaner": null,
+      "imageIntegrity": null,
+      "nodeRestriction": null,
+      "workloadIdentity": null
+    },
+    "serviceMeshProfile": null,
+    "servicePrincipalProfile": {
+      "clientId": "msi"
+    },
+    "sku": {
+      "name": "Base",
+      "tier": "Free"
+    },
+    "storageProfile": {
+      "blobCsiDriver": null,
+      "diskCsiDriver": {
+        "enabled": true,
+        "version": "v1"
+      },
+      "fileCsiDriver": {
+        "enabled": true
+      },
+      "snapshotController": {
+        "enabled": true
+      }
+    },
+    "supportPlan": "KubernetesOfficial",
+    "systemData": null,
+    "type": "Microsoft.ContainerService/ManagedClusters",
+    "upgradeSettings": null,
+    "windowsProfile": null,
+    "workloadAutoScalerProfile": {
+      "keda": null,
+      "verticalPodAutoscaler": null
+    }
+  }
+]

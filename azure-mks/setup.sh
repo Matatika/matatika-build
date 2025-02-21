@@ -42,6 +42,25 @@ az aks nodepool add --name nodepool1 --cluster-name $BUILD_AZ_AKS_NAME --resourc
 az aks nodepool add --name appspool --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 1 --min-count 1 --max-count 3 --enable-cluster-autoscaler
 az aks nodepool add --name stagingapps --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 1 --min-count 1 --max-count 1 --enable-cluster-autoscaler
 
+# Create a storage account, only used by our website
+export STORAGE_ACCOUNT_NAME=matatikawww
+az storage account create --name $STORAGE_ACCOUNT_NAME \
+                          --resource-group $BUILD_AZ_RG \
+                          --access-tier Hot \
+                          --allow-shared-key-access true \
+                          --kind StorageV2 \
+                          --location $BUILD_AZ_LOCATION \
+                          --sku Standard_LRS
+# Add the AKS as a Contributor to the storage account
+export AKS_PRINCIPAL=$(az aks show --name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG --output json | jq -r .identity.principalId)
+export STORAGE_ID=$(az storage account show --name $STORAGE_ACCOUNT_NAME --resource-group $BUILD_AZ_RG --output json | jq -r .id)
+az role assignment create \
+    --role "Contributor" \
+    --assignee-object-id $AKS_PRINCIPAL \
+    --assignee-principal-type "ServicePrincipal" \
+    --scope $STORAGE_ID
+
+
 # Setup the MKS namespace, later you will deploy some apps into it
 kubectl create namespace demo
 kubectl create namespace staging
