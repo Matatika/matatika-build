@@ -105,7 +105,7 @@ spec:
               value: https
           initialDelaySeconds: 45
           periodSeconds: 10
-          timeoutSeconds: 30
+          timeoutSeconds: 60
           failureThreshold: 3
           successThreshold: 1
         volumeMounts:
