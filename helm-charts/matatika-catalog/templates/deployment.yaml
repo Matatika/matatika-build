@@ -110,7 +110,7 @@ spec:
             path: /actuator/health/readiness
             port: {{ .Values.appService.internalHttpPort }}
           initialDelaySeconds: 90
-          periodSeconds: 10
+          periodSeconds: 30
           timeoutSeconds: 30
           failureThreshold: 3
           successThreshold: 1
@@ -118,8 +118,8 @@ spec:
           httpGet:
             path: /actuator/health/liveness
             port: {{ .Values.appService.internalHttpPort }}
-          initialDelaySeconds: 60
-          periodSeconds: 10
+          initialDelaySeconds: 90
+          periodSeconds: 30
           timeoutSeconds: 30
           failureThreshold: 3
           successThreshold: 1
