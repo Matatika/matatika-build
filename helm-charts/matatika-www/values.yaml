@@ -20,6 +20,19 @@ mysql:
       # Allow us to upload large files
       max_allowed_packet = 100M
 
+      # Allow zero defaults
+      sql_mode = 'IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+
+      # Database should always be in UTC
+      default_time_zone = '+00:00'
+
+      # Allow us to have non-nullable timestamp fields without defaulting to current date
+      explicit_defaults_for_timestamp = true
+
+      # Full UTF-8 support
+      character-set-server=utf8mb4
+      collation-server=utf8mb4_unicode_ci
+
 image:
   name: local/matatika-www
   # Specify a specific image version to override default ({{ .Release.appVersion }})
