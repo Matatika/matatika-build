@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "matatika-www.fullname" . }}-{{ .Values.appService.name }}
+  {{- with .Values.appService.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    {{- with .Values.appService.annotations }}
-    annotations:
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
-  spec:
+spec:
   type: {{ .Values.appService.type }}
   ports:
   - name: http
