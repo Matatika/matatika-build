@@ -54,6 +54,10 @@ ingress:
   hosts:
     - staging.matatika.com
   annotations:
+    # Tell external-dns to manage this ingress
+    external-dns.alpha.kubernetes.io/hostname: staging.matatika.com
+    # Optional cloudflare proxied
+    # external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
     - hosts:
