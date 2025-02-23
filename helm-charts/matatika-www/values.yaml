@@ -83,7 +83,7 @@ ingress:
     - www-localhost.matatika.com
   annotations:
     # Tell external-dns to manange this ingress
-    external-dns.alpha.kubernetes.io/hostname: matatika.com
+    external-dns.alpha.kubernetes.io/hostname: www-localhost.matatika.com
     # this flag ssl-redirect disables the default 308 redirect if the traffic is http
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
