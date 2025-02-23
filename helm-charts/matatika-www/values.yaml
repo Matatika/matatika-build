@@ -50,6 +50,9 @@ appService:
   type: ClusterIP
   httpPort: 80
   internalHttpPort: 80
+  annotations:
+    # Tell external-dns to manange this ingress
+    external-dns.alpha.kubernetes.io/hostname: www-localhost.matatika.com
   # Sets AUTH0_CLIENT_SECRET environment, for production this is usually set as a secure property deploy script and passed in from Azure DevOps
   auth0ClientSecret: PLACEHOLDER
   environments:
@@ -82,8 +85,6 @@ ingress:
   hosts:
     - www-localhost.matatika.com
   annotations:
-    # Tell external-dns to manange this ingress
-    external-dns.alpha.kubernetes.io/hostname: www-localhost.matatika.com
     # this flag ssl-redirect disables the default 308 redirect if the traffic is http
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:

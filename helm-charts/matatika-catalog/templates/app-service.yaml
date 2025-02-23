@@ -4,6 +4,10 @@ metadata:
   name: {{ include "matatika-catalog.fullname" . }}-{{ .Values.appService.name }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    {{- with .Values.appService.annotations }}
+    annotations:
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.appService.type }}
   ports:

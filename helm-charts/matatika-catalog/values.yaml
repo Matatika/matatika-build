@@ -22,6 +22,9 @@ appService:
   httpPort: 8080
   httpsPort: 8443
   internalHttpPort: 8080
+  annotations:
+    # Tell external-dns to manange this ingress
+    external-dns.alpha.kubernetes.io/hostname: staging.matatika.com
   #
   # Set these PLACEHOLDER values set in deployment script, for production this is usually set as a secure property deploy script and passed in from Azure DevOps
   #
@@ -54,8 +57,6 @@ ingress:
   hosts:
     - staging.matatika.com
   annotations:
-    # Tell external-dns to manange this ingress
-    external-dns.alpha.kubernetes.io/hostname: staging.matatika.com
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
   tls:
     - hosts:
