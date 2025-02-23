@@ -1,7 +1,7 @@
 
 #export BUILD_AZ_RG=SERVICES
-#export BUILD_AZ_LOCATION=eastus
-#export BUILD_AZ_AKS_NAME=GREENAKS
+#export BUILD_AZ_LOCATION=ukwest
+#export BUILD_AZ_AKS_NAME=BLUEAKS
 
 [[ -z "$BUILD_AZ_RG" ]] && { echo "Error: BUILD_AZ_RG not found in env"; exit 1; }
 [[ -z "$BUILD_AZ_LOCATION" ]] && { echo "Error: BUILD_AZ_LOCATION not found in env"; exit 1; }
@@ -38,9 +38,28 @@ az aks get-credentials -n $BUILD_AZ_AKS_NAME -g $BUILD_AZ_RG
 #
 az aks nodepool add --name esystempool --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 1 --node-taints CriticalAddonsOnly=true:NoSchedule --mode System
 az aks nodepool delete --name nodepool1 --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG
-az aks nodepool add --name nodepool1 --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 1 --min-count 1 --max-count 2 --enable-cluster-autoscaler
+az aks nodepool add --name nodepool1 --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 2 --min-count 2 --max-count 3 --enable-cluster-autoscaler
 az aks nodepool add --name appspool --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 1 --min-count 1 --max-count 3 --enable-cluster-autoscaler
 az aks nodepool add --name stagingapps --cluster-name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG -s Standard_DS3_v2 --node-osdisk-type Ephemeral --node-count 1 --min-count 1 --max-count 1 --enable-cluster-autoscaler
+
+# Create a storage account, only used by our website
+export STORAGE_ACCOUNT_NAME=matatikawww
+az storage account create --name $STORAGE_ACCOUNT_NAME \
+                          --resource-group $BUILD_AZ_RG \
+                          --access-tier Hot \
+                          --allow-shared-key-access true \
+                          --kind StorageV2 \
+                          --location $BUILD_AZ_LOCATION \
+                          --sku Standard_LRS
+# Add the AKS as a Contributor to the storage account
+export AKS_PRINCIPAL=$(az aks show --name $BUILD_AZ_AKS_NAME --resource-group $BUILD_AZ_RG --output json | jq -r .identity.principalId)
+export STORAGE_ID=$(az storage account show --name $STORAGE_ACCOUNT_NAME --resource-group $BUILD_AZ_RG --output json | jq -r .id)
+az role assignment create \
+    --role "Contributor" \
+    --assignee-object-id $AKS_PRINCIPAL \
+    --assignee-principal-type "ServicePrincipal" \
+    --scope $STORAGE_ID
+
 
 # Setup the MKS namespace, later you will deploy some apps into it
 kubectl create namespace demo

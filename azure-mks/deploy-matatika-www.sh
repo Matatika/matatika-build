@@ -6,6 +6,9 @@
 [[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
 [[ -z "$WWW_AUTH0_CLIENT_SECRET" ]] && { echo "Error: WWW_AUTH0_CLIENT_SECRET not found in env"; exit 1; }
 [[ -z "$WWW_CATALOG_CLIENT_SECRET" ]] && { echo "Error: WWW_CATALOG_CLIENT_SECRET not found in env"; exit 1; }
+[[ -z "$WWW_STORAGE_ACCOUNT" ]] && { echo "Error: WWW_STORAGE_ACCOUNT not found in env"; exit 1; }
+[[ -z "$WWW_STORAGE_ACCOUNT_KEY" ]] && { echo "Error: WWW_STORAGE_ACCOUNT_KEY not found in env"; exit 1; }
+[[ -z "$WWW_STORAGE_RESOURCE_GROUP" ]] && { echo "Error: WWW_STORAGE_RESOURCE_GROUP not found in env"; exit 1; }
 
 helm repo rm stable
 helm repo add stable https://charts.helm.sh/stable
@@ -46,7 +49,8 @@ helm upgrade \
 	--set appService.auth0ClientSecret=${WWW_AUTH0_CLIENT_SECRET} \
 	--set appService.catalogClientSecret=${WWW_CATALOG_CLIENT_SECRET} \
 	--set persistence.storageAccount=${WWW_STORAGE_ACCOUNT} \
-	--set persistence.resourceGroup=${WWW_RESOURCE_GROUP} \
+	--set persistence.storageAccountKey=${WWW_STORAGE_ACCOUNT_KEY} \
+	--set persistence.resourceGroup=${WWW_STORAGE_RESOURCE_GROUP} \
 	--set mysql.mysqlPassword=test,mysql.mysqlRootPassword=test \
 	--debug \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-www-values.yaml \

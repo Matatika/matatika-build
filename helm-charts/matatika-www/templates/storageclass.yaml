@@ -3,7 +3,7 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: {{ include "matatika-www.fullname" . }}-{{ .Values.persistence.storageClass }}
-provisioner: kubernetes.io/azure-file
+provisioner: file.csi.azure.com
 mountOptions:
   - dir_mode=0777
   - file_mode=0644
@@ -13,6 +13,13 @@ mountOptions:
   - cache=strict
 parameters:
   skuName: Standard_LRS
-  storageAccount: {{ .Values.persistence.storageAccount }} 
+  storageAccount: {{ .Values.persistence.storageAccount }}
+  {{- if .Values.persistence.shareName }}
+  shareName: {{ .Values.persistence.shareName }}
+  {{- end }}
+  {{- if .Values.persistence.storageAccountKey }}
+  secretName: {{ .Release.Name }}-azurefile
+  {{- end }}
   resourceGroup: {{ .Values.persistence.resourceGroup }}
 {{- end }}
+reclaimPolicy: Retain
