@@ -8,6 +8,7 @@ param containerRegistryConfig object = {
   // name: string?
   // resourceGroupName: string?
 }
+param keyVaultName string = ''
 param imageConfig object = {
   name: 'matatika/catalog'
   tag: 'latest'
@@ -54,6 +55,7 @@ param logstashEndpoint string = ''
 
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
 var useContainerRegistry = !empty(containerRegistryConfig)
+var useKeyVault = !empty(keyVaultName)
 
 resource environment 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
   name: environmentName
@@ -70,6 +72,10 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = if (useContainerRegistry) {
   name: containerRegistryConfig.name
   scope: resourceGroup(!empty(containerRegistryConfig.resourceGroupName) ? containerRegistryConfig.resourceGroupName : resourceGroup().name)
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2024-11-01' existing = if (useKeyVault) {
+  name: keyVaultName
 }
 
 resource app 'Microsoft.App/containerApps@2024-03-01' = {
@@ -160,6 +166,11 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
           value: join([
             'JAVA_OPTS=${javaOpts}'
             'MATATIKA_ENCRYPTOR_PASSWORD=${encryptorPassword}'
+            ...useKeyVault
+              ? [
+                'SPRING_CLOUD_AZURE_KEYVAULT_SECRET_ENDPOINT=${keyVault.properties.vaultUri}'
+              ]
+              : []
             ...empty(logstashEndpoint)
               ? []
               : [
@@ -377,6 +388,14 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT_VARIABLES'
               secretRef: 'shelltask-environment' 
             }
+            ...useKeyVault
+              ? [
+                {
+                  name: 'SPRING_CLOUD_AZURE_KEYVAULT_SECRET_ENDPOINT'
+                  value: keyVault.properties.vaultUri
+                }
+              ]
+              : []
             ...empty(customDomainName)
               ? []
               : [
