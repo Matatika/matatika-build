@@ -12,7 +12,7 @@ param imageConfig = {
 param customDomainName = readEnvironmentVariable('CUSTOM_DOMAIN_NAME', '')
 param reactAppEnv = readEnvironmentVariable('REACT_APP_ENV', 'production')
 param appIdentityClientId = readEnvironmentVariable('APP_IDENTITY_CLIENT_ID', '')
-param javaOpts = readEnvironmentVariable('JAVA_OPTS', '-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K')
+param javaOpts = readEnvironmentVariable('JAVA_OPTS', '-XX:MaxDirectMemorySize=128M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K')
 param activeProfiles = readEnvironmentVariable('ACTIVE_PROFILES', 'default,deploy')
 param persistenceCatalogUrl = readEnvironmentVariable('PERSISTENCE_CATALOG_URL', '')
 param persistenceCatalogUsername = readEnvironmentVariable('PERSISTENCE_CATALOG_USERNAME', '')
