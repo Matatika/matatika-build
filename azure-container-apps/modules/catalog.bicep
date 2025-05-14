@@ -53,8 +53,8 @@ param sendgridApiKey string = ''
 
 param logstashEndpoint string = ''
 
-param appUrl string = !empty(customDomainName) ? 'https://${customDomainName}' : ''
-param serverUrl string = !empty(customDomainName) ? 'https://${customDomainName}/api' : ''
+param externalDomainName string = !empty(customDomainName) ? customDomainName : ''
+param internalDomainName string = externalDomainName
 
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
 var useContainerRegistry = !empty(containerRegistryConfig)
@@ -399,36 +399,36 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
                 }
               ]
               : []
-            ...empty(appUrl)
+            ...empty(externalDomainName)
               ? []
               : [
                 {
                   name: 'APP_URL'
-                  value: appUrl
+                  value: 'https://${externalDomainName}'
                 }
                 {
                   name: 'CATALOG_ALLOWED_ORIGINS'
-                  value: appUrl
+                  value: 'https://${externalDomainName}'
                 }
                 {
                   name: 'AUTH0_RESULTURL'
-                  value: appUrl
+                  value: 'https://${externalDomainName}'
                 }
                 {
                   name: 'APP_SERVER_URI'
-                  value: serverUrl
+                  value: 'https://${externalDomainName}/api'
                 }
               ]
-            ...empty(serverUrl)
+            ...empty(internalDomainName)
               ? []
               : [
                 {
                   name: 'CATALOG_URL'
-                  value: serverUrl
+                  value: 'https://${internalDomainName}/api'
                 }
                 {
                   name: 'AUTH0_CLIENT_AUDIENCE'
-                  value: serverUrl
+                  value: 'https://${internalDomainName}/api'
                 }
               ]
           ]
