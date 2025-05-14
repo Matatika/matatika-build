@@ -414,6 +414,10 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
                   name: 'AUTH0_RESULTURL'
                   value: appUrl
                 }
+                {
+                  name: 'APP_SERVER_URI'
+                  value: serverUrl
+                }
               ]
             ...empty(serverUrl)
               ? []
@@ -424,10 +428,6 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
                 }
                 {
                   name: 'AUTH0_CLIENT_AUDIENCE'
-                  value: serverUrl
-                }
-                {
-                  name: 'APP_SERVER_URI'
                   value: serverUrl
                 }
               ]
