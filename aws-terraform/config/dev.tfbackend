@@ -1,0 +1,3 @@
+bucket = "matatika-dev-tf-state"
+key    = "dev.tfstate"
+region = "eu-west-2"
