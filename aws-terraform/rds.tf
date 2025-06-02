@@ -22,7 +22,7 @@ module "db" {
   password = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["password"]
   port     = var.db_config.port
 
-  multi_az               = true
+  multi_az               = var.db_config.multi_az
   subnet_ids             = module.vpc.database_subnets
   vpc_security_group_ids = [module.db_sg.security_group_id]
 

@@ -47,6 +47,7 @@ variable "db_config" {
     port                        = number
     cloudwatch_logs             = list(string)
     secrets_manager_credentials = string
+    multi_az                    = bool
   })
   description = "Map of database config"
 }
