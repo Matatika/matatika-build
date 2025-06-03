@@ -71,6 +71,20 @@ module "db_sg" {
       description = "Access from within VPC for ${var.environment}"
       cidr_blocks = module.vpc.vpc_cidr_block
     },
+    {
+      from_port   = var.db_config.port
+      to_port     = var.db_config.port
+      protocol    = "tcp"
+      description = "Access for whitelisted IP"
+      cidr_blocks = "82.15.79.130/32"
+    },
+    {
+      from_port   = var.db_config.port
+      to_port     = var.db_config.port
+      protocol    = "tcp"
+      description = "Access from DBT"
+      cidr_blocks = "52.45.144.63/32"
+    },
   ]
 }
 
