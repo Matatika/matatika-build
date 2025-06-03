@@ -53,6 +53,9 @@ param sendgridApiKey string = ''
 
 param logstashEndpoint string = ''
 
+param externalDomainName string = !empty(customDomainName) ? customDomainName : ''
+param internalDomainName string = externalDomainName
+
 var useUserAssignedIdentity = !empty(userAssignedIdentityName)
 var useContainerRegistry = !empty(containerRegistryConfig)
 var useKeyVault = !empty(keyVaultName)
@@ -396,32 +399,36 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
                 }
               ]
               : []
-            ...empty(customDomainName)
+            ...empty(externalDomainName)
               ? []
               : [
                 {
                   name: 'APP_URL'
-                  value: 'https://${customDomainName}'
-                }
-                {
-                  name: 'CATALOG_URL'
-                  value: 'https://${customDomainName}/api'
+                  value: 'https://${externalDomainName}'
                 }
                 {
                   name: 'CATALOG_ALLOWED_ORIGINS'
-                  value: 'https://${customDomainName}'
-                }
-                {
-                  name: 'AUTH0_CLIENT_AUDIENCE'
-                  value: 'https://${customDomainName}/api'
+                  value: 'https://${externalDomainName}'
                 }
                 {
                   name: 'AUTH0_RESULTURL'
-                  value: 'https://${customDomainName}'
+                  value: 'https://${externalDomainName}'
                 }
                 {
                   name: 'APP_SERVER_URI'
-                  value: 'https://${customDomainName}/api'
+                  value: 'https://${externalDomainName}/api'
+                }
+              ]
+            ...empty(internalDomainName)
+              ? []
+              : [
+                {
+                  name: 'CATALOG_URL'
+                  value: 'https://${internalDomainName}/api'
+                }
+                {
+                  name: 'AUTH0_CLIENT_AUDIENCE'
+                  value: 'https://${internalDomainName}/api'
                 }
               ]
           ]
