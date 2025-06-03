@@ -56,6 +56,15 @@ This requires administrator access permissions.
 
 ---
 
+## Prerequisites
+
+Before running the Terraform, provision manually an AWS Secrets Manager secret under the path `/terraform/rds/credentials` 
+(name configurable in `.tfvars`) in your desired region (`eu-west-1`) which should have JSON structure with the following keys:
+`username` and `password`. Values should contain credentials to your RDS. Manual provisioning is due to avoiding storing a secret
+in the code or `.tfvars`.
+
+---
+
 ## 📌 Notes
 This project uses a single source of infrastructure code for all environments.
 
