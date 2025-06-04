@@ -87,3 +87,11 @@ variable "rds_key_deletion_days" {
   description = "A window of time after deleting KMS key when the deletion is pending"
   default     = 30
 }
+
+# EKS
+
+variable "cluster_version" {
+  type        = string
+  description = "EKS cluster version"
+  default     = "1.31"
+}
