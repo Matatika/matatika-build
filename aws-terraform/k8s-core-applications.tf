@@ -70,46 +70,42 @@ data "aws_iam_policy_document" "additional_lb_policy" {
   }
 }
 
-# module "external_dns_irsa_role" {
-#   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-#   version = "5.3.1"
+module "external_dns_irsa_role" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version = "5.3.1"
 
-#   role_name = "external-dns"
+  role_name = "external-dns"
 
-#   attach_load_balancer_controller_policy = true
+  attach_load_balancer_controller_policy = true
 
-#   role_policy_arns = {
-#     "external_dns" = aws_iam_policy.external_dns.arn
-#   }
+  oidc_providers = {
+    main = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:external-dns"]
+    }
+  }
+}
 
-#   oidc_providers = {
-#     main = {
-#       provider_arn               = module.eks.oidc_provider_arn
-#       namespace_service_accounts = ["kube-system:external-dns"]
-#     }
-#   }
-# }
+resource "helm_release" "external_dns" {
+  name       = "external-dns"
+  repository = "https://kubernetes-sigs.github.io/external-dns"
+  chart      = "external-dns"
+  namespace  = "operations"
+  version    = "1.12.0"
 
-# resource "helm_release" "external_dns" {
-#   name       = "external-dns"
-#   repository = "https://kubernetes-sigs.github.io/external-dns"
-#   chart      = "external-dns"
-#   namespace  = "operations"
-#   version    = "1.12.0"
-
-#   values = [
-#     <<-VALUES
-#        provider: cloudflare
-#        cloudflare:
-#          apiToken: ${data.aws_secretsmanager_secret_version.cloudflare.secret_string}
-#        policy: sync
-#        domainFilters:
-#         - ${var.domain_name}
-#        txtOwnerId: externaldns-${var.environment}
-#        serviceAccount:
-#         create: true
-#         name: external-dns
-#        VALUES
-#   ]
-# }
+  values = [
+    <<-VALUES
+       provider: cloudflare
+       cloudflare:
+         apiToken: ${data.aws_secretsmanager_secret_version.cloudflare.secret_string}
+       policy: sync
+       domainFilters:
+        - ${var.domain_name}
+       txtOwnerId: externaldns-${var.environment}
+       serviceAccount:
+        create: true
+        name: external-dns
+       VALUES
+  ]
+}
 
