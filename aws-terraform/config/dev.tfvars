@@ -5,7 +5,6 @@ vpc_database_subnets = ["10.2.10.0/24", "10.2.20.0/24", "10.2.30.0/24"]
 vpc_private_subnets  = ["10.2.11.0/24", "10.2.21.0/24", "10.2.31.0/24"]
 vpc_public_subnets   = ["10.2.12.0/24", "10.2.23.0/24", "10.2.32.0/24"]
 domain_name          = "matatika.com"
-cluster_version      = "1.32"
 db_config = {
   engine                      = "postgres"
   engine_version              = "16.8"
@@ -22,3 +21,9 @@ db_config = {
   # not to hardcode secret variables in the code
 }
 cloudflare_secret_credentials = "/terraform/cloudflare/credentials"
+cluster_version               = "1.33"
+eks_addons_versions = {
+  coredns    = "v1.12.1-eksbuild.2"
+  kube_proxy = "v1.32.3-eksbuild.7"
+  vpc_cni    = "v1.19.5-eksbuild.3"
+}

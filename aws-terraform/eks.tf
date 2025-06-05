@@ -22,13 +22,13 @@ module "eks" {
 
   cluster_addons = {
     coredns = {
-      addon_version = "v1.11.3-eksbuild.1"
+      addon_version = var.eks_addons_versions.coredns
     }
     kube-proxy = {
-      addon_version = "v1.31.2-eksbuild.3"
+      addon_version = var.eks_addons_versions.kube_proxy
     }
     vpc-cni = {
-      addon_version = "v1.19.0-eksbuild.1"
+      addon_version = var.eks_addons_versions.vpc_cni
     }
   }
 

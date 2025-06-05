@@ -96,6 +96,16 @@ variable "cluster_version" {
   default     = "1.31"
 }
 
+variable "eks_addons_versions" {
+  type = object({
+    coredns    = string
+    vpc_cni    = string
+    kube_proxy = string
+  })
+  description = "Map of EKS add-on versions"
+}
+
+
 variable "domain_name" {
   type        = string
   description = "Domain name for ExternalDNS"
