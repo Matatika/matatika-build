@@ -94,7 +94,7 @@ resource "aws_kms_key" "db" {
   description             = "${var.environment}-db-${var.db_config.db_id}-kms"
   is_enabled              = true
   enable_key_rotation     = true
-  deletion_window_in_days = var.rds_key_deletion_days
+  deletion_window_in_days = var.key_deletion_days
 
   policy = jsonencode({
     Version = "2012-10-17"

@@ -82,7 +82,7 @@ variable "rds_backup_retention_period" {
   default     = 30
 }
 
-variable "rds_key_deletion_days" {
+variable "key_deletion_days" {
   type        = number
   description = "A window of time after deleting KMS key when the deletion is pending"
   default     = 30
@@ -94,4 +94,17 @@ variable "cluster_version" {
   type        = string
   description = "EKS cluster version"
   default     = "1.31"
+}
+
+variable "domain_name" {
+  type        = string
+  description = "Domain name for ExternalDNS"
+  default     = "matatika.com"
+}
+
+variable "cloudflare_secret_credentials" {
+  type        = string
+  description = "Secrets Manager path to CloudFlare API key"
+  default     = "/terraform/cloudflare/credentials"
+
 }

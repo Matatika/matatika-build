@@ -9,6 +9,11 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
+data "aws_iam_roles" "sso_admin" {
+  name_regex  = "AWSReservedSSO_AWSAdminAccess_*"
+  path_prefix = "/aws-reserved/sso.amazonaws.com/"
+}
+
 # DB
 data "aws_secretsmanager_secret" "db_creds" {
   name = var.db_config.secrets_manager_credentials
@@ -16,4 +21,17 @@ data "aws_secretsmanager_secret" "db_creds" {
 
 data "aws_secretsmanager_secret_version" "db_creds" {
   secret_id = data.aws_secretsmanager_secret.db_creds.id
+}
+
+# EKS
+data "aws_eks_cluster_auth" "cluster_auth" {
+  name = module.eks.cluster_name
+}
+
+data "aws_secretsmanager_secret" "cloudflare" {
+  name = var.cloudflare_secret_credentials
+}
+
+data "aws_secretsmanager_secret_version" "cloudflare" {
+  secret_id = data.aws_secretsmanager_secret.cloudflare.id
 }

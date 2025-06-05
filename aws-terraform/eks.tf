@@ -1,21 +1,113 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.31"
+  version = "20.31"
 
-  cluster_name    = "${var.environment}-eks-cluster"
+  cluster_name    = var.environment
+  subnet_ids      = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
   cluster_version = var.cluster_version
 
-  # Optional
-  cluster_endpoint_public_access = true
+  cluster_endpoint_public_access = true # needs route table update for private subnet
+  # with VPN CIDRs if private endpoint only
 
-  # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
+  create_cloudwatch_log_group              = true
+
+  enable_irsa = true
 
   cluster_compute_config = {
     enabled    = true
     node_pools = ["general-purpose"]
   }
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  cluster_addons = {
+    coredns = {
+      addon_version = "v1.11.3-eksbuild.1"
+    }
+    kube-proxy = {
+      addon_version = "v1.31.2-eksbuild.3"
+    }
+    vpc-cni = {
+      addon_version = "v1.19.0-eksbuild.1"
+    }
+  }
+
+  cluster_encryption_config = {
+    resources = ["secrets"]
+    provider = {
+      key_arn = aws_kms_key.eks.arn
+    }
+  }
+
+  cluster_security_group_name = "${var.environment}-eks-cluster"
+  cluster_security_group_additional_rules = {
+    ingress_vpc = {
+      description = "Access EKS from VPC CIDR and VPN."
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "ingress"
+      cidr_blocks = [module.vpc.vpc_cidr_block]
+    }
+  }
+
+  access_entries = {
+    kubernetes-admin = {
+      principal_arn = tolist(data.aws_iam_roles.sso_admin.arns)[0]
+      policy_associations = {
+        kubernetes-admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
+    # kubernetes-read-only = {
+    #   principal_arn = 
+    #   policy_associations = {
+    #     kubernetes-admin = {
+    #       policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"
+    #       access_scope = {
+    #         type = "cluster"
+    #       }
+    #     }
+    #   }
+    # }
+  }
+}
+
+# KMS key
+resource "aws_kms_key" "eks" {
+
+  description             = "${var.environment}-eks-kms"
+  is_enabled              = true
+  enable_key_rotation     = true
+  deletion_window_in_days = var.key_deletion_days
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Id      = "default"
+    Statement = [
+      {
+        Sid    = "default"
+        Effect = "Allow"
+        Principal = {
+          AWS = [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+          ]
+        }
+        Action = [
+          "kms:*",
+        ]
+        Resource = "*"
+      },
+    ]
+  })
+
+}
+
+resource "aws_kms_alias" "eks" {
+  name          = "alias/${var.environment}-eks-kms"
+  target_key_id = aws_kms_key.eks.key_id
 }
