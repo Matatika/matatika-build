@@ -93,11 +93,19 @@ resource "helm_release" "external_dns" {
   namespace  = "operations"
   version    = "1.12.0"
 
+  set_sensitive {
+    name  = "env[0].name"
+    value = "CF_API_TOKEN"
+  }
+
+  set_sensitive {
+    name  = "env[0].value"
+    value = data.aws_secretsmanager_secret_version.cloudflare.secret_string
+  }
+
   values = [
     <<-VALUES
        provider: cloudflare
-       cloudflare:
-         apiToken: ${data.aws_secretsmanager_secret_version.cloudflare.secret_string}
        policy: sync
        domainFilters:
         - ${var.domain_name}
