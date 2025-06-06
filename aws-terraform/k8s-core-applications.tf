@@ -56,30 +56,6 @@ resource "helm_release" "aws_load_balancer_controller" {
   ]
 }
 
-# resource "null_resource" "patch_lb_controller_clusterrole" {
-#   depends_on = [helm_release.aws_load_balancer_controller]
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       kubectl patch clusterrole aws-load-balancer-controller-role --type='json' -p='[
-#         {
-#           "op": "add",
-#           "path": "/rules/-",
-#           "value": {
-#             "apiGroups": ["coordination.k8s.io"],
-#             "resources": ["leases"],
-#             "verbs": ["get", "watch", "list", "create", "update", "patch"]
-#           }
-#         }
-#       ]'
-#     EOT
-#   }
-
-#   triggers = {
-#     always_run = timestamp()
-#   }
-# }
-
 resource "kubernetes_cluster_role" "aws_lb_controller_lease_patch" {
   metadata {
     name = "aws-lb-controller-lease-access"
