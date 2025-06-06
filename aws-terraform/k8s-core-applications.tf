@@ -24,7 +24,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
-  version    = "1.4.4"
+  version    = "1.13.2"
 
   values = [
     <<-VALUES
@@ -39,8 +39,77 @@ resource "helm_release" "aws_load_balancer_controller" {
        image:
         repository: public.ecr.aws/eks/aws-load-balancer-controller
         tag: v2.13.2
+       clusterRole:
+         extraRules:
+           - apiGroups:
+               - coordination.k8s.io
+             resources:
+               - leases
+             verbs:
+               - get
+               - watch
+               - list
+               - create
+               - update
+               - patch
        VALUES
   ]
+}
+
+# resource "null_resource" "patch_lb_controller_clusterrole" {
+#   depends_on = [helm_release.aws_load_balancer_controller]
+
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       kubectl patch clusterrole aws-load-balancer-controller-role --type='json' -p='[
+#         {
+#           "op": "add",
+#           "path": "/rules/-",
+#           "value": {
+#             "apiGroups": ["coordination.k8s.io"],
+#             "resources": ["leases"],
+#             "verbs": ["get", "watch", "list", "create", "update", "patch"]
+#           }
+#         }
+#       ]'
+#     EOT
+#   }
+
+#   triggers = {
+#     always_run = timestamp()
+#   }
+# }
+
+resource "kubernetes_cluster_role" "aws_lb_controller_lease_patch" {
+  metadata {
+    name = "aws-lb-controller-lease-access"
+  }
+
+  rule {
+    api_groups = ["coordination.k8s.io"]
+    resources  = ["leases"]
+    verbs      = ["get", "watch", "list", "create", "update", "patch"]
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "aws_lb_controller_lease_patch_binding" {
+  metadata {
+    name = "aws-lb-controller-lease-binding"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = kubernetes_cluster_role.aws_lb_controller_lease_patch.metadata[0].name
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = "aws-load-balancer-controller"
+    namespace = "kube-system"
+  }
+
+  depends_on = [helm_release.aws_load_balancer_controller]
 }
 
 resource "aws_iam_policy" "additional_lb_policy" {
@@ -67,6 +136,16 @@ data "aws_iam_policy_document" "additional_lb_policy" {
         "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*"
       ]
     )
+  }
+
+  statement {
+    actions = [
+      "ec2:DescribeRouteTables",
+      "ec2:GetSecurityGroupsForVpc",
+      "elasticloadbalancing:DescribeListenerAttributes"
+    ]
+    effect    = "Allow"
+    resources = ["*"]
   }
 }
 
