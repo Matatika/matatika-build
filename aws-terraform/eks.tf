@@ -15,7 +15,7 @@ module "eks" {
 
   enable_irsa = true
 
-  cluster_compute_config = {
+  cluster_compute_config = { # Uncomment for EKS Auto Mode (not appropriate for now as nodes require labels)
     enabled    = true
     node_pools = ["general-purpose"]
   }

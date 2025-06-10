@@ -1,17 +1,3 @@
-# resource "aws_eks_node_group" "esystempool" {
-#   cluster_name    = module.eks.cluster_name
-#   node_group_name = "esystempool"
-#   node_role_arn   = aws_iam_role.eks_node_group_role.arn
-#   subnet_ids      = module.vpc.private_subnets
-#   instance_types  = ["t3.medium"]
-
-#   scaling_config {
-#     desired_size = 1
-#     min_size     = 1
-#     max_size     = 1
-#   }
-# }
-
 resource "aws_eks_node_group" "nodepool1" {
   cluster_name    = module.eks.cluster_name
   node_group_name = "nodepool1"
@@ -23,6 +9,12 @@ resource "aws_eks_node_group" "nodepool1" {
     desired_size = 2
     min_size     = 2
     max_size     = 3
+  }
+
+  tags = {
+    "k8s.io/cluster-autoscaler/enabled"                    = "true"
+    "k8s.io/cluster-autoscaler/${module.eks.cluster_name}" = "owned"
+    "env"                                                  = var.environment
   }
 
   labels = {
@@ -48,6 +40,13 @@ resource "aws_eks_node_group" "appspool" {
     "agentpool" = "appspool"
     "env"       = "${var.environment}"
   }
+
+  tags = {
+    "k8s.io/cluster-autoscaler/enabled"                    = "true"
+    "k8s.io/cluster-autoscaler/${module.eks.cluster_name}" = "owned"
+    "env"                                                  = var.environment
+  }
+
 }
 
 resource "aws_eks_node_group" "apps" {
@@ -55,18 +54,25 @@ resource "aws_eks_node_group" "apps" {
   node_group_name = "${var.environment}apps"
   node_role_arn   = aws_iam_role.eks_node_group_role.arn
   subnet_ids      = module.vpc.private_subnets
-  instance_types  = ["t3.medium"]
+  instance_types  = ["m5.xlarge"]
 
   scaling_config {
     desired_size = 1
     min_size     = 1
-    max_size     = 1
+    max_size     = 3
   }
 
   labels = {
     "agentpool" = "${var.environment}apps"
     "env"       = "${var.environment}"
   }
+
+  tags = {
+    "k8s.io/cluster-autoscaler/enabled"                    = "true"
+    "k8s.io/cluster-autoscaler/${module.eks.cluster_name}" = "owned"
+    "env"                                                  = var.environment
+  }
+
 }
 
 resource "aws_iam_role" "eks_node_group_role" {
