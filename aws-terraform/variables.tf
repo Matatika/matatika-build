@@ -112,6 +112,11 @@ variable "domain_name" {
   default     = "matatika.com"
 }
 
+variable "domain_prefix" {
+  type        = string
+  description = "Domain prefix so later full domain will be of a format domain_prefix.domain_name.com, e.g. staging-aws.matatika.com"
+}
+
 variable "cloudflare_secret_credentials" {
   type        = string
   description = "Secrets Manager path to CloudFlare API key"

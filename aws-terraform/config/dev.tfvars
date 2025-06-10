@@ -5,6 +5,7 @@ vpc_database_subnets = ["10.2.10.0/24", "10.2.20.0/24", "10.2.30.0/24"]
 vpc_private_subnets  = ["10.2.11.0/24", "10.2.21.0/24", "10.2.31.0/24"]
 vpc_public_subnets   = ["10.2.12.0/24", "10.2.23.0/24", "10.2.32.0/24"]
 domain_name          = "matatika.com"
+domain_prefix        = "dev" # so later the host for ExternalDNS would be dev.matatika.com
 db_config = {
   engine                      = "postgres"
   engine_version              = "16.8"

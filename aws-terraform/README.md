@@ -73,7 +73,7 @@ This requires administrator access permissions.
 
 ---
 
-## Prerequisites
+## 🔧 Prerequisites
 
 Before running the Terraform, provision manually an AWS Secrets Manager secret under paths `/terraform/rds/credentials` and `/terraform/cloudflare/credentials`
 (paths configurable in `.tfvars`) in your desired region (`eu-west-1`).
@@ -106,4 +106,30 @@ You can define separate `terraform.tfbackend` files per environment to isolate s
 terraform init -backend-config="./config/dev.tfbackend"
 terraform plan  -var-file="tfvars/dev.tfvars"
 terraform apply -var-file="tfvars/dev.tfvars"
+```
+
+# 🚀 Deploying app in your AWS infrastructure
+
+## 🔧 Prerequisites
+
+After provisioning the infrastructure:
+- validate your subdomain with hosted zone adding CNAME record (outputted from Terraform/retrieve from AWS Console).
+- plug ACM certificate ARN to Helm chart values. It can be automated with CI/CD later on.
+- later on you'll have to provision new Auth0 application if the environment is new.
+
+## ⚙️ Helm chart values for Ingress
+
+AWS Load Balancer Controller needs a different handling that Azure one.
+This requires adding more values to your Ingress resource -
+you'll find a working ingress example for `Dev` under `example-ingress/dev-matatika-catalog-ingress.yaml`.
+
+- `service`: `httpPort: 80`, `targetPort: 8080`
+- `ingress.annotations`:
+```
+ingressClassName: alb
+alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:868651350637:certificate/b8cfc226-a9d8-4d44-9883-22886d60693c # this one is different per environment!
+alb.ingress.kubernetes.io/healthcheck-path: /
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+alb.ingress.kubernetes.io/scheme: internet-facing
+alb.ingress.kubernetes.io/target-type: ip
 ```

@@ -13,7 +13,7 @@ spec:
   ports:
   - name: http
     port: {{ .Values.appService.httpPort }}
-    targetPort: app-http
+    targetPort: {{ .Values.appService.targetPort }} # app-http
     protocol: TCP
   selector:
     app: {{ template "matatika-catalog.fullname" . }}-app

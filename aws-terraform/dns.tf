@@ -2,7 +2,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "4.3.2"
 
-  domain_name               = "${var.environment}.${var.domain_name}"
+  domain_name               = "${var.domain_prefix}.${var.domain_name}"
   validation_method         = "DNS"
   subject_alternative_names = []
 
