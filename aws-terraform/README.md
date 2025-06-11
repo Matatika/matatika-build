@@ -1,8 +1,9 @@
 # 🛠️ Terraform Infrastructure
 
-This repository manages AWS infrastructure using [Terraform](https://www.terraform.io/). 
+This repository manages AWS infrastructure for `matatika-catalog` using [Terraform](https://www.terraform.io/). 
+Infrastructure for `matatika-website` is still work in progress.
 It supports multiple environments (e.g. `dev`, `stage`, `prod`) that share the same infrastructure code.
-Environment-specific configuration is handled through variable files (`./config/.tfvars`) and backend configuration (`./config/.tfbackend`).
+Environment-specific configuration is handled through variable files (`../matatika-config/aws-terraform/.tfvars`) and backend configuration (`../matatika-config/aws-terraform/.tfbackend`).
 
 ---
 
@@ -30,7 +31,7 @@ Then to use a given profile, attach `--profile` to the AWS command.
 Before the first use, initialize the working directory and backend from `aws-terraform` directory:
 
 ```bash
-terraform init -backend-config="./config/dev.tfbackend"
+terraform init -backend-config="../matatika-config/aws-terraform/dev.tfbackend"
 ```
 
 Example contents of terraform.tfbackend:
@@ -43,12 +44,12 @@ region = "eu-west-2"
 
 ### 2. Plan Infrastructure
 ``` bash
-terraform plan -var-file="./config/dev.tfvars"
+terraform plan -var-file="../matatika-config/aws-terraform/dev.tfvars"
 ```
 
 ### 3. Apply Infrastructure
 ```bash
-terraform apply -var-file="./config/dev.tfvars"
+terraform apply -var-file="../matatika-config/aws-terraform/dev.tfvars"
 ```
 
 ### 4. Destroy Infrastructure
@@ -103,7 +104,7 @@ You can define separate `terraform.tfbackend` files per environment to isolate s
 
 ## 🧰 Example Commands (dev environment)
 ```bash
-terraform init -backend-config="./config/dev.tfbackend"
+terraform init -backend-config="../matatika-config/aws-terraform/dev.tfbackend"
 terraform plan  -var-file="tfvars/dev.tfvars"
 terraform apply -var-file="tfvars/dev.tfvars"
 ```
