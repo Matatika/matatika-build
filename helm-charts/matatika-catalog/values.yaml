@@ -21,6 +21,7 @@ appService:
   type: ClusterIP
   httpPort: 8080
   httpsPort: 8443
+  targetPort: app-http
   internalHttpPort: 8080
   #
   # Set these PLACEHOLDER values set in deployment script, for production this is usually set as a secure property deploy script and passed in from Azure DevOps
