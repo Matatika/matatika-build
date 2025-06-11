@@ -20,6 +20,7 @@ appService:
   name: springboot
   type: ClusterIP
   httpPort: 8080
+  httpsPort: 8443
   targetPort: app-http
   internalHttpPort: 8080
   #
