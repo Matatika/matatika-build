@@ -3,7 +3,7 @@
 This repository manages AWS infrastructure for `matatika-catalog` using [Terraform](https://www.terraform.io/). 
 Infrastructure for `matatika-website` is still work in progress.
 It supports multiple environments (e.g. `dev`, `stage`, `prod`) that share the same infrastructure code.
-Environment-specific configuration is handled through variable files (`../matatika-config/aws-terraform/.tfvars`) and backend configuration (`../matatika-config/aws-terraform/.tfbackend`).
+Environment-specific configuration is handled through variable files (`../matatika-config/aws-terraform/*.tfvars`) and backend configuration (`../matatika-config/aws-terraform/*.tfbackend`).
 
 ---
 
@@ -54,7 +54,7 @@ terraform apply -var-file="../matatika-config/aws-terraform/dev.tfvars"
 
 ### 4. Destroy Infrastructure
 ```bash
-terraform destroy -var-file="tfvars/dev.tfvars"
+terraform destroy -var-file="../matatika-config/aws-terraform/dev.tfvars"
 ```
 
 ### 5. Exec into Kubernetes cluster
@@ -105,8 +105,8 @@ You can define separate `terraform.tfbackend` files per environment to isolate s
 ## 🧰 Example Commands (dev environment)
 ```bash
 terraform init -backend-config="../matatika-config/aws-terraform/dev.tfbackend"
-terraform plan  -var-file="tfvars/dev.tfvars"
-terraform apply -var-file="tfvars/dev.tfvars"
+terraform plan  -var-file="../matatika-config/aws-terraform/dev.tfvars"
+terraform apply -var-file="../matatika-config/aws-terraform/dev.tfvars"
 ```
 
 # 🚀 Deploying app in your AWS infrastructure
