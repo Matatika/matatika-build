@@ -10,7 +10,7 @@ module "eks" {
   cluster_endpoint_public_access = true # needs route table update for private subnet
   # with VPN CIDRs if private endpoint only
 
-  enable_cluster_creator_admin_permissions = true
+  enable_cluster_creator_admin_permissions = false
   create_cloudwatch_log_group              = true
 
   enable_irsa = true
