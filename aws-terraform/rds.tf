@@ -19,6 +19,7 @@ module "db" {
 
   db_name  = var.db_config.db_name
   username = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["username"]
+  create_random_password = false
   password = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["password"]
   port     = var.db_config.port
 
