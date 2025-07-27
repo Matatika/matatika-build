@@ -7,8 +7,8 @@ resource "aws_eks_node_group" "nodepool1" {
   instance_types  = ["t3.medium"]
 
   scaling_config {
-    desired_size = 2
-    min_size     = 2
+    desired_size = 0
+    min_size     = 0
     max_size     = 3
   }
 
