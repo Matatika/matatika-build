@@ -31,7 +31,7 @@ Then to use a given profile, attach `--profile` to the AWS command.
 Before the first use, initialize the working directory and backend from `aws-terraform` directory:
 
 ```bash
-terraform init -backend-config="../matatika-config/aws-terraform/dev.tfbackend"
+terraform init -backend-config="../../matatika-config/aws-terraform/dev/matatika.tfbackend"
 ```
 
 Example contents of terraform.tfbackend:
@@ -44,17 +44,17 @@ region = "eu-west-2"
 
 ### 2. Plan Infrastructure
 ``` bash
-terraform plan -var-file="../matatika-config/aws-terraform/dev.tfvars"
+terraform plan -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
 ```
 
 ### 3. Apply Infrastructure
 ```bash
-terraform apply -var-file="../matatika-config/aws-terraform/dev.tfvars"
+terraform apply -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
 ```
 
 ### 4. Destroy Infrastructure
 ```bash
-terraform destroy -var-file="../matatika-config/aws-terraform/dev.tfvars"
+terraform destroy -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
 ```
 
 ### 5. Exec into Kubernetes cluster
