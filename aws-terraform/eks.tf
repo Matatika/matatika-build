@@ -30,6 +30,11 @@ module "eks" {
     vpc-cni = {
       addon_version = var.eks_addons_versions.vpc_cni
     }
+		aws-ebs-csi-driver = {
+			most_recent              = true
+			resolve_conflicts        = "OVERWRITE"
+			service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
+		}
   }
 
   cluster_encryption_config = {
