@@ -49,7 +49,7 @@ resource "helm_release" "aws_load_balancer_controller" {
          annotations:
            eks.amazonaws.com/role-arn: ${module.aws_load_balancer_controller_irsa_role.iam_role_arn}
        vpcId: ${module.vpc.vpc_id}
-       region: ${data.aws_region.current.name}
+       region: ${data.aws_region.current.region}
        image:
         repository: public.ecr.aws/eks/aws-load-balancer-controller
         tag: v2.13.2
@@ -162,15 +162,16 @@ resource "helm_release" "external_dns" {
   namespace  = "operations"
   version    = "1.12.0"
 
-  set_sensitive {
-    name  = "env[0].name"
-    value = "CF_API_TOKEN"
-  }
-
-  set_sensitive {
+  set_sensitive = [
+    {
+      name  = "env[0].name"
+      value = "CF_API_TOKEN"
+    },
+    {
     name  = "env[0].value"
     value = data.aws_secretsmanager_secret_version.cloudflare.secret_string
-  }
+    }
+  ]
 
   values = [
     <<-VALUES

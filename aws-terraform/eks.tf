@@ -1,13 +1,13 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.31"
+  version = "21.0.4"
 
-  cluster_name    = var.environment
+  name    = var.environment
   subnet_ids      = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
-  cluster_version = var.cluster_version
+  kubernetes_version = var.cluster_version
 
-  cluster_endpoint_public_access = true # needs route table update for private subnet
+  endpoint_public_access = true # needs route table update for private subnet
   # with VPN CIDRs if private endpoint only
 
   enable_cluster_creator_admin_permissions = false
@@ -15,12 +15,12 @@ module "eks" {
 
   enable_irsa = true
 
-  cluster_compute_config = { # Uncomment for EKS Auto Mode (not appropriate for now as nodes require labels)
+  compute_config = { # Uncomment for EKS Auto Mode (not appropriate for now as nodes require labels)
     enabled    = true
     node_pools = ["general-purpose"]
   }
 
-  cluster_addons = {
+  addons = {
     coredns = {
       addon_version = var.eks_addons_versions.coredns
     }
@@ -37,15 +37,15 @@ module "eks" {
 		}
   }
 
-  cluster_encryption_config = {
+  encryption_config = {
     resources = ["secrets"]
     provider = {
       key_arn = aws_kms_key.eks.arn
     }
   }
 
-  cluster_security_group_name = "${var.environment}-eks-cluster"
-  cluster_security_group_additional_rules = {
+  security_group_name = "${var.environment}-eks-cluster"
+  security_group_additional_rules = {
     ingress_vpc = {
       description = "Access EKS from VPC CIDR and VPN."
       protocol    = "tcp"

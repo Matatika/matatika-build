@@ -50,7 +50,7 @@ resource "kubernetes_config_map" "aws_observability" {
 [OUTPUT]
     Name cloudwatch_logs
     Match   *
-    region ${data.aws_region.current.name}
+    region ${data.aws_region.current.region}
     log_group_name ${module.eks.cluster_name}-eks
     log_stream_prefix ${var.environment}
     auto_create_group true

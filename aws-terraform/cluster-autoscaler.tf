@@ -136,7 +136,7 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
 
           env {
             name  = "AWS_REGION"
-            value = data.aws_region.current.name
+            value = data.aws_region.current.region
           }
         }
 
