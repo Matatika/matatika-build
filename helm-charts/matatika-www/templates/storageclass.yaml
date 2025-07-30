@@ -21,5 +21,5 @@ parameters:
   secretName: {{ .Release.Name }}-azurefile
   {{- end }}
   resourceGroup: {{ .Values.persistence.resourceGroup }}
-{{- end }}
 reclaimPolicy: Retain
+{{- end }}
