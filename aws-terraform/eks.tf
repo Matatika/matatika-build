@@ -82,7 +82,23 @@ module "eks" {
   }
 }
 
-# gp3 storage classes
+# storage classes
+resource "kubernetes_storage_class" "expandable_gp2_storage_class" {
+  metadata {
+    name = "expandable-gp2"
+  }
+
+  storage_provisioner    = "kubernetes.io/aws-ebs"
+  reclaim_policy         = "Delete"
+  allow_volume_expansion = true
+  volume_binding_mode    = "WaitForFirstConsumer"
+  parameters = {
+    encrypted = true
+    fsType    = "ext4"
+    type      = "gp2"
+  }
+}
+
 resource "kubernetes_storage_class" "ebs_csi_encrypted_gp3_storage_class" {
   metadata {
     name = "ebs-csi-encrypted-gp3"
