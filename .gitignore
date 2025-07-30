@@ -4,6 +4,7 @@ azure-mks/ca.crt
 ### Terraform
 # Local .terraform directories
 **/.terraform/*
+**/.helm/*
 
 # .tfstate files
 *.tfstate
