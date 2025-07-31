@@ -99,9 +99,12 @@ resource "kubernetes_storage_class" "expandable_gp2_storage_class" {
   }
 }
 
-resource "kubernetes_storage_class" "ebs_csi_encrypted_gp3_storage_class" {
+resource "kubernetes_storage_class" "ebs_csi_gp3_storage_class" {
   metadata {
-    name = "ebs-csi-encrypted-gp3"
+    name = "ebs-csi-gp3"
+    annotations = {
+      "storageclass.kubernetes.io/is-default-class" = true
+    }
   }
 
   storage_provisioner    = "ebs.csi.aws.com"
@@ -110,22 +113,6 @@ resource "kubernetes_storage_class" "ebs_csi_encrypted_gp3_storage_class" {
   volume_binding_mode    = "WaitForFirstConsumer"
   parameters = {
     encrypted = true
-    fsType    = "ext4"
-    type      = "gp3"
-  }
-}
-
-resource "kubernetes_storage_class" "ebs_csi_gp3_storage_class" {
-  metadata {
-    name = "ebs-csi-gp3"
-  }
-
-  storage_provisioner    = "ebs.csi.aws.com"
-  reclaim_policy         = "Delete"
-  allow_volume_expansion = true
-  volume_binding_mode    = "WaitForFirstConsumer"
-  parameters = {
-    encrypted = false
     fsType    = "ext4"
     type      = "gp3"
   }
