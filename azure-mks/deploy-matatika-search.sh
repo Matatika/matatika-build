@@ -7,7 +7,6 @@
 [[ -z "$CATALOG_MATATIKA_ES_ELASTIC_PASSWORD" ]] && { echo "Error: CATALOG_MATATIKA_ES_ELASTIC_PASSWORD not found in env"; exit 1; }
 
 helm repo add stable https://charts.helm.sh/stable
-helm repo add elastic https://helm.elastic.co
 helm repo update
 
 helm list --namespace ${STAGE}
@@ -19,7 +18,6 @@ fi
 # helm upgrade [RELEASE] [CHART] [flags]
 #
 RELEASE=${STAGE}-matatika-search
-CHART_VERSION=8.5.1
 IMAGE_TAG=8.15.3
 if [ -z "$APP_VERSION" ]; then
 	echo "INFO: APP_VERSION not set, using 'latest'.  NB - helm won't redeploy if there's no changes to the release, even if the pull policy is always";
@@ -38,7 +36,6 @@ echo "Upgrading to CHART_VERSION: $CHART_VERSION, APP_VERSION: $APP_VERSION, IMA
 
 helm upgrade \
 	${RELEASE} \
-    --version=${CHART_VERSION} \
 	--namespace ${STAGE} \
 	--create-namespace \
 	--install \
