@@ -1,0 +1,3 @@
+[submodule "helm-charts/elastic"]
+	path = helm-charts/elastic
+	url = https://github.com/Matatika/elastic-helm-charts.git
