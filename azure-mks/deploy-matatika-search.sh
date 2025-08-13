@@ -49,4 +49,4 @@ helm upgrade \
 	--debug \
 	--values /tmp/esConfig-values.yaml \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-search-values.yaml \
-	elastic/elasticsearch
+	$BUILD_HELM_HOME/elastic/elasticsearch/
