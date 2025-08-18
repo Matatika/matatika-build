@@ -24,6 +24,7 @@ You can use either `Access keys` from your IAM IC or use profiles.
 To set up a profile, see [AWS docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html). In particular, run
 `aws configure sso` with URL https://matatika.awsapps.com/start 
 Then to use a given profile, attach `--profile` to the AWS command.
+Every command can use this profile with `export AWS_DEFAULT_PROFILE=matatika-dev`
 
 
 ### 1. Initialize Terraform
