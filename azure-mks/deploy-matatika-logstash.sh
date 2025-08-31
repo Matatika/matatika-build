@@ -32,7 +32,7 @@ echo "Upgrading to CHART_VERSION: $CHART_VERSION, APP_VERSION: $APP_VERSION, IMA
 { echo "logstashPipeline:"; echo "  logstash.conf: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-logstash/pipeline/logstash.conf; } > /tmp/logstashPipeline-values.yaml
 
 # Download certificates from elastic search
-kubectl -n $STAGE cp matatika-search-master-0:/usr/share/elasticsearch/config/certs/ca/ca.crt ./ca.crt
+kubectl exec -n $STAGE matatika-search-master-0 -c elasticsearch -- bash -c "cd /usr/share/elasticsearch/config/certs; tar --dereference -cf - ./ca.crt" | tar -xf - ./ca.crt
 # Download certificates from secure external elastic search (R3 signed in this case)
 #$CATALOG_HOME/elastic-logstash/certs/downloadcerts.sh
 #mv r3.pem ca.crt

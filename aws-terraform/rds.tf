@@ -5,6 +5,9 @@ module "db" {
 
   identifier = "${var.environment}-db"
 
+  # When should changes be applied?
+  apply_immediately    = true
+
   # All available versions: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts
   engine               = var.db_config.engine
   engine_version       = var.db_config.engine_version
