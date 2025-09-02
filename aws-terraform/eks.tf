@@ -21,20 +21,7 @@ module "eks" {
   }
 
   addons = {
-    coredns = {
-      addon_version = var.eks_addons_versions.coredns
-    }
-    kube-proxy = {
-      addon_version = var.eks_addons_versions.kube_proxy
-    }
-    vpc-cni = {
-      addon_version = var.eks_addons_versions.vpc_cni
-    }
-		aws-ebs-csi-driver = {
-			most_recent              = true
-			resolve_conflicts        = "OVERWRITE"
-			service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
-		}
+    // use k8s-addons.tf
   }
 
   encryption_config = {

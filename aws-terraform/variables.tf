@@ -93,14 +93,15 @@ variable "key_deletion_days" {
 variable "cluster_version" {
   type        = string
   description = "EKS cluster version"
-  default     = "1.31"
+  default     = "1.33"
 }
 
 variable "eks_addons_versions" {
   type = object({
-    coredns    = string
-    vpc_cni    = string
-    kube_proxy = string
+    coredns            = string
+    vpc_cni            = string
+    kube_proxy         = string
+    aws_ebs_csi_driver = string
   })
   description = "Map of EKS add-on versions"
 }
