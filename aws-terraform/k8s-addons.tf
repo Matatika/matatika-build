@@ -5,7 +5,7 @@ resource "time_sleep" "wait_3_minutes" {
 }
 
 resource "aws_eks_addon" "coredns" {
-  cluster_name      = module.eks.cluster_id
+  cluster_name      = var.environment
   addon_name        = "coredns"
   addon_version     = var.eks_addons_versions.coredns
   resolve_conflicts_on_create = "OVERWRITE"
@@ -15,14 +15,14 @@ resource "aws_eks_addon" "coredns" {
 }
 
 resource "aws_eks_addon" "kube_proxy" {
-  cluster_name      = module.eks.cluster_id
+  cluster_name      = var.environment
   addon_name        = "kube-proxy"
   addon_version     = var.eks_addons_versions.kube_proxy
   depends_on = [time_sleep.wait_3_minutes]
 }
 
 resource "aws_eks_addon" "vpc_cni" {
-  cluster_name      = module.eks.cluster_id
+  cluster_name      = var.environment
   addon_name        = "vpc-cni"
   addon_version     = var.eks_addons_versions.vpc_cni
   resolve_conflicts_on_create = "OVERWRITE"
@@ -32,7 +32,7 @@ resource "aws_eks_addon" "vpc_cni" {
 }
 
 resource "aws_eks_addon" "aws_ebs_csi_driver" {
-  cluster_name      = module.eks.cluster_id
+  cluster_name      = var.environment
   addon_name        = "aws-ebs-csi-driver"
   addon_version     = var.eks_addons_versions.aws_ebs_csi_driver
   resolve_conflicts_on_create = "OVERWRITE"
