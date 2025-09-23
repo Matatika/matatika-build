@@ -37,7 +37,7 @@ export BUILD_HELM_HOME=../helm-charts
 export BUILD_CONFIG_HOME=.
 export STAGE=example
 export CATALOG_PERSISTENCE_CATALOG_PASSWORD=password
-export CATALOG_PERSISTENCE_WAREHOUSE_PASSWORD=password
+export CATALOG_PERSISTENCE_WAREHOUSE_PASSWORD=admin
 export CATALOG_MATATIKA_ENCRYPTOR_PASSWORD=encryptor_password
 ```
 
@@ -69,8 +69,8 @@ export APP_VERSION=1
 export IMAGE_TAG=latest
 export REGISTRY_PASSWORD="NOT USED IN EXAMPLE matatika-catalog-values.yaml"
 export CATALOG_AUTH0_CLIENT_SECRET="NOT USED IN EXAMPLE application-example.properties"
-export CATALOG_GITHUB_API_PRIVATE_KEY="REPO CREATION WILL FAIL IN EXAMPLE CONFIGURATION"
-export CATALOG_GITHUB_API_WORKSPACES_PRIVATE_KEY="NOT USED IN EXAMPLE application-example.properties"
+export CATALOG_GITHUB_API_PRIVATE_KEY="REPO CREATION DISABLED IN EXAMPLE CONFIGURATION"
+export CATALOG_GITHUB_API_WORKSPACES_PRIVATE_KEY="GITHUB DISABLED IN EXAMPLE CONFIGURATION"
 export CATALOG_MATATIKA_ES_ELASTIC_PASSWORD="NOT USED IN EXAMPLE matatika-catalog-values.yaml"
 ./deploy-matatika-catalog.sh
 ```
@@ -78,9 +78,21 @@ export CATALOG_MATATIKA_ES_ELASTIC_PASSWORD="NOT USED IN EXAMPLE matatika-catalo
 Make a change and then deploy again.
 
 
-6. Expose ingress
+6. Go to Lab and create a workspace
 
-To expose Matatika to the internet you will need to configure the matatika-catalog-value.yaml -> ingress -> annotations for your cluster.
+    a. `kubectl port-forward svc/example-matatika-catalog-springboot 8080:8080`
+
+    b. Open -> http://localhost:8080
+
+    c. Create a new workspace with an existing repository.
+    e.g. https://github.com/Matatika/example-ga4-export
+
+    New Workspace -> Advanced -> URL
+
+    (this is necessary as the repo creation is disabled without github setup.)
+
+
+To expose Matatika to the internet you will need to configure the matatika-catalog-value.yaml -> ingress -> annotations for your cluster and domains in application-example.properties.
 
 
 7. Delete your release

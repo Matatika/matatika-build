@@ -45,15 +45,22 @@ appService:
     - name: REACT_APP_ENV
       value: "distribution"
     - name: APP_URL
-      value: https://example.matatika.com
+      value: http://localhost:8080
     - name: APP_SERVER_URI
-      value: https://example.matatika.com/api  
+      value: http://localhost:8080/api  
+    # See Ingress
+    #- name: APP_URL
+    #  value: https://example.matatika.com
+    #- name: APP_SERVER_URI
+    #  value: https://example.matatika.com/api  
     - name: JAVA_OPTS
       value: "-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K"
     - name: ACTIVE_PROFILES
       value: "default,deploy"
     - name: SPRING_CLOUD_KUBERNETES_ENABLED
       value: "true"
+    - name: SPRING_CLOUD_LOCAL_ENABLED
+      value: "false"
     # Disable elastic search
     - name: MATATIKA_ELASTICSEARCH_ENABLED
       value: "false"
@@ -68,7 +75,7 @@ appService:
     - name: PERSISTENCE_WAREHOUSE_URL
       value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/matatika?ssl=false"
     - name: PERSISTENCE_WAREHOUSE_USERNAME
-      value: "matatika"
+      value: "postgres"
     - name: PERSISTENCE_CATALOG_URL
       value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/matatika?ssl=false"
     - name: PERSISTENCE_CATALOG_USERNAME
