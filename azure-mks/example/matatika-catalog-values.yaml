@@ -80,6 +80,8 @@ appService:
       value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/matatika?ssl=false"
     - name: PERSISTENCE_CATALOG_USERNAME
       value: "matatika"
+    - name: MATATIKA_WORKSPACES_HOME
+      value: /tmp
 
 rbac:
   create: true
