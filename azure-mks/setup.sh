@@ -62,11 +62,8 @@ az role assignment create \
 
 
 # Setup the MKS namespace, later you will deploy some apps into it
-kubectl create namespace demo
 kubectl create namespace staging
 kubectl create namespace staging-tasks
-kubectl create namespace prod
-kubectl create namespace prod-tasks
 
 # set default namespace
 kubectl config set-context $BUILD_AZ_AKS_NAME --namespace=staging
