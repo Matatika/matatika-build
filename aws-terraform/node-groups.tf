@@ -22,6 +22,8 @@ resource "aws_eks_node_group" "nodepool1" {
     "agentpool" = "nodepool1"
     "env"       = "${var.environment}"
   }
+
+  depends_on = [aws_eks_addon.vpc_cni]
 }
 
 # Node pool for the catalog, elastic search, logstash and main components.
@@ -49,6 +51,7 @@ resource "aws_eks_node_group" "apps" {
     "env"                                                  = var.environment
   }
 
+  depends_on = [aws_eks_addon.vpc_cni]
 }
 
 resource "aws_iam_role" "eks_node_group_role" {

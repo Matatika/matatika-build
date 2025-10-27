@@ -41,16 +41,17 @@ helm upgrade \
 	--create-namespace \
 	--install \
 	--wait \
-	--set image.password=${REGISTRY_PASSWORD} \
-	--set image.tag=${IMAGE_TAG} \
-	--set appService.version=${APP_VERSION} \
-	--set appService.auth0ClientSecret=${CATALOG_AUTH0_CLIENT_SECRET} \
+	--timeout 10m0s \
+	--set image.password="${REGISTRY_PASSWORD}" \
+	--set image.tag="${IMAGE_TAG}" \
+	--set appService.version="${APP_VERSION}" \
+	--set appService.auth0ClientSecret="${CATALOG_AUTH0_CLIENT_SECRET}" \
 	--set appService.githubApiPrivateKey="${CATALOG_GITHUB_API_PRIVATE_KEY}" \
 	--set appService.githubApiWorkspacesPrivateKey="${CATALOG_GITHUB_API_WORKSPACES_PRIVATE_KEY}" \
-	--set appService.persistenceWarehousePass=${CATALOG_PERSISTENCE_WAREHOUSE_PASSWORD} \
-	--set appService.persistenceCatalogPass=${CATALOG_PERSISTENCE_CATALOG_PASSWORD} \
-	--set appService.elasticSearchPassword=${CATALOG_MATATIKA_ES_ELASTIC_PASSWORD} \
-	--set appService.encryptorPassword=${CATALOG_MATATIKA_ENCRYPTOR_PASSWORD} \
+	--set appService.persistenceWarehousePass="${CATALOG_PERSISTENCE_WAREHOUSE_PASSWORD}" \
+	--set appService.persistenceCatalogPass="${CATALOG_PERSISTENCE_CATALOG_PASSWORD}" \
+	--set appService.elasticSearchPassword="${CATALOG_MATATIKA_ES_ELASTIC_PASSWORD}" \
+	--set appService.encryptorPassword="${CATALOG_MATATIKA_ENCRYPTOR_PASSWORD}" \
 	--set elasticsearch.rebuild="${ELASTICSEARCH_REBUILD}" \
 	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \

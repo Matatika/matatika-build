@@ -93,18 +93,24 @@ variable "key_deletion_days" {
 variable "cluster_version" {
   type        = string
   description = "EKS cluster version"
-  default     = "1.31"
+  default     = "1.33"
 }
 
 variable "eks_addons_versions" {
   type = object({
-    coredns    = string
-    vpc_cni    = string
-    kube_proxy = string
+    coredns            = string
+    vpc_cni            = string
+    kube_proxy         = string
+    aws_ebs_csi_driver = string
   })
   description = "Map of EKS add-on versions"
+  default     = {
+    coredns            = "v1.12.1-eksbuild.2"
+    kube_proxy         = "v1.33.0-eksbuild.2"
+    vpc_cni            = "v1.19.5-eksbuild.3"
+    aws_ebs_csi_driver = "v1.44.0-eksbuild.1"
+  }
 }
-
 
 variable "domain_name" {
   type        = string
@@ -121,5 +127,4 @@ variable "cloudflare_secret_credentials" {
   type        = string
   description = "Secrets Manager path to CloudFlare API key"
   default     = "/terraform/cloudflare/credentials"
-
 }

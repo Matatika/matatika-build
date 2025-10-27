@@ -29,9 +29,9 @@ global:
     ##
     auth:
       postgresPassword: "<set_admin_password>"
-      username: "warehouse"
+      username: "<set username>"
       password: "<set_password>"
-      database: "warehouse"
+      database: "<set database>"
       existingSecret: ""
       secretKeys:
         adminPasswordKey: ""

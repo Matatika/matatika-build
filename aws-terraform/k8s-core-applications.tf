@@ -53,7 +53,7 @@ resource "helm_release" "aws_load_balancer_controller" {
        region: ${data.aws_region.current.region}
        image:
         repository: public.ecr.aws/eks/aws-load-balancer-controller
-        tag: v2.13.2
+        tag: v2.13.4
        clusterRole:
          extraRules:
            - apiGroups:

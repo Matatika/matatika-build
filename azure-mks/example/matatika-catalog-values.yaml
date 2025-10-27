@@ -1,24 +1,26 @@
-# staging.matatika.com values for matatika-catalog.
+# example.matatika.com values for matatika-catalog.
 
 replicaCount: 1
 
 image:
-# We are using --set specify a specific image version to override default ({{ .Release.appVersion }})
-#tag: latest
+  # We are using --set specify a specific image version to override default ({{ .Release.appVersion }})
+  #tag: latest
+
+  name: matatika/catalog
 #
 # To use a private repository you'll need all of the following
 #
-  private: true
-  name: matatika.azurecr.io/matatika-catalog
-  repository: matatika.azurecr.io
-  username: matatika
+#  private: true
+#  name: matatika.azurecr.io/matatika-catalog
+#  repository: matatika.azurecr.io
+#  username: matatika
 #  password: [we are using --set]
   pullPolicy: Always
 
 appService:
   name: springboot
   type: ClusterIP
-  nodePool: nodepool2
+  #nodePool: nodepool
   httpPort: 80
   httpsPort: 443
   internalHttpPort: 8080
@@ -40,53 +42,66 @@ appService:
   # Securely sets MATATIKA_ENCRYPTOR_PASSWORD environment, secure value set with deploy script
   encryptorPassword: PLACEHOLDER
   environments:
+    - name: REACT_APP_ENV
+      value: "distribution"
+    - name: APP_URL
+      value: http://localhost:8080
+    - name: APP_SERVER_URI
+      value: http://localhost:8080/api  
+    # See Ingress
+    #- name: APP_URL
+    #  value: https://example.matatika.com
+    #- name: APP_SERVER_URI
+    #  value: https://example.matatika.com/api  
     - name: JAVA_OPTS
       value: "-XX:MaxDirectMemorySize=64M -XX:MaxMetaspaceSize=240234K -XX:ReservedCodeCacheSize=240M -Xss1M -Xmx1079906K"
     - name: ACTIVE_PROFILES
       value: "default,deploy"
     - name: SPRING_CLOUD_KUBERNETES_ENABLED
       value: "true"
-    - name: KUBERNETES_REQUEST_TIMEOUT
-      value: "60000"
-    - name: BERT_HOST
-      value: "bert"
-    - name: ELASTICSEARCH_HOST
-      value: "matatika-search-master.example.svc.cluster.local"
-    - name: ELASTICSEARCH_USER
-      value: "elastic"
-    - name: MATATIKA_LOGSTASH_ENDPOINT
-      value: "example-matatika-logstash-logstash.example.svc.cluster.local:5000"
+    - name: SPRING_CLOUD_LOCAL_ENABLED
+      value: "false"
+    # Disable elastic search
+    - name: MATATIKA_ELASTICSEARCH_ENABLED
+      value: "false"
+    - name: MANAGEMENT_HEALTH_ELASTICSEARCH_ENABLED
+      value: "false"
+    # Disable logstash
+    - name: MATATIKA_LOGSTASH_ENABLED
+      value: "false"
+    # Generate a 256-bit (32-char) secret key and set it here. This is used to generate access tokens for the Matatika App and API.
+    - name: MATATIKA_AUTH_LOCAL_SECRET
+      value: "matatikaauthlocalsecret_changeme"
     - name: PERSISTENCE_WAREHOUSE_URL
-      value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/warehouse?ssl=false"
+      value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/matatika?ssl=false"
     - name: PERSISTENCE_WAREHOUSE_USERNAME
       value: "postgres"
     - name: PERSISTENCE_CATALOG_URL
-      value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/warehouse?ssl=false"
+      value: "jdbc:postgresql://catalog-postgres-postgresql.example.svc.cluster.local:5432/matatika?ssl=false"
     - name: PERSISTENCE_CATALOG_USERNAME
-      value: "postgres"
-    - name: AUTH0_CLIENT_AUDIENCE
-      value: "https://catalog-example.matatika.com/api"
-    - name: APP_URL
-      value: https://example.matatika.com
+      value: "matatika"
+    - name: MATATIKA_WORKSPACES_HOME
+      value: /tmp
 
 rbac:
   create: true
 
 ingress:
   enabled: true
-  className: webapprouting.kubernetes.azure.com
+  # AZURE
+  #className: webapprouting.kubernetes.azure.com
+  # AWS
+  className: alb
   paths:
     - /
   # Used to create Ingress record (should used with service.type: ClusterIP).
   hosts:
-    - catalog.44b3fe4de4104e2d8e43.uksouth.aksapp.io
-    - catalog-example.matatika.com
+    - example.matatika.com
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   tls:
     - hosts:
-      - catalog.44b3fe4de4104e2d8e43.uksouth.aksapp.io
-      - catalog-example.matatika.com
+      - example.matatika.com
 
 resources:
   requests:

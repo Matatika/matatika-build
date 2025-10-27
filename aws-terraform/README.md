@@ -105,9 +105,9 @@ You can define separate `terraform.tfbackend` files per environment to isolate s
 
 ## 🧰 Example Commands (dev environment)
 ```bash
-terraform init -backend-config="../matatika-config/aws-terraform/dev.tfbackend"
-terraform plan  -var-file="../matatika-config/aws-terraform/dev.tfvars"
-terraform apply -var-file="../matatika-config/aws-terraform/dev.tfvars"
+terraform init -backend-config="../../matatika-config/aws-terraform/dev/matatika.tfbackend"
+terraform plan  -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
+terraform apply -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
 ```
 
 # 🚀 Deploying app in your AWS infrastructure
