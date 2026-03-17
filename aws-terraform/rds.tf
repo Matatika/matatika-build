@@ -6,7 +6,7 @@ module "db" {
   identifier = "${var.environment}-db"
 
   # When should changes be applied?
-  apply_immediately    = true
+  apply_immediately = true
 
   # All available versions: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts
   engine               = var.db_config.engine
@@ -20,11 +20,11 @@ module "db" {
   storage_encrypted = true
   storage_type      = "gp2"
 
-  db_name  = var.db_config.db_name
-  username = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["username"]
+  db_name                = var.db_config.db_name
+  username               = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["username"]
   create_random_password = false
-  password = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["password"]
-  port     = var.db_config.port
+  password               = jsondecode(data.aws_secretsmanager_secret_version.db_creds.secret_string)["password"]
+  port                   = var.db_config.port
 
   multi_az               = var.db_config.multi_az
   subnet_ids             = module.vpc.database_subnets
