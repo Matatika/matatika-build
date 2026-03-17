@@ -2,9 +2,9 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.0.4"
 
-  name    = var.environment
-  subnet_ids      = module.vpc.private_subnets
-  vpc_id          = module.vpc.vpc_id
+  name               = var.environment
+  subnet_ids         = module.vpc.private_subnets
+  vpc_id             = module.vpc.vpc_id
   kubernetes_version = var.cluster_version
 
   endpoint_public_access = true # needs route table update for private subnet
