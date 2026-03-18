@@ -128,3 +128,9 @@ variable "cloudflare_secret_credentials" {
   description = "Secrets Manager path to CloudFlare API key"
   default     = "/terraform/cloudflare/credentials"
 }
+
+variable "deploy_prometheus" {
+  type        = bool
+  description = "Whether to deploy the kube-prometheus-stack Helm chart"
+  default     = false
+}
