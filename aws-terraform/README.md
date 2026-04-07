@@ -11,13 +11,12 @@ Environment-specific configuration is handled through variable files (`../matati
 
 - Terraform (version specified in `./terraform-version`)
 - Configured [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-- Access to the appropriate AWS account (administrator permissions) using a named profile or default credentials
+- Access to the appropriate AWS account (with appropriate permissions) using a named profile or default credentials
 
 ---
 
 ## 🚀 Usage
 
-For now infrastructure is only in `Dev` (`868651350637`) account.
 You have to be authenticated in the target account.
 
 You can use either `Access keys` from your IAM IC or use profiles.
@@ -62,7 +61,7 @@ terraform destroy -var-file="../../matatika-config/aws-terraform/dev/matatika.tf
 Whoever has an access entry to EKS cluster in the Terraform can do the following:
 
 ```bash
-aws eks update-kubeconfig --region eu-west-2 --name dev
+aws eks update-kubeconfig --region eu-west-2 --name <cluster_name>
 kubectl get pods
 ```
 
@@ -72,6 +71,8 @@ kubectl get pods
 You can authenticate using an AWS profile or `aws-vault`.
 
 This requires administrator access permissions.
+
+If you have an open AWS Console session you can use `aws login` in order to pass that session to the CLI (and thus Terraform).
 
 ---
 
@@ -103,11 +104,22 @@ You can define separate `terraform.tfbackend` files per environment to isolate s
 
 ---
 
-## 🧰 Example Commands (dev environment)
+## 🧰 Example Commands
+
+(This will require the relevant configuration files in `../../matatika-config/aws-terraform/<environment>`)
+
 ```bash
-terraform init -backend-config="../../matatika-config/aws-terraform/dev/matatika.tfbackend"
-terraform plan  -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
-terraform apply -var-file="../../matatika-config/aws-terraform/dev/matatika.tfvars"
+make init-dev
+make plan-dev
+make apply-dev
+
+make init-staging
+make plan-staging
+make apply-staging
+
+make init-prod
+make plan-prod
+make apply-prod
 ```
 
 # 🚀 Deploying app in your AWS infrastructure

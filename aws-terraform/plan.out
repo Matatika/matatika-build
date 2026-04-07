@@ -1,0 +1,1815 @@
+[0m[1mmodule.db.module.db_instance.random_id.snapshot_identifier[0]: Refreshing state... [id=a5uofw][0m
+[0m[1mdata.aws_availability_zones.available: Reading...[0m[0m
+[0m[1mdata.aws_secretsmanager_secret.cloudflare: Reading...[0m[0m
+[0m[1mmodule.ebs_csi_irsa_role.aws_iam_role_policy_attachment.ebs_csi[0]: Refreshing state... [id=ebs-csi/arn:aws:iam::446050219225:policy/AmazonEKS_EBS_CSI_Policy-20250902173342951100000009][0m
+[0m[1mmodule.external_dns_irsa_role.aws_iam_role_policy_attachment.load_balancer_controller[0]: Refreshing state... [id=external-dns/arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006][0m
+[0m[1mmodule.db.module.db_parameter_group.aws_db_parameter_group.this[0]: Refreshing state... [id=staging-db-20250902173341930600000001][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.aws_iam_role_policy_attachment.load_balancer_controller[0]: Refreshing state... [id=aws-load-balancer-controller/arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008][0m
+[0m[1mmodule.ebs_csi_irsa_role.aws_iam_policy.ebs_csi[0]: Refreshing state... [id=arn:aws:iam::446050219225:policy/AmazonEKS_EBS_CSI_Policy-20250902173342951100000009][0m
+[0m[1maws_iam_role.eks_node_group_role: Refreshing state... [id=eks-node-group-role][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.aws_iam_policy.load_balancer_controller[0]: Refreshing state... [id=arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008][0m
+[0m[1mmodule.external_dns_irsa_role.aws_iam_policy.load_balancer_controller[0]: Refreshing state... [id=arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006][0m
+[0m[1mdata.aws_availability_zones.available: Read complete after 0s [id=eu-west-2][0m
+[0m[1mmodule.eks.data.aws_iam_policy_document.node_assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_iam_policy_document.node_assume_role_policy[0]: Read complete after 0s [id=3518401652][0m
+[0m[1mdata.aws_iam_roles.sso_admin: Reading...[0m[0m
+[0m[1mdata.aws_secretsmanager_secret.cloudflare: Read complete after 0s [id=arn:aws:secretsmanager:eu-west-2:446050219225:secret:/terraform/cloudflare/credentials-A6zgbq][0m
+[0m[1mdata.aws_iam_policy_document.additional_lb_policy: Reading...[0m[0m
+[0m[1mdata.aws_iam_policy_document.additional_lb_policy: Read complete after 0s [id=955608145][0m
+[0m[1mmodule.eks.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.db.module.db_instance.data.aws_iam_policy_document.enhanced_monitoring: Reading...[0m[0m
+[0m[1mmodule.db.module.db_instance.data.aws_iam_policy_document.enhanced_monitoring: Read complete after 0s [id=76086537][0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_service_principal.elasticloadbalancing[0]: Reading...[0m[0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_service_principal.elasticloadbalancing[0]: Read complete after 0s [id=elasticloadbalancing.eu-west-2.amazonaws.com][0m
+[0m[1mdata.aws_secretsmanager_secret.db_creds: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_caller_identity.current[0]: Read complete after 0s [id=446050219225][0m
+[0m[1mdata.aws_region.current: Reading...[0m[0m
+[0m[1mdata.aws_region.current: Read complete after 0s [id=eu-west-2][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mdata.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mdata.aws_caller_identity.current: Read complete after 0s [id=446050219225][0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Reading...[0m[0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.flow_log_cloudwatch_assume_role[0]: Read complete after 0s [id=1021377347][0m
+[0m[1mmodule.vpc.data.aws_region.current[0]: Reading...[0m[0m
+[0m[1mmodule.vpc.data.aws_region.current[0]: Read complete after 0s [id=eu-west-2][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_service_principal.elasticloadbalancing[0]: Reading...[0m[0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_service_principal.elasticloadbalancing[0]: Read complete after 0s [id=elasticloadbalancing.eu-west-2.amazonaws.com][0m
+[0m[1mmodule.eks.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2830595799][0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.acm.aws_acm_certificate.this[0]: Refreshing state... [id=arn:aws:acm:eu-west-2:446050219225:certificate/cef67e50-379b-42b7-8ee2-04ba0c648e47][0m
+[0m[1mdata.aws_secretsmanager_secret.db_creds: Read complete after 0s [id=arn:aws:secretsmanager:eu-west-2:446050219225:secret:/terraform/rds/credentials-HQhTkl][0m
+[0m[1maws_iam_policy.cluster_autoscaler: Refreshing state... [id=arn:aws:iam::446050219225:policy/staging-cluster-autoscaler-policy][0m
+[0m[1mmodule.eks.aws_cloudwatch_log_group.this[0]: Refreshing state... [id=/aws/eks/staging/cluster][0m
+[0m[1mmodule.vpc.aws_vpc.this[0]: Refreshing state... [id=vpc-0567af4090196bf4c][0m
+[0m[1mmodule.db.module.db_instance.data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.db.module.db_instance.data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.vpc.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.vpc.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.vpc.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.aws_iam_role.eks_auto[0]: Refreshing state... [id=staging-eks-auto-20250902173341945000000004][0m
+[0m[1mmodule.vpc.data.aws_caller_identity.current[0]: Read complete after 0s [id=446050219225][0m
+[0m[1mdata.aws_secretsmanager_secret_version.cloudflare: Reading...[0m[0m
+[0m[1maws_iam_policy.additional_lb_policy: Refreshing state... [id=arn:aws:iam::446050219225:policy/additional_lb_policy][0m
+[0m[1mdata.aws_secretsmanager_secret_version.cloudflare: Read complete after 0s [id=arn:aws:secretsmanager:eu-west-2:446050219225:secret:/terraform/cloudflare/credentials-A6zgbq|AWSCURRENT][0m
+[0m[1mmodule.db.module.db_instance.aws_iam_role.enhanced_monitoring[0]: Refreshing state... [id=staging-db-monitoring-role-postgres][0m
+[0m[1mdata.aws_iam_roles.sso_admin: Read complete after 1s [id=eu-west-2][0m
+[0m[1mmodule.eks.data.aws_iam_session_context.current[0]: Reading...[0m[0m
+[0m[1maws_kms_key.eks: Refreshing state... [id=a27e46b3-7047-4be5-a002-ad74c308746a][0m
+[0m[1maws_kms_key.db: Refreshing state... [id=bf1f0f79-05b0-4dcf-b28c-0c90a9c40061][0m
+[0m[1mmodule.vpc.aws_iam_role.vpc_flow_log_cloudwatch[0]: Refreshing state... [id=vpc-flow-log-role-20250902173342796100000005][0m
+[0m[1mmodule.eks.aws_iam_role.this[0]: Refreshing state... [id=staging-cluster-20250902173341934600000002][0m
+[0m[1mmodule.eks.data.aws_iam_session_context.current[0]: Read complete after 0s [id=arn:aws:sts::446050219225:assumed-role/AWSReservedSSO_AWSAdminAccess_0e6a097895bc62f5/max@meltano.com][0m
+[0m[1mdata.aws_secretsmanager_secret_version.db_creds: Reading...[0m[0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_iam_policy_document.load_balancer_controller[0]: Reading...[0m[0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_iam_policy_document.load_balancer_controller[0]: Reading...[0m[0m
+[0m[1maws_iam_role_policy_attachment.eks_worker_node["arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"]: Refreshing state... [id=eks-node-group-role/arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_iam_policy_document.load_balancer_controller[0]: Read complete after 0s [id=1541424006][0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_iam_policy_document.load_balancer_controller[0]: Read complete after 0s [id=1541424006][0m
+[0m[1maws_iam_role_policy_attachment.eks_worker_node["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Refreshing state... [id=eks-node-group-role/arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy][0m
+[0m[1maws_iam_role_policy_attachment.eks_worker_node["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"]: Refreshing state... [id=eks-node-group-role/arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly][0m
+[0m[1mmodule.eks.data.aws_iam_policy_document.custom[0]: Reading...[0m[0m
+[0m[1mmodule.eks.data.aws_iam_policy_document.custom[0]: Read complete after 0s [id=513122117][0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_iam_policy_document.ebs_csi[0]: Reading...[0m[0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_iam_policy_document.ebs_csi[0]: Read complete after 0s [id=4189668531][0m
+[0m[1mdata.aws_secretsmanager_secret_version.db_creds: Read complete after 0s [id=arn:aws:secretsmanager:eu-west-2:446050219225:secret:/terraform/rds/credentials-HQhTkl|AWSCURRENT][0m
+[0m[1maws_kms_alias.eks: Refreshing state... [id=alias/staging-eks-kms][0m
+[0m[1maws_kms_alias.db: Refreshing state... [id=alias/staging-postgres16-kms][0m
+[0m[1mmodule.eks.aws_iam_policy.custom[0]: Refreshing state... [id=arn:aws:iam::446050219225:policy/staging-cluster-20250902173342914100000007][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_iam_policy_document.this[0]: Reading...[0m[0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=1541424006][0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_iam_policy_document.this[0]: Reading...[0m[0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=1541424006][0m
+[0m[1mmodule.eks.module.kms.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.kms.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.kms.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.kms.data.aws_caller_identity.current[0]: Read complete after 0s [id=446050219225][0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_iam_policy_document.this[0]: Reading...[0m[0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=4189668531][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.eks_auto["AmazonEC2ContainerRegistryPullOnly"]: Refreshing state... [id=staging-eks-auto-20250902173341945000000004/arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.eks_auto["AmazonEKSWorkerNodeMinimalPolicy"]: Refreshing state... [id=staging-eks-auto-20250902173341945000000004/arn:aws:iam::aws:policy/AmazonEKSWorkerNodeMinimalPolicy][0m
+[0m[1mmodule.db.module.db_instance.aws_iam_role_policy_attachment.enhanced_monitoring[0]: Refreshing state... [id=staging-db-monitoring-role-postgres/arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.custom[0]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::446050219225:policy/staging-cluster-20250902173342914100000007][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSLoadBalancingPolicy"]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::aws:policy/AmazonEKSLoadBalancingPolicy][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSNetworkingPolicy"]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::aws:policy/AmazonEKSClusterPolicy][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSComputePolicy"]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::aws:policy/AmazonEKSComputePolicy][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.this["AmazonEKSBlockStoragePolicy"]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::aws:policy/AmazonEKSBlockStoragePolicy][0m
+[0m[1mmodule.eks.module.kms.data.aws_iam_policy_document.this[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.kms.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=3171453058][0m
+[0m[1mmodule.vpc.aws_default_security_group.this[0]: Refreshing state... [id=sg-0713cf54ccad2678b][0m
+[0m[1mmodule.vpc.aws_default_route_table.default[0]: Refreshing state... [id=rtb-0e35efd17d42344ac][0m
+[0m[1mmodule.vpc.aws_default_network_acl.this[0]: Refreshing state... [id=acl-03235622fbc28fef8][0m
+[0m[1mmodule.eks.module.kms.aws_kms_key.this[0]: Refreshing state... [id=5e381f6a-0503-440d-b4b7-c68fdc1e5c52][0m
+[0m[1mmodule.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-0afe6eacfa173f504][0m
+[0m[1mmodule.eks.aws_security_group.cluster[0]: Refreshing state... [id=sg-08d111ac3d1c26fd8][0m
+[0m[1mmodule.vpc.aws_route_table.private[0]: Refreshing state... [id=rtb-0d6c6ae6157eaa7c4][0m
+[0m[1mmodule.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-051b40b449497a512][0m
+[0m[1mmodule.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-0ccea96c41d2d5570][0m
+[0m[1mmodule.vpc.aws_subnet.private[2]: Refreshing state... [id=subnet-06268badbf884e78f][0m
+[0m[1mmodule.vpc.aws_subnet.database[2]: Refreshing state... [id=subnet-03ab53d0f9e09f0a7][0m
+[0m[1mmodule.vpc.aws_subnet.database[0]: Refreshing state... [id=subnet-03667f68807cb2d16][0m
+[0m[1mmodule.vpc.aws_subnet.database[1]: Refreshing state... [id=subnet-07dd65b58db1b16a3][0m
+[0m[1mmodule.vpc.aws_route_table.database[0]: Refreshing state... [id=rtb-064b0d35a45c55a12][0m
+[0m[1mmodule.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-00bd165fb9c0ffb02][0m
+[0m[1mmodule.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-09fd89fc5903505ad][0m
+[0m[1mmodule.vpc.aws_subnet.public[2]: Refreshing state... [id=subnet-0e83773900041822b][0m
+[0m[1mmodule.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-07690a0ff894edcd4][0m
+[0m[1mmodule.db_sg.aws_security_group.this_name_prefix[0]: Refreshing state... [id=sg-03b352f1252ad895e][0m
+[0m[1mmodule.eks.aws_security_group.node[0]: Refreshing state... [id=sg-03805f5d5532210fb][0m
+[0m[1mmodule.vpc.aws_cloudwatch_log_group.flow_log[0]: Refreshing state... [id=/aws/vpc-flow-log/vpc-0567af4090196bf4c][0m
+[0m[1mmodule.eks.module.kms.aws_kms_alias.this["cluster"]: Refreshing state... [id=alias/eks/staging][0m
+[0m[1mmodule.vpc.aws_eip.nat[0]: Refreshing state... [id=eipalloc-0c75826b2ce60525f][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-0466ec142cad8564a][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[2]: Refreshing state... [id=rtbassoc-0e43c254d84223172][0m
+[0m[1mmodule.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0df5826928bb3c883][0m
+[0m[1mmodule.eks.aws_iam_policy.cluster_encryption[0]: Refreshing state... [id=arn:aws:iam::446050219225:policy/staging-cluster-ClusterEncryption20250902173411229400000013][0m
+[0m[1mmodule.vpc.aws_db_subnet_group.database[0]: Refreshing state... [id=staging-vpc][0m
+[0m[1mmodule.vpc.aws_route_table_association.database[0]: Refreshing state... [id=rtbassoc-01406e9cf78963705][0m
+[0m[1mmodule.vpc.aws_route_table_association.database[1]: Refreshing state... [id=rtbassoc-0945f0fe18364149b][0m
+[0m[1mmodule.vpc.aws_route_table_association.database[2]: Refreshing state... [id=rtbassoc-042273504aca6c4b7][0m
+[0m[1mmodule.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-07690a0ff894edcd41080289494][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Refreshing state... [id=sgrule-3478719498][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Refreshing state... [id=sgrule-3095636141][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["egress_all"]: Refreshing state... [id=sgrule-644355707][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_443"]: Refreshing state... [id=sgrule-3680620227][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Refreshing state... [id=sgrule-484182850][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Refreshing state... [id=sgrule-2885173185][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Refreshing state... [id=sgrule-2521706893][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Refreshing state... [id=sgrule-356997053][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Refreshing state... [id=sgrule-3691327531][0m
+[0m[1mmodule.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Refreshing state... [id=sgrule-3540715634][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-00f990d597acec3a4][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-01a1e2a4b5a602f7c][0m
+[0m[1mmodule.vpc.aws_route_table_association.public[2]: Refreshing state... [id=rtbassoc-0fa9b688e77eb9d6a][0m
+[0m[1mmodule.vpc.aws_flow_log.this[0]: Refreshing state... [id=fl-0cd01bbf4536fc7ab][0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Reading...[0m[0m
+[0m[1mmodule.vpc.data.aws_iam_policy_document.vpc_flow_log_cloudwatch[0]: Read complete after 0s [id=1838539580][0m
+[0m[1mmodule.db_sg.aws_security_group_rule.ingress_with_cidr_blocks[1]: Refreshing state... [id=sgrule-3023485362][0m
+[0m[1mmodule.db_sg.aws_security_group_rule.ingress_with_cidr_blocks[0]: Refreshing state... [id=sgrule-2344984855][0m
+[0m[1mmodule.db_sg.aws_security_group_rule.ingress_with_cidr_blocks[2]: Refreshing state... [id=sgrule-931329359][0m
+[0m[1mmodule.eks.aws_security_group_rule.cluster["ingress_vpc"]: Refreshing state... [id=sgrule-2465981739][0m
+[0m[1mmodule.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Refreshing state... [id=sgrule-229040825][0m
+[0m[1mmodule.vpc.aws_iam_policy.vpc_flow_log_cloudwatch[0]: Refreshing state... [id=arn:aws:iam::446050219225:policy/vpc-flow-log-to-cloudwatch-20250902173357419200000011][0m
+[0m[1mmodule.eks.aws_iam_role_policy_attachment.cluster_encryption[0]: Refreshing state... [id=staging-cluster-20250902173341934600000002/arn:aws:iam::446050219225:policy/staging-cluster-ClusterEncryption20250902173411229400000013][0m
+[0m[1mmodule.vpc.aws_nat_gateway.this[0]: Refreshing state... [id=nat-005dbfb1aabd2c4c0][0m
+[0m[1mmodule.db.module.db_instance.aws_db_instance.this[0]: Refreshing state... [id=db-O34OWUAOVEB7YW6DP34QEW7KFU][0m
+[0m[1mmodule.vpc.aws_route.private_nat_gateway[0]: Refreshing state... [id=r-rtb-0d6c6ae6157eaa7c41080289494][0m
+[0m[1mmodule.eks.aws_eks_cluster.this[0]: Refreshing state... [id=staging][0m
+[0m[1mmodule.vpc.aws_iam_role_policy_attachment.vpc_flow_log_cloudwatch[0]: Refreshing state... [id=vpc-flow-log-role-20250902173342796100000005/arn:aws:iam::446050219225:policy/vpc-flow-log-to-cloudwatch-20250902173357419200000011][0m
+[0m[1mmodule.eks.aws_eks_access_entry.this["kubernetes-admin"]: Refreshing state... [id=staging:arn:aws:iam::446050219225:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSAdminAccess_0e6a097895bc62f5][0m
+[0m[1mmodule.eks.data.tls_certificate.this[0]: Reading...[0m[0m
+[0m[1mmodule.eks.time_sleep.this[0]: Refreshing state... [id=2025-09-02T17:44:46Z][0m
+[0m[1mmodule.eks.data.tls_certificate.this[0]: Read complete after 0s [id=1dc76326fb30ec85b6567240ab789feda42aabfa][0m
+[0m[1mmodule.eks.aws_iam_openid_connect_provider.oidc_provider[0]: Refreshing state... [id=arn:aws:iam::446050219225:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/5C1486433B586266A71EF630E68596A5][0m
+[0m[1maws_iam_role.cluster_autoscaler: Refreshing state... [id=staging-cluster-autoscaler-role][0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_iam_policy_document.assume[0]: Reading...[0m[0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_iam_policy_document.assume[0]: Reading...[0m[0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_iam_policy_document.assume[0]: Reading...[0m[0m
+[0m[1mmodule.ebs_csi_irsa_role.data.aws_iam_policy_document.assume[0]: Read complete after 0s [id=2507338625][0m
+[0m[1mmodule.external_dns_irsa_role.data.aws_iam_policy_document.assume[0]: Read complete after 0s [id=1917061704][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.data.aws_iam_policy_document.assume[0]: Read complete after 0s [id=370993354][0m
+[0m[1mmodule.external_dns_irsa_role.aws_iam_role.this[0]: Refreshing state... [id=external-dns][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.aws_iam_role.this[0]: Refreshing state... [id=aws-load-balancer-controller][0m
+[0m[1mmodule.ebs_csi_irsa_role.aws_iam_role.this[0]: Refreshing state... [id=ebs-csi][0m
+[0m[1mmodule.eks.aws_eks_access_policy_association.this["kubernetes-admin_kubernetes-admin"]: Refreshing state... [id=staging#arn:aws:iam::446050219225:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AWSAdminAccess_0e6a097895bc62f5#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy][0m
+[0m[1maws_iam_role_policy_attachment.cluster_autoscaler: Refreshing state... [id=staging-cluster-autoscaler-role/arn:aws:iam::446050219225:policy/staging-cluster-autoscaler-policy][0m
+[0m[1mmodule.aws_load_balancer_controller_irsa_role.aws_iam_role_policy_attachment.this["additional_lb_policy"]: Refreshing state... [id=aws-load-balancer-controller/arn:aws:iam::446050219225:policy/additional_lb_policy][0m
+[0m[1mdata.aws_eks_cluster_auth.cluster_auth: Reading...[0m[0m
+[0m[1mtime_sleep.wait_3_minutes: Refreshing state... [id=2025-09-02T17:47:46Z][0m
+[0m[1mdata.aws_eks_cluster_auth.cluster_auth: Read complete after 0s [id=staging][0m
+[0m[1maws_eks_addon.vpc_cni: Refreshing state... [id=staging:vpc-cni][0m
+[0m[1maws_eks_addon.kube_proxy: Refreshing state... [id=staging:kube-proxy][0m
+[0m[1maws_eks_addon.aws_ebs_csi_driver: Refreshing state... [id=staging:aws-ebs-csi-driver][0m
+[0m[1mhelm_release.aws_load_balancer_controller: Refreshing state... [id=aws-load-balancer-controller][0m
+[0m[1mhelm_release.external_dns: Refreshing state... [id=external-dns][0m
+[0m[1mkubernetes_namespace.operations: Refreshing state... [id=operations][0m
+[0m[1mkubernetes_namespace.env-tasks: Refreshing state... [id=staging-tasks][0m
+[0m[1mkubernetes_namespace.aws_observability: Refreshing state... [id=aws-observability][0m
+[0m[1mkubernetes_namespace.env: Refreshing state... [id=staging][0m
+[0m[1mkubernetes_role.cluster_autoscaler: Refreshing state... [id=kube-system/cluster-autoscaler][0m
+[0m[1mkubernetes_service_account.cluster_autoscaler: Refreshing state... [id=kube-system/cluster-autoscaler][0m
+[0m[1mkubernetes_cluster_role.aws_lb_controller_lease_patch: Refreshing state... [id=aws-lb-controller-lease-access][0m
+[0m[1mkubernetes_storage_class.ebs_csi_gp3_storage_class: Refreshing state... [id=ebs-csi-gp3][0m
+[0m[1mkubernetes_storage_class.expandable_gp2_storage_class: Refreshing state... [id=expandable-gp2][0m
+[0m[1mkubernetes_cluster_role.cluster_autoscaler: Refreshing state... [id=cluster-autoscaler][0m
+[0m[1mkubernetes_config_map.aws_observability: Refreshing state... [id=aws-observability/aws-logging][0m
+[0m[1mkubernetes_role_binding.cluster_autoscaler: Refreshing state... [id=kube-system/cluster-autoscaler][0m
+[0m[1mkubernetes_cluster_role_binding.cluster_autoscaler: Refreshing state... [id=cluster-autoscaler][0m
+[0m[1mkubernetes_deployment.cluster_autoscaler: Refreshing state... [id=kube-system/cluster-autoscaler][0m
+[0m[1maws_eks_addon.coredns: Refreshing state... [id=staging:coredns][0m
+[0m[1maws_eks_node_group.apps: Refreshing state... [id=staging:apps][0m
+[0m[1maws_eks_node_group.nodepool1: Refreshing state... [id=staging:nodepool1][0m
+[0m[1mkubernetes_cluster_role_binding.aws_lb_controller_lease_patch_binding: Refreshing state... [id=aws-lb-controller-lease-binding][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+  [33m~[0m update in-place[0m
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # helm_release.aws_load_balancer_controller[0m will be updated in-place
+[0m  [33m~[0m[0m resource "helm_release" "aws_load_balancer_controller" {
+      [33m~[0m[0m id                         = "aws-load-balancer-controller" -> (known after apply)
+      [33m~[0m[0m metadata                   = {
+          [33m~[0m[0m app_version    = "v2.13.2" -> (known after apply)
+          [33m~[0m[0m chart          = "aws-load-balancer-controller" -> (known after apply)
+          [33m~[0m[0m first_deployed = 1756835060 -> (known after apply)
+          [33m~[0m[0m last_deployed  = 1756835060 -> (known after apply)
+          [33m~[0m[0m name           = "aws-load-balancer-controller" -> (known after apply)
+          [33m~[0m[0m namespace      = "kube-system" -> (known after apply)
+          [33m~[0m[0m notes          = <<-EOT
+                AWS Load Balancer controller installed!
+            EOT -> (known after apply)
+          [33m~[0m[0m revision       = 1 -> (known after apply)
+          [33m~[0m[0m values         = jsonencode(
+                {
+                  [31m-[0m[0m clusterName    = "staging"
+                  [31m-[0m[0m clusterRole    = {
+                      [31m-[0m[0m extraRules = [
+                          [31m-[0m[0m {
+                              [31m-[0m[0m apiGroups = [
+                                  [31m-[0m[0m "coordination.k8s.io",
+                                ]
+                              [31m-[0m[0m resources = [
+                                  [31m-[0m[0m "leases",
+                                ]
+                              [31m-[0m[0m verbs     = [
+                                  [31m-[0m[0m "get",
+                                  [31m-[0m[0m "watch",
+                                  [31m-[0m[0m "list",
+                                  [31m-[0m[0m "create",
+                                  [31m-[0m[0m "update",
+                                  [31m-[0m[0m "patch",
+                                ]
+                            },
+                        ]
+                    }
+                  [31m-[0m[0m image          = {
+                      [31m-[0m[0m repository = "public.ecr.aws/eks/aws-load-balancer-controller"
+                      [31m-[0m[0m tag        = "v2.13.4"
+                    }
+                  [31m-[0m[0m region         = "eu-west-2"
+                  [31m-[0m[0m replicaCount   = 1
+                  [31m-[0m[0m serviceAccount = {
+                      [31m-[0m[0m annotations = {
+                          [31m-[0m[0m "eks.amazonaws.com/role-arn" = "arn:aws:iam::446050219225:role/aws-load-balancer-controller"
+                        }
+                      [31m-[0m[0m name        = "aws-load-balancer-controller"
+                    }
+                  [31m-[0m[0m vpcId          = "vpc-0567af4090196bf4c"
+                }
+            ) -> (known after apply)
+          [33m~[0m[0m version        = "1.13.2" -> (known after apply)
+        } -> (known after apply)
+        name                       = "aws-load-balancer-controller"
+      [32m+[0m[0m take_ownership             = false
+      [32m+[0m[0m upgrade_install            = false
+        [90m# (28 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # helm_release.external_dns[0m will be updated in-place
+[0m  [33m~[0m[0m resource "helm_release" "external_dns" {
+      [33m~[0m[0m id                         = "external-dns" -> (known after apply)
+      [33m~[0m[0m metadata                   = {
+          [33m~[0m[0m app_version    = "0.13.1" -> (known after apply)
+          [33m~[0m[0m chart          = "external-dns" -> (known after apply)
+          [33m~[0m[0m first_deployed = 1756835059 -> (known after apply)
+          [33m~[0m[0m last_deployed  = 1756835059 -> (known after apply)
+          [33m~[0m[0m name           = "external-dns" -> (known after apply)
+          [33m~[0m[0m namespace      = "operations" -> (known after apply)
+          [33m~[0m[0m notes          = <<-EOT
+                ***********************************************************************
+                * External DNS                                                        *
+                ***********************************************************************
+                  Chart version: 1.12.0
+                  App version:   0.13.1
+                  Image tag:     k8s.gcr.io/external-dns/external-dns:v0.13.1
+                ***********************************************************************
+            EOT -> (known after apply)
+          [33m~[0m[0m revision       = 1 -> (known after apply)
+          [33m~[0m[0m values         = jsonencode(
+                {
+                  [31m-[0m[0m domainFilters  = [
+                      [31m-[0m[0m "matatika.com",
+                    ]
+                  [31m-[0m[0m env            = [
+                      [31m-[0m[0m {
+                          [31m-[0m[0m name  = "CF_API_TOKEN"
+                          [31m-[0m[0m value = "sbVZAQPkjHQgTrk-lJyESJweYmFawqKrp9-a4F-S"
+                        },
+                    ]
+                  [31m-[0m[0m policy         = "sync"
+                  [31m-[0m[0m provider       = "cloudflare"
+                  [31m-[0m[0m serviceAccount = {
+                      [31m-[0m[0m create = true
+                      [31m-[0m[0m name   = "external-dns"
+                    }
+                  [31m-[0m[0m txtOwnerId     = "externaldns-staging"
+                }
+            ) -> (known after apply)
+          [33m~[0m[0m version        = "1.12.0" -> (known after apply)
+        } -> (known after apply)
+        name                       = "external-dns"
+      [32m+[0m[0m take_ownership             = false
+      [32m+[0m[0m upgrade_install            = false
+        [90m# (29 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.aws_load_balancer_controller_irsa_role.aws_iam_policy.load_balancer_controller[0][0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_policy.load_balancer_controller is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_policy" "load_balancer_controller" {
+      [31m-[0m[0m arn              = "arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008" [90m-> null[0m[0m
+      [31m-[0m[0m attachment_count = 1 [90m-> null[0m[0m
+      [31m-[0m[0m description      = "Provides permissions for AWS Load Balancer Controller addon" [90m-> null[0m[0m
+      [31m-[0m[0m id               = "arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008" [90m-> null[0m[0m
+      [31m-[0m[0m name             = "AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008" [90m-> null[0m[0m
+      [31m-[0m[0m name_prefix      = "AmazonEKS_AWS_Load_Balancer_Controller-" [90m-> null[0m[0m
+      [31m-[0m[0m path             = "/" [90m-> null[0m[0m
+      [31m-[0m[0m policy           = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "iam:CreateServiceLinkedRole"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "iam:AWSServiceName" = "elasticloadbalancing.amazonaws.com"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTrustStores",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTargetHealth",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTargetGroups",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTargetGroupAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTags",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeSSLPolicies",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeRules",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeLoadBalancers",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeListeners",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeListenerCertificates",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeListenerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeCapacityReservation",
+                          [31m-[0m[0m "ec2:GetSecurityGroupsForVpc",
+                          [31m-[0m[0m "ec2:GetCoipPoolUsage",
+                          [31m-[0m[0m "ec2:DescribeVpcs",
+                          [31m-[0m[0m "ec2:DescribeVpcPeeringConnections",
+                          [31m-[0m[0m "ec2:DescribeTags",
+                          [31m-[0m[0m "ec2:DescribeSubnets",
+                          [31m-[0m[0m "ec2:DescribeSecurityGroups",
+                          [31m-[0m[0m "ec2:DescribeRouteTables",
+                          [31m-[0m[0m "ec2:DescribeNetworkInterfaces",
+                          [31m-[0m[0m "ec2:DescribeIpamPools",
+                          [31m-[0m[0m "ec2:DescribeInternetGateways",
+                          [31m-[0m[0m "ec2:DescribeInstances",
+                          [31m-[0m[0m "ec2:DescribeCoipPools",
+                          [31m-[0m[0m "ec2:DescribeAvailabilityZones",
+                          [31m-[0m[0m "ec2:DescribeAddresses",
+                          [31m-[0m[0m "ec2:DescribeAccountAttributes",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "wafv2:GetWebACLForResource",
+                          [31m-[0m[0m "wafv2:GetWebACL",
+                          [31m-[0m[0m "wafv2:DisassociateWebACL",
+                          [31m-[0m[0m "wafv2:AssociateWebACL",
+                          [31m-[0m[0m "waf-regional:GetWebACLForResource",
+                          [31m-[0m[0m "waf-regional:GetWebACL",
+                          [31m-[0m[0m "waf-regional:DisassociateWebACL",
+                          [31m-[0m[0m "waf-regional:AssociateWebACL",
+                          [31m-[0m[0m "shield:GetSubscriptionState",
+                          [31m-[0m[0m "shield:DescribeProtection",
+                          [31m-[0m[0m "shield:DeleteProtection",
+                          [31m-[0m[0m "shield:CreateProtection",
+                          [31m-[0m[0m "iam:ListServerCertificates",
+                          [31m-[0m[0m "iam:GetServerCertificate",
+                          [31m-[0m[0m "cognito-idp:DescribeUserPoolClient",
+                          [31m-[0m[0m "acm:ListCertificates",
+                          [31m-[0m[0m "acm:DescribeCertificate",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [31m-[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = "ec2:CreateSecurityGroup"
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateTags"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null         = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "ec2:CreateAction" = "CreateSecurityGroup"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "ec2:DeleteTags",
+                          [31m-[0m[0m "ec2:CreateTags",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [31m-[0m[0m "ec2:DeleteSecurityGroup",
+                          [31m-[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:CreateTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:CreateLoadBalancer",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:DeleteRule",
+                          [31m-[0m[0m "elasticloadbalancing:DeleteListener",
+                          [31m-[0m[0m "elasticloadbalancing:CreateRule",
+                          [31m-[0m[0m "elasticloadbalancing:CreateListener",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:RemoveTags",
+                          [31m-[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = [
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:RemoveTags",
+                          [31m-[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = [
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:SetSubnets",
+                          [31m-[0m[0m "elasticloadbalancing:SetSecurityGroups",
+                          [31m-[0m[0m "elasticloadbalancing:SetIpAddressType",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyTargetGroupAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyListenerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyIpPools",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyCapacityReservation",
+                          [31m-[0m[0m "elasticloadbalancing:DeleteTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:DeleteLoadBalancer",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "elasticloadbalancing:AddTags"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null         = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "elasticloadbalancing:CreateAction" = [
+                                  [31m-[0m[0m "CreateTargetGroup",
+                                  [31m-[0m[0m "CreateLoadBalancer",
+                                ]
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = [
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:RegisterTargets",
+                          [31m-[0m[0m "elasticloadbalancing:DeregisterTargets",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:SetWebAcl",
+                          [31m-[0m[0m "elasticloadbalancing:SetRulePriorities",
+                          [31m-[0m[0m "elasticloadbalancing:RemoveListenerCertificates",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyRule",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyListener",
+                          [31m-[0m[0m "elasticloadbalancing:AddListenerCertificates",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m policy_id        = "ANPAWPWVKGTM7CZWPEZW7" [90m-> null[0m[0m
+      [31m-[0m[0m tags             = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all         = {
+          [31m-[0m[0m "environment"  = "staging"
+          [31m-[0m[0m "map-migrated" = "TBD"
+        } [90m-> null[0m[0m
+    }
+
+[1m  # module.aws_load_balancer_controller_irsa_role.aws_iam_policy.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "this" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m attachment_count = (known after apply)
+      [32m+[0m[0m description      = "Provides permissions for AWS Load Balancer Controller addon"
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m name             = "AWS_Load_Balancer_Controller"
+      [32m+[0m[0m name_prefix      = (known after apply)
+      [32m+[0m[0m path             = "/"
+      [32m+[0m[0m policy           = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "iam:CreateServiceLinkedRole"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "iam:AWSServiceName" = "elasticloadbalancing.amazonaws.com"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTrustStores",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetHealth",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetGroups",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetGroupAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTags",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeSSLPolicies",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeRules",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeLoadBalancers",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListeners",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListenerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeCapacityReservation",
+                          [32m+[0m[0m "ec2:GetSecurityGroupsForVpc",
+                          [32m+[0m[0m "ec2:GetCoipPoolUsage",
+                          [32m+[0m[0m "ec2:DescribeVpcs",
+                          [32m+[0m[0m "ec2:DescribeVpcPeeringConnections",
+                          [32m+[0m[0m "ec2:DescribeTags",
+                          [32m+[0m[0m "ec2:DescribeSubnets",
+                          [32m+[0m[0m "ec2:DescribeSecurityGroups",
+                          [32m+[0m[0m "ec2:DescribeRouteTables",
+                          [32m+[0m[0m "ec2:DescribeNetworkInterfaces",
+                          [32m+[0m[0m "ec2:DescribeIpamPools",
+                          [32m+[0m[0m "ec2:DescribeInternetGateways",
+                          [32m+[0m[0m "ec2:DescribeInstances",
+                          [32m+[0m[0m "ec2:DescribeCoipPools",
+                          [32m+[0m[0m "ec2:DescribeAvailabilityZones",
+                          [32m+[0m[0m "ec2:DescribeAddresses",
+                          [32m+[0m[0m "ec2:DescribeAccountAttributes",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "wafv2:GetWebACLForResource",
+                          [32m+[0m[0m "wafv2:GetWebACL",
+                          [32m+[0m[0m "wafv2:DisassociateWebACL",
+                          [32m+[0m[0m "wafv2:AssociateWebACL",
+                          [32m+[0m[0m "waf-regional:GetWebACLForResource",
+                          [32m+[0m[0m "waf-regional:GetWebACL",
+                          [32m+[0m[0m "waf-regional:DisassociateWebACL",
+                          [32m+[0m[0m "waf-regional:AssociateWebACL",
+                          [32m+[0m[0m "shield:GetSubscriptionState",
+                          [32m+[0m[0m "shield:DescribeProtection",
+                          [32m+[0m[0m "shield:DeleteProtection",
+                          [32m+[0m[0m "shield:CreateProtection",
+                          [32m+[0m[0m "iam:ListServerCertificates",
+                          [32m+[0m[0m "iam:GetServerCertificate",
+                          [32m+[0m[0m "cognito-idp:DescribeUserPoolClient",
+                          [32m+[0m[0m "acm:ListCertificates",
+                          [32m+[0m[0m "acm:DescribeCertificate",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = "ec2:CreateSecurityGroup"
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateTags"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null         = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "ec2:CreateAction" = "CreateSecurityGroup"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "ec2:DeleteTags",
+                          [32m+[0m[0m "ec2:CreateTags",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:DeleteSecurityGroup",
+                          [32m+[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "elasticloadbalancing:CreateTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:CreateLoadBalancer",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:DeleteRule",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteListener",
+                          [32m+[0m[0m "elasticloadbalancing:CreateRule",
+                          [32m+[0m[0m "elasticloadbalancing:CreateListener",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "elasticloadbalancing:RemoveTags",
+                          [32m+[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = [
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:RemoveTags",
+                          [32m+[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "elasticloadbalancing:SetSubnets",
+                          [32m+[0m[0m "elasticloadbalancing:SetSecurityGroups",
+                          [32m+[0m[0m "elasticloadbalancing:SetIpAddressType",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyTargetGroupAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyListenerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyIpPools",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyCapacityReservation",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteLoadBalancer",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "elasticloadbalancing:AddTags"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null         = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "elasticloadbalancing:CreateAction" = [
+                                  [32m+[0m[0m "CreateTargetGroup",
+                                  [32m+[0m[0m "CreateLoadBalancer",
+                                ]
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = [
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:RegisterTargets",
+                          [32m+[0m[0m "elasticloadbalancing:DeregisterTargets",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:SetWebAcl",
+                          [32m+[0m[0m "elasticloadbalancing:SetRulePriorities",
+                          [32m+[0m[0m "elasticloadbalancing:RemoveListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyRule",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyListener",
+                          [32m+[0m[0m "elasticloadbalancing:AddListenerCertificates",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id        = (known after apply)
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "environment"  = "staging"
+          [32m+[0m[0m "map-migrated" = "TBD"
+        }
+    }
+
+[1m  # module.aws_load_balancer_controller_irsa_role.aws_iam_role_policy_attachment.additional["additional_lb_policy"][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "additional" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::446050219225:policy/additional_lb_policy"
+      [32m+[0m[0m role       = "aws-load-balancer-controller"
+    }
+
+[1m  # module.aws_load_balancer_controller_irsa_role.aws_iam_role_policy_attachment.load_balancer_controller[0][0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_role_policy_attachment.load_balancer_controller is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
+      [31m-[0m[0m id         = "aws-load-balancer-controller/arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342915000000008" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "aws-load-balancer-controller" [90m-> null[0m[0m
+    }
+
+[1m  # module.aws_load_balancer_controller_irsa_role.aws_iam_role_policy_attachment.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = "aws-load-balancer-controller"
+    }
+
+[1m  # module.aws_load_balancer_controller_irsa_role.aws_iam_role_policy_attachment.this["additional_lb_policy"][0m will be [1m[31mdestroyed[0m
+  # (because resource does not use for_each)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [31m-[0m[0m id         = "aws-load-balancer-controller/arn:aws:iam::446050219225:policy/additional_lb_policy" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::446050219225:policy/additional_lb_policy" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "aws-load-balancer-controller" [90m-> null[0m[0m
+    }
+
+[1m  # module.ebs_csi_irsa_role.aws_iam_policy.ebs_csi[0][0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_policy.ebs_csi is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_policy" "ebs_csi" {
+      [31m-[0m[0m arn              = "arn:aws:iam::446050219225:policy/AmazonEKS_EBS_CSI_Policy-20250902173342951100000009" [90m-> null[0m[0m
+      [31m-[0m[0m attachment_count = 1 [90m-> null[0m[0m
+      [31m-[0m[0m description      = "Provides permissions to manage EBS volumes via the container storage interface driver" [90m-> null[0m[0m
+      [31m-[0m[0m id               = "arn:aws:iam::446050219225:policy/AmazonEKS_EBS_CSI_Policy-20250902173342951100000009" [90m-> null[0m[0m
+      [31m-[0m[0m name             = "AmazonEKS_EBS_CSI_Policy-20250902173342951100000009" [90m-> null[0m[0m
+      [31m-[0m[0m name_prefix      = "AmazonEKS_EBS_CSI_Policy-" [90m-> null[0m[0m
+      [31m-[0m[0m path             = "/" [90m-> null[0m[0m
+      [31m-[0m[0m policy           = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "ec2:DescribeVolumesModifications",
+                          [31m-[0m[0m "ec2:DescribeVolumes",
+                          [31m-[0m[0m "ec2:DescribeTags",
+                          [31m-[0m[0m "ec2:DescribeSnapshots",
+                          [31m-[0m[0m "ec2:DescribeInstances",
+                          [31m-[0m[0m "ec2:DescribeAvailabilityZones",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "ec2:ModifyVolume",
+                          [31m-[0m[0m "ec2:CreateSnapshot",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "ec2:DetachVolume",
+                          [31m-[0m[0m "ec2:AttachVolume",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = [
+                          [31m-[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [31m-[0m[0m "arn:aws:ec2:*:*:instance/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "ec2:EnableFastSnapshotRestores",
+                          [31m-[0m[0m "ec2:CreateVolume",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateTags"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "ec2:CreateAction" = [
+                                  [31m-[0m[0m "CreateVolume",
+                                  [31m-[0m[0m "CreateSnapshot",
+                                ]
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = [
+                          [31m-[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [31m-[0m[0m "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = "ec2:DeleteTags"
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = [
+                          [31m-[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [31m-[0m[0m "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateVolume"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:RequestTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateVolume"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:RequestTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:DeleteVolume"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:DeleteVolume"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:ResourceTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:DeleteVolume"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "ec2:ResourceTag/kubernetes.io/created-for/pvc/name" = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateSnapshot"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:RequestTag/CSIVolumeSnapshotName" = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateSnapshot"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:RequestTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:DeleteSnapshot"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:ResourceTag/CSIVolumeSnapshotName" = "*"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:DeleteSnapshot"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringLike = {
+                              [31m-[0m[0m "aws:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m policy_id        = "ANPAWPWVKGTMXLBDXNYKG" [90m-> null[0m[0m
+      [31m-[0m[0m tags             = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all         = {
+          [31m-[0m[0m "environment"  = "staging"
+          [31m-[0m[0m "map-migrated" = "TBD"
+        } [90m-> null[0m[0m
+    }
+
+[1m  # module.ebs_csi_irsa_role.aws_iam_policy.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "this" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m attachment_count = (known after apply)
+      [32m+[0m[0m description      = "Provides permissions to manage EBS volumes via the container storage interface driver"
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m name             = "EBS_CSI"
+      [32m+[0m[0m name_prefix      = (known after apply)
+      [32m+[0m[0m path             = "/"
+      [32m+[0m[0m policy           = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:DescribeVolumesModifications",
+                          [32m+[0m[0m "ec2:DescribeVolumes",
+                          [32m+[0m[0m "ec2:DescribeTags",
+                          [32m+[0m[0m "ec2:DescribeSnapshots",
+                          [32m+[0m[0m "ec2:DescribeInstances",
+                          [32m+[0m[0m "ec2:DescribeAvailabilityZones",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:ModifyVolume",
+                          [32m+[0m[0m "ec2:CreateSnapshot",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:DetachVolume",
+                          [32m+[0m[0m "ec2:AttachVolume",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [32m+[0m[0m "arn:aws:ec2:*:*:instance/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:EnableFastSnapshotRestores",
+                          [32m+[0m[0m "ec2:CreateVolume",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateTags"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "ec2:CreateAction" = [
+                                  [32m+[0m[0m "CreateVolume",
+                                  [32m+[0m[0m "CreateSnapshot",
+                                ]
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = [
+                          [32m+[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [32m+[0m[0m "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = "ec2:DeleteTags"
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:ec2:*:*:volume/*",
+                          [32m+[0m[0m "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateVolume"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:RequestTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateVolume"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:RequestTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:DeleteVolume"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:DeleteVolume"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:ResourceTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:DeleteVolume"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "ec2:ResourceTag/kubernetes.io/created-for/pvc/name" = "*"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:volume/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateSnapshot"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:RequestTag/CSIVolumeSnapshotName" = "*"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateSnapshot"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:RequestTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:DeleteSnapshot"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:ResourceTag/CSIVolumeSnapshotName" = "*"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:DeleteSnapshot"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringLike = {
+                              [32m+[0m[0m "aws:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:snapshot/*"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id        = (known after apply)
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "environment"  = "staging"
+          [32m+[0m[0m "map-migrated" = "TBD"
+        }
+    }
+
+[1m  # module.ebs_csi_irsa_role.aws_iam_role_policy_attachment.ebs_csi[0][0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_role_policy_attachment.ebs_csi is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "ebs_csi" {
+      [31m-[0m[0m id         = "ebs-csi/arn:aws:iam::446050219225:policy/AmazonEKS_EBS_CSI_Policy-20250902173342951100000009" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::446050219225:policy/AmazonEKS_EBS_CSI_Policy-20250902173342951100000009" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "ebs-csi" [90m-> null[0m[0m
+    }
+
+[1m  # module.ebs_csi_irsa_role.aws_iam_role_policy_attachment.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = "ebs-csi"
+    }
+
+[1m  # module.external_dns_irsa_role.aws_iam_policy.load_balancer_controller[0][0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_policy.load_balancer_controller is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_policy" "load_balancer_controller" {
+      [31m-[0m[0m arn              = "arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006" [90m-> null[0m[0m
+      [31m-[0m[0m attachment_count = 1 [90m-> null[0m[0m
+      [31m-[0m[0m description      = "Provides permissions for AWS Load Balancer Controller addon" [90m-> null[0m[0m
+      [31m-[0m[0m id               = "arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006" [90m-> null[0m[0m
+      [31m-[0m[0m name             = "AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006" [90m-> null[0m[0m
+      [31m-[0m[0m name_prefix      = "AmazonEKS_AWS_Load_Balancer_Controller-" [90m-> null[0m[0m
+      [31m-[0m[0m path             = "/" [90m-> null[0m[0m
+      [31m-[0m[0m policy           = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "iam:CreateServiceLinkedRole"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "iam:AWSServiceName" = "elasticloadbalancing.amazonaws.com"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTrustStores",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTargetHealth",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTargetGroups",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTargetGroupAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeTags",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeSSLPolicies",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeRules",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeLoadBalancers",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeListeners",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeListenerCertificates",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeListenerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:DescribeCapacityReservation",
+                          [31m-[0m[0m "ec2:GetSecurityGroupsForVpc",
+                          [31m-[0m[0m "ec2:GetCoipPoolUsage",
+                          [31m-[0m[0m "ec2:DescribeVpcs",
+                          [31m-[0m[0m "ec2:DescribeVpcPeeringConnections",
+                          [31m-[0m[0m "ec2:DescribeTags",
+                          [31m-[0m[0m "ec2:DescribeSubnets",
+                          [31m-[0m[0m "ec2:DescribeSecurityGroups",
+                          [31m-[0m[0m "ec2:DescribeRouteTables",
+                          [31m-[0m[0m "ec2:DescribeNetworkInterfaces",
+                          [31m-[0m[0m "ec2:DescribeIpamPools",
+                          [31m-[0m[0m "ec2:DescribeInternetGateways",
+                          [31m-[0m[0m "ec2:DescribeInstances",
+                          [31m-[0m[0m "ec2:DescribeCoipPools",
+                          [31m-[0m[0m "ec2:DescribeAvailabilityZones",
+                          [31m-[0m[0m "ec2:DescribeAddresses",
+                          [31m-[0m[0m "ec2:DescribeAccountAttributes",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "wafv2:GetWebACLForResource",
+                          [31m-[0m[0m "wafv2:GetWebACL",
+                          [31m-[0m[0m "wafv2:DisassociateWebACL",
+                          [31m-[0m[0m "wafv2:AssociateWebACL",
+                          [31m-[0m[0m "waf-regional:GetWebACLForResource",
+                          [31m-[0m[0m "waf-regional:GetWebACL",
+                          [31m-[0m[0m "waf-regional:DisassociateWebACL",
+                          [31m-[0m[0m "waf-regional:AssociateWebACL",
+                          [31m-[0m[0m "shield:GetSubscriptionState",
+                          [31m-[0m[0m "shield:DescribeProtection",
+                          [31m-[0m[0m "shield:DeleteProtection",
+                          [31m-[0m[0m "shield:CreateProtection",
+                          [31m-[0m[0m "iam:ListServerCertificates",
+                          [31m-[0m[0m "iam:GetServerCertificate",
+                          [31m-[0m[0m "cognito-idp:DescribeUserPoolClient",
+                          [31m-[0m[0m "acm:ListCertificates",
+                          [31m-[0m[0m "acm:DescribeCertificate",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [31m-[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = "ec2:CreateSecurityGroup"
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "ec2:CreateTags"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null         = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "ec2:CreateAction" = "CreateSecurityGroup"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "ec2:DeleteTags",
+                          [31m-[0m[0m "ec2:CreateTags",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [31m-[0m[0m "ec2:DeleteSecurityGroup",
+                          [31m-[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:CreateTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:CreateLoadBalancer",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:DeleteRule",
+                          [31m-[0m[0m "elasticloadbalancing:DeleteListener",
+                          [31m-[0m[0m "elasticloadbalancing:CreateRule",
+                          [31m-[0m[0m "elasticloadbalancing:CreateListener",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:RemoveTags",
+                          [31m-[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = [
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:RemoveTags",
+                          [31m-[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = [
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = [
+                          [31m-[0m[0m "elasticloadbalancing:SetSubnets",
+                          [31m-[0m[0m "elasticloadbalancing:SetSecurityGroups",
+                          [31m-[0m[0m "elasticloadbalancing:SetIpAddressType",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyTargetGroupAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyListenerAttributes",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyIpPools",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyCapacityReservation",
+                          [31m-[0m[0m "elasticloadbalancing:DeleteTargetGroup",
+                          [31m-[0m[0m "elasticloadbalancing:DeleteLoadBalancer",
+                        ]
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null = {
+                              [31m-[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = "*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "elasticloadbalancing:AddTags"
+                      [31m-[0m[0m Condition = {
+                          [31m-[0m[0m Null         = {
+                              [31m-[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [31m-[0m[0m StringEquals = {
+                              [31m-[0m[0m "elasticloadbalancing:CreateAction" = [
+                                  [31m-[0m[0m "CreateTargetGroup",
+                                  [31m-[0m[0m "CreateLoadBalancer",
+                                ]
+                            }
+                        }
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Resource  = [
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [31m-[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:RegisterTargets",
+                          [31m-[0m[0m "elasticloadbalancing:DeregisterTargets",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "elasticloadbalancing:SetWebAcl",
+                          [31m-[0m[0m "elasticloadbalancing:SetRulePriorities",
+                          [31m-[0m[0m "elasticloadbalancing:RemoveListenerCertificates",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyRule",
+                          [31m-[0m[0m "elasticloadbalancing:ModifyListener",
+                          [31m-[0m[0m "elasticloadbalancing:AddListenerCertificates",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m policy_id        = "ANPAWPWVKGTM7UKBELE6X" [90m-> null[0m[0m
+      [31m-[0m[0m tags             = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all         = {
+          [31m-[0m[0m "environment"  = "staging"
+          [31m-[0m[0m "map-migrated" = "TBD"
+        } [90m-> null[0m[0m
+    }
+
+[1m  # module.external_dns_irsa_role.aws_iam_policy.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "this" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m attachment_count = (known after apply)
+      [32m+[0m[0m description      = "Provides permissions for AWS Load Balancer Controller addon"
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m name             = "AWS_Load_Balancer_Controller"
+      [32m+[0m[0m name_prefix      = (known after apply)
+      [32m+[0m[0m path             = "/"
+      [32m+[0m[0m policy           = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "iam:CreateServiceLinkedRole"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "iam:AWSServiceName" = "elasticloadbalancing.amazonaws.com"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTrustStores",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetHealth",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetGroups",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetGroupAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTags",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeSSLPolicies",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeRules",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeLoadBalancers",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListeners",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListenerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeCapacityReservation",
+                          [32m+[0m[0m "ec2:GetSecurityGroupsForVpc",
+                          [32m+[0m[0m "ec2:GetCoipPoolUsage",
+                          [32m+[0m[0m "ec2:DescribeVpcs",
+                          [32m+[0m[0m "ec2:DescribeVpcPeeringConnections",
+                          [32m+[0m[0m "ec2:DescribeTags",
+                          [32m+[0m[0m "ec2:DescribeSubnets",
+                          [32m+[0m[0m "ec2:DescribeSecurityGroups",
+                          [32m+[0m[0m "ec2:DescribeRouteTables",
+                          [32m+[0m[0m "ec2:DescribeNetworkInterfaces",
+                          [32m+[0m[0m "ec2:DescribeIpamPools",
+                          [32m+[0m[0m "ec2:DescribeInternetGateways",
+                          [32m+[0m[0m "ec2:DescribeInstances",
+                          [32m+[0m[0m "ec2:DescribeCoipPools",
+                          [32m+[0m[0m "ec2:DescribeAvailabilityZones",
+                          [32m+[0m[0m "ec2:DescribeAddresses",
+                          [32m+[0m[0m "ec2:DescribeAccountAttributes",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "wafv2:GetWebACLForResource",
+                          [32m+[0m[0m "wafv2:GetWebACL",
+                          [32m+[0m[0m "wafv2:DisassociateWebACL",
+                          [32m+[0m[0m "wafv2:AssociateWebACL",
+                          [32m+[0m[0m "waf-regional:GetWebACLForResource",
+                          [32m+[0m[0m "waf-regional:GetWebACL",
+                          [32m+[0m[0m "waf-regional:DisassociateWebACL",
+                          [32m+[0m[0m "waf-regional:AssociateWebACL",
+                          [32m+[0m[0m "shield:GetSubscriptionState",
+                          [32m+[0m[0m "shield:DescribeProtection",
+                          [32m+[0m[0m "shield:DeleteProtection",
+                          [32m+[0m[0m "shield:CreateProtection",
+                          [32m+[0m[0m "iam:ListServerCertificates",
+                          [32m+[0m[0m "iam:GetServerCertificate",
+                          [32m+[0m[0m "cognito-idp:DescribeUserPoolClient",
+                          [32m+[0m[0m "acm:ListCertificates",
+                          [32m+[0m[0m "acm:DescribeCertificate",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = "ec2:CreateSecurityGroup"
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "ec2:CreateTags"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null         = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "ec2:CreateAction" = "CreateSecurityGroup"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "ec2:DeleteTags",
+                          [32m+[0m[0m "ec2:CreateTags",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "arn:aws:ec2:*:*:security-group/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:DeleteSecurityGroup",
+                          [32m+[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "elasticloadbalancing:CreateTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:CreateLoadBalancer",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:DeleteRule",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteListener",
+                          [32m+[0m[0m "elasticloadbalancing:CreateRule",
+                          [32m+[0m[0m "elasticloadbalancing:CreateListener",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "elasticloadbalancing:RemoveTags",
+                          [32m+[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster"  = "true"
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = [
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:RemoveTags",
+                          [32m+[0m[0m "elasticloadbalancing:AddTags",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = [
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "elasticloadbalancing:SetSubnets",
+                          [32m+[0m[0m "elasticloadbalancing:SetSecurityGroups",
+                          [32m+[0m[0m "elasticloadbalancing:SetIpAddressType",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyTargetGroupAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyListenerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyIpPools",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyCapacityReservation",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteLoadBalancer",
+                        ]
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null = {
+                              [32m+[0m[0m "aws:ResourceTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "elasticloadbalancing:AddTags"
+                      [32m+[0m[0m Condition = {
+                          [32m+[0m[0m Null         = {
+                              [32m+[0m[0m "aws:RequestTag/elbv2.k8s.aws/cluster" = "false"
+                            }
+                          [32m+[0m[0m StringEquals = {
+                              [32m+[0m[0m "elasticloadbalancing:CreateAction" = [
+                                  [32m+[0m[0m "CreateTargetGroup",
+                                  [32m+[0m[0m "CreateLoadBalancer",
+                                ]
+                            }
+                        }
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Resource  = [
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+                          [32m+[0m[0m "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
+                        ]
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:RegisterTargets",
+                          [32m+[0m[0m "elasticloadbalancing:DeregisterTargets",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:SetWebAcl",
+                          [32m+[0m[0m "elasticloadbalancing:SetRulePriorities",
+                          [32m+[0m[0m "elasticloadbalancing:RemoveListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyRule",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyListener",
+                          [32m+[0m[0m "elasticloadbalancing:AddListenerCertificates",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id        = (known after apply)
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "environment"  = "staging"
+          [32m+[0m[0m "map-migrated" = "TBD"
+        }
+    }
+
+[1m  # module.external_dns_irsa_role.aws_iam_role_policy_attachment.load_balancer_controller[0][0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_role_policy_attachment.load_balancer_controller is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
+      [31m-[0m[0m id         = "external-dns/arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::446050219225:policy/AmazonEKS_AWS_Load_Balancer_Controller-20250902173342891300000006" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "external-dns" [90m-> null[0m[0m
+    }
+
+[1m  # module.external_dns_irsa_role.aws_iam_role_policy_attachment.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = "external-dns"
+    }
+
+[1m  # module.vpc.aws_nat_gateway.this[0][0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_nat_gateway" "this" {
+        id                                 = "nat-005dbfb1aabd2c4c0"
+      [32m+[0m[0m regional_nat_gateway_address       = (known after apply)
+        tags                               = {
+            "Name" = "staging-vpc-eu-west-2a"
+        }
+        [90m# (14 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m7 to add, 3 to change, 7 to destroy.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mDeprecated Resource[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  with kubernetes_service_account.cluster_autoscaler,
+[33m│[0m [0m  on cluster-autoscaler.tf line 53, in resource "kubernetes_service_account" "cluster_autoscaler":
+[33m│[0m [0m  53: resource "kubernetes_service_account" "cluster_autoscaler" [4m{[0m[0m
+[33m│[0m [0m
+[33m│[0m [0mDeprecated; use kubernetes_service_account_v1.
+[33m│[0m [0m
+[33m│[0m [0m(and 14 more similar warnings elsewhere)
+[33m╵[0m[0m
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

@@ -1,27 +1,29 @@
 module "ebs_csi_irsa_role" {
-	source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "5.59.0"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+  version = "6.4.0"
 
-	role_name             = "ebs-csi"
-	attach_ebs_csi_policy = true
+  name                  = "ebs-csi"
+  use_name_prefix       = false
+  attach_ebs_csi_policy = true
 
-	oidc_providers = {
-		ex = {
-			provider_arn               = module.eks.oidc_provider_arn
-			namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
-		}
-	}
+  oidc_providers = {
+    ex = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
+    }
+  }
 }
 
 module "aws_load_balancer_controller_irsa_role" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "5.59.0"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+  version = "6.4.0"
 
-  role_name = "aws-load-balancer-controller"
+  name            = "aws-load-balancer-controller"
+  use_name_prefix = false
 
   attach_load_balancer_controller_policy = true
 
-  role_policy_arns = {
+  policies = {
     "additional_lb_policy" = aws_iam_policy.additional_lb_policy.arn
   }
 
@@ -48,7 +50,7 @@ resource "helm_release" "aws_load_balancer_controller" {
        serviceAccount:
          name: aws-load-balancer-controller
          annotations:
-           eks.amazonaws.com/role-arn: ${module.aws_load_balancer_controller_irsa_role.iam_role_arn}
+           eks.amazonaws.com/role-arn: ${module.aws_load_balancer_controller_irsa_role.arn}
        vpcId: ${module.vpc.vpc_id}
        region: ${data.aws_region.current.region}
        image:
@@ -141,10 +143,12 @@ data "aws_iam_policy_document" "additional_lb_policy" {
 }
 
 module "external_dns_irsa_role" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "5.59.0"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+  version = "6.4.0"
 
-  role_name = "external-dns"
+  name            = "external-dns"
+  use_name_prefix = false
+  policy_name     = "AWS_Load_Balancer_Controller_ExternalDNS"
 
   attach_load_balancer_controller_policy = true
 
@@ -169,8 +173,8 @@ resource "helm_release" "external_dns" {
       value = "CF_API_TOKEN"
     },
     {
-    name  = "env[0].value"
-    value = data.aws_secretsmanager_secret_version.cloudflare.secret_string
+      name  = "env[0].value"
+      value = data.aws_secretsmanager_secret_version.cloudflare.secret_string
     }
   ]
 

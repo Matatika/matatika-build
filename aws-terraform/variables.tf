@@ -104,7 +104,7 @@ variable "eks_addons_versions" {
     aws_ebs_csi_driver = string
   })
   description = "Map of EKS add-on versions"
-  default     = {
+  default = {
     coredns            = "v1.12.1-eksbuild.2"
     kube_proxy         = "v1.33.0-eksbuild.2"
     vpc_cni            = "v1.19.5-eksbuild.3"
@@ -127,4 +127,10 @@ variable "cloudflare_secret_credentials" {
   type        = string
   description = "Secrets Manager path to CloudFlare API key"
   default     = "/terraform/cloudflare/credentials"
+}
+
+variable "deploy_prometheus" {
+  type        = bool
+  description = "Whether to deploy the kube-prometheus-stack Helm chart"
+  default     = false
 }
