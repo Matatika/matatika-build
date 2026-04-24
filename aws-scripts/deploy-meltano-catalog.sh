@@ -5,7 +5,7 @@ trap 's=$?; echo >&2 "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 [[ -z "$BUILD_HELM_HOME" ]] && { echo "Error: BUILD_HELM_HOME not found in env"; exit 1; }
 [[ -z "$BUILD_CONFIG_HOME" ]] && { echo "Error: BUILD_CONFIG_HOME not found in env"; exit 1; }
 [[ -z "$STAGE" ]] && { echo "Error: STAGE not found in env"; exit 1; }
-[[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
+#[[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
 [[ -z "$CATALOG_AUTH0_CLIENT_SECRET" ]] && { echo "Error: CATALOG_AUTH0_CLIENT_SECRET not found in env"; exit 1; }
 [[ -z "$CATALOG_GITHUB_API_PRIVATE_KEY" ]] && { echo "Error: CATALOG_GITHUB_API_PRIVATE_KEY not found in env"; exit 1; }
 [[ -z "$CATALOG_GITHUB_API_WORKSPACES_PRIVATE_KEY" ]] && { echo "Error: CATALOG_GITHUB_API_WORKSPACES_PRIVATE_KEY not found in env"; exit 1; }
@@ -44,7 +44,7 @@ helm upgrade \
 	--install \
 	--wait \
 	--timeout 10m0s \
-	--set image.password="${REGISTRY_PASSWORD}" \
+	#--set image.password="${REGISTRY_PASSWORD}" \
 	--set image.tag="${IMAGE_TAG}" \
 	--set appService.version="${APP_VERSION}" \
 	--set appService.auth0ClientSecret="${CATALOG_AUTH0_CLIENT_SECRET}" \
