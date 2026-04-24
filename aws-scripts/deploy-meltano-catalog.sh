@@ -25,7 +25,7 @@ fi
 #
 # helm upgrade [RELEASE] [CHART] [flags]
 #
-RELEASE=${STAGE}-matatika-catalog
+RELEASE=${STAGE}-meltano-catalog
 if [ -z "$APP_VERSION" ]; then
 	echo "INFO: APP_VERSION not set, using 'latest'.  NB - helm won't redeploy if there's no changes to the release, even if the pull policy is always";
 	APP_VERSION=latest
@@ -57,5 +57,5 @@ helm upgrade \
 	--set elasticsearch.rebuild="${ELASTICSEARCH_REBUILD}" \
 	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \
-	--values ${BUILD_CONFIG_HOME}/${STAGE}/matatika-catalog-values.yaml \
-	$BUILD_HELM_HOME/matatika-catalog/
+	--values ${BUILD_CONFIG_HOME}/${STAGE}/meltano-catalog-values.yaml \
+	$BUILD_HELM_HOME/meltano-catalog/

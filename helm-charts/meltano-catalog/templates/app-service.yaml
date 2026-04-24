@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "meltano-catalog.fullname" . }}-{{ .Values.appService.name }}
+  {{- with .Values.appService.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  type: {{ .Values.appService.type }}
+  ports:
+  - name: http
+    port: {{ .Values.appService.httpPort }}
+    targetPort: {{ .Values.appService.targetPort }} # app-http
+    protocol: TCP
+  selector:
+    app: {{ template "meltano-catalog.fullname" . }}-app
