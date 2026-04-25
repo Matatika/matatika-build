@@ -14,7 +14,7 @@ trap 's=$?; echo >&2 "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 [[ -z "$CATALOG_MATATIKA_ES_ELASTIC_PASSWORD" ]] && { echo "Error: CATALOG_MATATIKA_ES_ELASTIC_PASSWORD not found in env"; exit 1; }
 [[ -z "$CATALOG_MATATIKA_ENCRYPTOR_PASSWORD" ]] && { echo "Error: CATALOG_MATATIKA_ENCRYPTOR_PASSWORD not found in env"; exit 1; }
 
-helm repo rm stable
+helm repo rm stable || true
 helm repo add stable https://charts.helm.sh/stable
 
 helm list --namespace ${STAGE}
