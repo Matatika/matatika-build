@@ -45,7 +45,6 @@ helm upgrade \
 	--install \
 	--wait \
 	--timeout 10m0s \
-	#--set image.password="${REGISTRY_PASSWORD}" \
 	--set image.tag="${IMAGE_TAG}" \
 	--set appService.version="${APP_VERSION}" \
 	--set appService.auth0ClientSecret="${CATALOG_AUTH0_CLIENT_SECRET}" \
