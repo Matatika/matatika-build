@@ -27,7 +27,7 @@ spec:
         app: {{ include "meltano-catalog.fullname" . }}-app
         version: "v{{ .Values.appService.version }}"
     spec:
-{{- if .Values.image.private }}
+{{- if .Values.image.acr }}
       imagePullSecrets:
         - name: {{ .Chart.Name }}-acr-secret
 {{- end }}
@@ -90,11 +90,13 @@ spec:
               secretKeyRef:
                 name: {{ .Release.Name }}-appsecrets
                 key:  encryptor_pass
+{{- if .Values.image.acr }}
           - name: "SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY-CONFIGURATIONS_AZURECR__SECRET"
             valueFrom:
               secretKeyRef:
                 name: {{ .Release.Name }}-appsecrets
                 key:  azurecr_registry_secret
+{{- end }}
 
 {{- if .Values.elasticsearch.rebuild }}
           - name: ELASTICSEARCH_REBUILD

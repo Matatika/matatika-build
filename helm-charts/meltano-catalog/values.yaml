@@ -8,8 +8,8 @@ image:
   name: local/meltano-catalog
   # Specify a specific image version to override default ({{ .Release.appVersion }})
   #tag: latest
-  private: false
-  #password: [your docker registry password]
+  acr: false
+  #password: [your acr password — only used when acr: true]
   ## Specify an imagePullPolicy (Required)
   ## Use 'Never' if this is local development, 'Always' if the image is deployed using latest
   ## ref: http://kubernetes.io/docs/user-guide/images/#updating-images
