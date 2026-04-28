@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: latest-dev
+description: The meltano-catalog helm chart for Kubernetes
+name: meltano-catalog
+version: 0.1.0
