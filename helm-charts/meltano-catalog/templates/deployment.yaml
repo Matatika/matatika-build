@@ -36,7 +36,7 @@ spec:
 {{- end }}
 {{- if .Values.appService.nodePool }}
       nodeSelector:
-        agentpool: "{{ .Values.appService.nodePool }}"
+        {{ .Values.appService.nodeSelectorKey | default "agentpool" }}: "{{ .Values.appService.nodePool }}"
 {{- end }}
       volumes:
       - configMap:
