@@ -37,6 +37,25 @@ fi
 
 ELASTICSEARCH_REBUILD=${ELASTICSEARCH_REBUILD:-false}
 
+# ── GKE context discovery ─────────────────────────────────────────────────────
+# When deploying into a GKE cluster, the kubeconfig context is named
+# `gke_<project>_<location>_<cluster>`. Pull project / location / cluster
+# straight out of it and pass them to the chart's gcp.* values, so the
+# environment values file doesn't have to repeat what's already implicit
+# in the active context.
+HELM_GCP_OVERRIDES=()
+CONTEXT=$(kubectl config current-context)
+if [[ "$CONTEXT" == gke_* ]]; then
+	IFS=_ read -r _ GCP_PROJECT GCP_LOCATION GCP_CLUSTER <<<"$CONTEXT"
+	echo "INFO: detected GKE context — project=$GCP_PROJECT, location=$GCP_LOCATION, cluster=$GCP_CLUSTER"
+	HELM_GCP_OVERRIDES=(
+		--set gcp.enabled=true
+		--set gcp.projectId="$GCP_PROJECT"
+		--set gcp.cluster.location="$GCP_LOCATION"
+		--set gcp.cluster.name="$GCP_CLUSTER"
+	)
+fi
+
 echo "Upgrading to APP_VERSION: $APP_VERSION, IMAGE_TAG: $IMAGE_TAG"
 helm upgrade \
 	${RELEASE} \
@@ -58,4 +77,5 @@ helm upgrade \
 	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/meltano-catalog-values.yaml \
+	${HELM_GCP_OVERRIDES[@]+"${HELM_GCP_OVERRIDES[@]}"} \
 	$BUILD_HELM_HOME/meltano-catalog/
