@@ -37,3 +37,24 @@ Generate the imagePullSecret for a private Container Registry.
 {{- define "imagePullSecret" }}
 {{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.image.repository (printf "%s:%s" .Values.image.username .Values.image.password | b64enc) | b64enc }}
 {{- end }}
+
+{{/*
+Decide which Kubernetes Secret holds a given app-secret key.
+
+When gcp.enabled is true AND the key is listed in gcp.secrets, the key is
+sourced from the ESO-managed Secret ("<release>-appsecrets-gcp"). Otherwise
+the key continues to come from the Helm-managed Secret ("<release>-appsecrets").
+
+Args (dict):
+  key: the K8s secret key (e.g. "persistence_catalog_pass")
+  ctx: the chart root context (pass `.`)
+*/}}
+{{- define "meltano-catalog.appsecret-name" -}}
+{{- $key := .key -}}
+{{- $ctx := .ctx -}}
+{{- if and $ctx.Values.gcp.enabled (hasKey ($ctx.Values.gcp.secrets | default dict) $key) -}}
+{{- printf "%s-appsecrets-gcp" $ctx.Release.Name -}}
+{{- else -}}
+{{- printf "%s-appsecrets" $ctx.Release.Name -}}
+{{- end -}}
+{{- end -}}

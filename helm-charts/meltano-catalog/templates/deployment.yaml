@@ -27,6 +27,9 @@ spec:
         app: {{ include "meltano-catalog.fullname" . }}-app
         version: "v{{ .Values.appService.version }}"
     spec:
+{{- if .Values.gcp.enabled }}
+      serviceAccountName: {{ .Values.gcp.serviceAccountName }}
+{{- end }}
 {{- if .Values.image.acr }}
       imagePullSecrets:
         - name: {{ .Chart.Name }}-acr-secret
@@ -39,6 +42,19 @@ spec:
       - configMap:
           name: {{ include "meltano-catalog.fullname" . }}-application-config
         name: application-config
+{{- if and .Values.gcp.enabled .Values.gcp.secrets }}
+      # CSI volume backed by the GKE Secret Manager add-on. The mount itself
+      # is what triggers the driver to fetch the listed secrets and project
+      # them into the K8s Secret declared via secretObjects on the
+      # SecretProviderClass — without this volume on a pod, the K8s Secret
+      # would never materialise and the env-var lookups below would fail.
+      - name: gcp-secrets
+        csi:
+          driver: secrets-store-gke.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: {{ .Release.Name }}-appsecrets-gcp
+{{- end }}
       containers:
       - name: {{ .Chart.Name }}-app
       {{- if .Values.image.tag }}
@@ -52,43 +68,51 @@ spec:
           mountPath: /config/application-deploy.properties
           subPath: application-deploy.properties
           readOnly: true
+{{- if and .Values.gcp.enabled .Values.gcp.secrets }}
+        # Read-only mount of the CSI volume. We don't actually read the files
+        # from /var/secrets/gcp — env vars below pull from the synced K8s
+        # Secret instead. The mount exists purely to keep the driver active.
+        - name: gcp-secrets
+          mountPath: /var/secrets/gcp
+          readOnly: true
+{{- end }}
         env:
           - name: "APP_VERSION"
             value: "v{{ .Values.appService.version }}"
           - name: "AUTH0_CLIENT_SECRET"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "auth0_client_secret" "ctx" .) }}
                 key:  auth0_client_secret
           - name: "GITHUB_API_PRIVATE_KEY"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "github_api_private_key" "ctx" .) }}
                 key:  github_api_private_key
           - name: "GITHUB_API_WORKSPACES_PRIVATE_KEY"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "github_api_workspaces_private_key" "ctx" .) }}
                 key:  github_api_workspaces_private_key
           - name: "PERSISTENCE_WAREHOUSE_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "persistence_warehouse_pass" "ctx" .) }}
                 key:  persistence_warehouse_pass
           - name: "PERSISTENCE_CATALOG_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "persistence_catalog_pass" "ctx" .) }}
                 key:  persistence_catalog_pass
           - name: "ELASTICSEARCH_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "es_elastic_pass" "ctx" .) }}
                 key:  es_elastic_pass
           - name: "MATATIKA_ENCRYPTOR_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "encryptor_pass" "ctx" .) }}
                 key:  encryptor_pass
 {{- if .Values.image.acr }}
           - name: "SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY-CONFIGURATIONS_AZURECR__SECRET"

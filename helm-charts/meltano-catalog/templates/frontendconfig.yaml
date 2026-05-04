@@ -1,0 +1,32 @@
+{{- /*
+  GKE FrontendConfig — adds policies that attach to the L7 load balancer
+  fronting the Ingress. Today this is used to redirect HTTP to HTTPS at the
+  LB, equivalent to the AWS Load Balancer Controller's `ssl-redirect`
+  annotation. The CRD is shipped by the GKE Ingress controller; on non-GKE
+  clusters this template should be left disabled (the default) since the CRD
+  isn't installed there.
+
+  The Ingress references this object via the
+  `networking.gke.io/v1beta1.FrontendConfig` annotation, which is injected by
+  templates/ingress.yaml when ingress.frontendConfig.enabled is true so the
+  user doesn't need to repeat the chart fullname in their values file.
+*/ -}}
+{{- if and .Values.ingress.enabled .Values.ingress.frontendConfig .Values.ingress.frontendConfig.enabled -}}
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: {{ include "meltano-catalog.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "meltano-catalog.name" . }}
+    helm.sh/chart: {{ include "meltano-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- with .Values.ingress.frontendConfig.redirectToHttps }}
+  redirectToHttps:
+    enabled: {{ .enabled }}
+    {{- with .responseCodeName }}
+    responseCodeName: {{ . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
