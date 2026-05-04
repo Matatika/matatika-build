@@ -1,6 +1,14 @@
 {{- if .Values.rbac.create -}}
 {{- $serviceName := include "meltano-catalog.fullname" . -}}
 
+{{- if and .Values.appService.dataflowTasksNamespace (ne .Values.appService.dataflowTasksNamespace .Release.Namespace) }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.appService.dataflowTasksNamespace }}
+---
+{{- end }}
+
 # This role is used to allow Matatika Catalog to read configuration from config maps via Kubernetes plugin.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
