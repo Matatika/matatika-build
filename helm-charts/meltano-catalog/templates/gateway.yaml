@@ -30,6 +30,24 @@ metadata:
   {{- end }}
 spec:
   gatewayClassName: {{ .Values.gateway.className }}
+  {{- /*
+    Pin the LB to a specific IP via Gateway API spec.addresses. This is the
+    Gateway-API-native equivalent of the legacy `networking.gke.io/static-ip`
+    annotation; on GKE the controller documents both, but the annotation has
+    been observed not to take effect on some cluster versions, so the chart
+    supports either or both.
+
+    Each entry is `{ type, value }`:
+      type: NamedAddress  → value is the name of a google_compute_global_address
+      type: IPAddress     → value is the literal IPv4/IPv6 string
+  */}}
+  {{- with .Values.gateway.addresses }}
+  addresses:
+    {{- range . }}
+    - type: {{ .type }}
+      value: {{ .value | quote }}
+    {{- end }}
+  {{- end }}
   listeners:
   - name: https
     port: 443

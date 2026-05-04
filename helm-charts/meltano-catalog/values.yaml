@@ -100,12 +100,23 @@ gateway:
   #   networking.gke.io/certmap:   <cert-map-name>
   #   networking.gke.io/static-ip: <static-ip-resource-name>
   annotations: {}
+  # Gateway API spec.addresses — pin the LB VIP. Equivalent to the
+  # `networking.gke.io/static-ip` annotation but uses the upstream Gateway API
+  # field directly. Useful when the annotation is silently ignored by the
+  # controller (observed on some GKE versions). Leave empty to let the
+  # controller allocate a dynamic IP.
+  #   - type: NamedAddress  # value is google_compute_global_address.name
+  #     value: my-static-ip
+  #   - type: IPAddress
+  #     value: 34.102.144.50
+  addresses: []
   # Annotations on the HTTPS HTTPRoute (external-dns, etc.).
   routeAnnotations: {}
   # Hostnames the HTTPRoute matches. All route to the chart's app service.
   hosts: []
-  # Emit a second HTTPRoute on the :80 listener that issues a 308 redirect to
+  # Emit a second HTTPRoute on the :80 listener that issues a 301 redirect to
   # HTTPS. Equivalent to the FrontendConfig redirectToHttps setting.
+  # (GKE Gateway only supports 301/302 for RequestRedirect — not 308.)
   redirectHttps: true
 
 resources: {}
