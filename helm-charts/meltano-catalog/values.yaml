@@ -80,6 +80,34 @@ ingress:
       # preference for HTTP→HTTPS — preserves method, signals permanence.
       responseCodeName: PERMANENT_REDIRECT
 
+# ── GKE Gateway API (opt-in, replaces Ingress on GKE Autopilot) ──────────────
+# GKE Autopilot does not register the `gce` IngressClass, so Ingresses with
+# ingressClassName: gce are silently ignored. Set ingress.enabled: false and
+# gateway.enabled: true when deploying to GKE Autopilot.
+#
+# gateway.create controls whether this chart owns the Gateway resource. Set
+# false when the Gateway is shared with other charts in the same namespace
+# (e.g. matatika-catalog and meltano-catalog both binding to one Gateway).
+gateway:
+  enabled: false
+  create: true
+  # Defaults to .Release.Name when empty.
+  name: ""
+  # gke-l7-global-external-managed is the recommended Global External
+  # Application LB; gke-l7-gxlb is the equivalent classic path.
+  className: gke-l7-global-external-managed
+  # Annotations on the Gateway resource (GKE-specific config):
+  #   networking.gke.io/certmap:   <cert-map-name>
+  #   networking.gke.io/static-ip: <static-ip-resource-name>
+  annotations: {}
+  # Annotations on the HTTPS HTTPRoute (external-dns, etc.).
+  routeAnnotations: {}
+  # Hostnames the HTTPRoute matches. All route to the chart's app service.
+  hosts: []
+  # Emit a second HTTPRoute on the :80 listener that issues a 308 redirect to
+  # HTTPS. Equivalent to the FrontendConfig redirectToHttps setting.
+  redirectHttps: true
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
