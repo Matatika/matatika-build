@@ -1,0 +1,49 @@
+# Default values for meltano-secrets.
+#
+# This chart provisions the per-namespace plumbing that lets apps in this
+# namespace consume GCP Secret Manager secrets via External Secrets Operator.
+# It does NOT install ESO itself — that's a cluster-wide concern, installed
+# once via the upstream external-secrets/external-secrets chart.
+#
+# What this chart creates:
+#   - A SecretStore in .Release.Namespace that authenticates to GCP via
+#     Workload Identity, impersonating .Values.serviceAccountName.
+#   - A Role + RoleBinding granting the ESO controller permission to call
+#     the K8s TokenRequest API against .Values.serviceAccountName, which is
+#     what powers the workloadIdentity.serviceAccountRef path in the
+#     SecretStore.
+#
+# Pre-reqs (NOT provisioned by this chart):
+#   - External Secrets Operator installed cluster-wide.
+#   - .Values.serviceAccountName ServiceAccount exists in this namespace
+#     (typically created by an app chart, e.g. meltano-catalog).
+#   - That KSA is annotated with iam.gke.io/gcp-service-account pointing at
+#     a GSA which holds roles/secretmanager.secretAccessor on the secrets
+#     apps in this namespace need to read.
+#   - That WI binding exists in IAM (in Terraform, see
+#     accounts/<project>/europe-west2/iam/main.tf in
+#     meltano-infrastructure-gcp).
+
+# GCP project that owns the Secret Manager secrets to be fetched.
+projectId: ""
+
+# GKE cluster identity. ESO needs both fields to derive the Workload
+# Identity pool URL when exchanging KSA tokens for GCP access tokens.
+cluster:
+  location: ""
+  name: ""
+
+# Name of the Kubernetes ServiceAccount in this namespace that ESO
+# impersonates when fetching secrets. Must already exist and be WI-bound.
+serviceAccountName: ""
+
+# Name of the SecretStore created in this namespace. Apps in this namespace
+# reference this name in their ExternalSecret's secretStoreRef.name.
+secretStoreName: gcp-secret-manager
+
+# Where the ESO controller runs. The chart creates a RoleBinding granting
+# the controller's KSA permission to mint tokens for serviceAccountName.
+# The defaults match the upstream external-secrets helm chart.
+esoController:
+  namespace: external-secrets
+  serviceAccountName: external-secrets

@@ -100,34 +100,64 @@ affinity: {}
 
 # ── GCP / Secret Manager (opt-in) ─────────────────────────────────────────────
 # When gcp.enabled is true, the chart creates:
-#   - A ServiceAccount annotated with iam.gke.io/gcp-service-account so the pod
-#     can impersonate the listed GSA via Workload Identity.
-#   - A SecretProviderClass for the GKE Secret Manager add-on, which mounts
-#     each entry in gcp.secrets and projects them into a Kubernetes Secret
-#     named "<release>-appsecrets-gcp".
-#   - The deployment mounts a CSI volume so the projection is active.
+#   - A ServiceAccount annotated with iam.gke.io/gcp-service-account so the
+#     pod (and ESO when impersonating it) can act as the listed GSA via
+#     Workload Identity.
+#   - A SecretStore that authenticates to GCP Secret Manager via Workload
+#     Identity, impersonating the chart's KSA. (Skipped if gcp.createSecretStore
+#     is false — for the case where the SecretStore is provisioned externally
+#     and shared across multiple apps in the namespace.)
+#   - A Role + RoleBinding granting the ESO controller permission to call
+#     the K8s TokenRequest API on the chart's KSA, which is what powers the
+#     workloadIdentity.serviceAccountRef path in the SecretStore.
+#   - An ExternalSecret that pulls each entry in gcp.secrets from GCP Secret
+#     Manager and writes them to a Kubernetes Secret named
+#     "<release>-appsecrets-gcp".
 #
 # Per-key env-var routing: any key listed in gcp.secrets is pulled from the
-# CSI-projected Secret; anything not in this map continues to come from the
+# ESO-managed Secret; anything not in this map continues to come from the
 # Helm-managed appsecrets Secret. This lets you migrate one secret at a time.
 #
-# Pre-req: the GKE cluster must have the Secret Manager add-on enabled
-# (secret_manager_config.enabled = true on google_container_cluster). The GSA
-# at gcp.serviceAccountEmail must have roles/secretmanager.secretAccessor on
-# the secrets it needs to read. No in-cluster controller pods are created by
-# this path — the CSI driver is shipped by GKE on Google-managed nodes.
+# Pre-reqs (cluster bootstrap, NOT provisioned by this chart):
+#   - External Secrets Operator (ESO) installed in the cluster.
+#   - The GSA at gcp.serviceAccountEmail exists and has
+#     roles/secretmanager.secretAccessor on the secrets it needs to read.
+#   - The Workload Identity binding from
+#     <project>.svc.id.goog[<namespace>/<serviceAccountName>] to that GSA
+#     exists in IAM (in Terraform: meltano-infrastructure-gcp/.../iam).
 gcp:
   enabled: false
   # GCP project that owns the Secret Manager secrets. Required because secrets
   # may live in a different project than the cluster.
   projectId: ""
+  # GKE cluster identity. ESO needs both fields to derive the Workload
+  # Identity pool URL when exchanging KSA tokens for GCP access tokens.
+  # cluster.name defaults to projectId — Matatika's convention has them equal.
+  # cluster.location has no convention to default from; supply it explicitly
+  # (or let the deploy script derive it from `kubectl config current-context`).
+  cluster:
+    location: ""
+    name: ""
   # GSA bound to the chart's KSA via Workload Identity. The pod uses it to
-  # talk to Cloud SQL, Cloud Storage, etc. and the CSI driver uses it to read
-  # the secrets listed under gcp.secrets.
+  # talk to Cloud SQL, Cloud Storage, etc., and ESO uses it (via KSA
+  # impersonation) to read the secrets listed under gcp.secrets.
   serviceAccountEmail: ""
   # Name of the Kubernetes ServiceAccount the deployment runs as. Created by
   # the chart with the WI annotation pointing at gcp.serviceAccountEmail.
+  # ESO impersonates this KSA when fetching secrets.
   serviceAccountName: meltano-catalog
+  # Name of the SecretStore that ESO will use to fetch the secrets listed
+  # below. By default the chart creates it; set createSecretStore=false to
+  # use an externally-managed SecretStore by this name (e.g., shared across
+  # multiple apps in the same namespace).
+  secretStoreName: gcp-secret-manager
+  createSecretStore: true
+  # Where the ESO controller runs. The chart creates a RoleBinding granting
+  # the controller's KSA permission to mint tokens for serviceAccountName.
+  # Defaults match the upstream external-secrets helm chart.
+  esoController:
+    namespace: external-secrets
+    serviceAccountName: external-secrets
   # Map of K8s-secret key (matches existing appsecrets keys) → GCP Secret
   # Manager secret ID. Only listed keys are pulled from Secret Manager;
   # anything not in this map continues to come from the Helm appsecrets Secret.

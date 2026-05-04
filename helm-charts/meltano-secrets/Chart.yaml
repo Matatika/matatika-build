@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "0.1.0"
+description: Per-namespace integration between External Secrets Operator and GCP Secret Manager. Provisions a SecretStore and the RBAC the ESO controller needs to impersonate a Workload Identity-bound KSA in this namespace.
+name: meltano-secrets
+version: 0.1.0
