@@ -9,10 +9,10 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+    # Single-replica deployment backed by a ReadWriteOnce PV.
+    # RollingUpdate would try to start the new pod before the old pod releases
+    # the volume, deadlocking on Multi-Attach. Recreate avoids this.
+    type: Recreate
   selector:
     matchLabels:
       app: {{ template "mysql.fullname" . }}
@@ -46,9 +46,12 @@ spec:
       {{- if .Values.extraInitContainers }}
 {{ tpl .Values.extraInitContainers . | indent 6 }}
       {{- end }}
-      {{- if .Values.nodeSelector }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-        agentPool: "{{ toYaml .Values.nodeSelector }}"
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- if .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- end }}
       containers:
       - name: {{ template "mysql.fullname" . }}

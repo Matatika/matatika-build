@@ -61,6 +61,11 @@ extraInitContainers: |
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 nodeSelector: {}
 
+## Grace period for clean MySQL shutdown.
+## Default (30s) can be too short for InnoDB to flush its buffer pool under load,
+## risking crash recovery on next startup. Bumped to 120s for safety.
+terminationGracePeriodSeconds: 120
+
 livenessProbe:
   initialDelaySeconds: 30
   periodSeconds: 10
