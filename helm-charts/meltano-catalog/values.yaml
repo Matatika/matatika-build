@@ -4,6 +4,14 @@
 
 replicaCount: 1
 
+# ── Deploy-time inputs ────────────────────────────────────────────────────────
+# Values populated by the deploy script (not by humans editing values files).
+# `redeployAt` is rendered into a pod-template annotation to force a rolling
+# restart on every deploy when the image tag is mutable (e.g. latest-dev).
+# Leave blank by default so `helm template` / local installs stay idempotent.
+deploy:
+  redeployAt: ""
+
 image:
   name: local/meltano-catalog
   # Specify a specific image version to override default ({{ .Release.appVersion }})

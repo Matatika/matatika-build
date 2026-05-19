@@ -43,6 +43,11 @@ fi
 
 ELASTICSEARCH_REBUILD=${ELASTICSEARCH_REBUILD:-false}
 
+# Build-unique value rendered into a pod-template annotation so every deploy
+# rotates the ReplicaSet, even when image.tag is a mutable tag (e.g. latest-dev)
+# whose underlying image has been rebuilt.
+REDEPLOY_AT=${CODEBUILD_BUILD_ID:-$(date -u +%Y%m%dT%H%M%SZ)}
+
 echo "Upgrading to APP_VERSION: $APP_VERSION, IMAGE_TAG: $IMAGE_TAG"
 
 # ── GKE context discovery ─────────────────────────────────────────────────────
@@ -73,6 +78,7 @@ helm upgrade \
 	--wait \
 	--timeout 10m0s \
 	--set image.tag="${IMAGE_TAG}" \
+	--set deploy.redeployAt="${REDEPLOY_AT}" \
 	--set appService.version="${APP_VERSION}" \
 	--set appService.auth0ClientSecret="${CATALOG_AUTH0_CLIENT_SECRET}" \
 	--set appService.githubApiPrivateKey="${CATALOG_GITHUB_API_PRIVATE_KEY}" \
