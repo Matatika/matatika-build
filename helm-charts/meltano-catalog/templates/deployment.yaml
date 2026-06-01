@@ -8,9 +8,6 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-  annotations:
-    checksum/values: {{ (print $.Values) | sha256sum }}
-    checksum/config: {{ include (print $.Template.BasePath "/application-config.yaml") . | sha256sum }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -26,6 +23,21 @@ spec:
       labels:
         app: {{ include "meltano-catalog.fullname" . }}-app
         version: "v{{ .Values.appService.version }}"
+      annotations:
+        checksum/values: {{ (print $.Values) | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/application-config.yaml") . | sha256sum }}
+        {{- /*
+          Force a rolling restart on every deploy when the upstream image is
+          rebuilt under a mutable tag (e.g. latest-dev). The deploy script
+          passes a build-unique value (CODEBUILD_BUILD_ID, falling back to a
+          UTC timestamp) so the pod template hash always changes, a new
+          ReplicaSet is created, and — combined with imagePullPolicy: Always —
+          kubelet pulls the freshly built image. Skipped when unset so local
+          `helm template` / dev installs stay stable.
+        */}}
+        {{- with .Values.deploy.redeployAt }}
+        deploy.meltano.io/redeployed-at: {{ . | quote }}
+        {{- end }}
     spec:
 {{- if .Values.gcp.enabled }}
       serviceAccountName: {{ .Values.gcp.serviceAccountName }}
