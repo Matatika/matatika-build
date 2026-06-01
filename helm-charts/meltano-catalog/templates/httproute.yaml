@@ -1,0 +1,78 @@
+{{- /*
+  GKE Gateway API — HTTPRoute resources that bind to the Gateway in gateway.yaml
+  (or an externally-managed Gateway when gateway.create: false).
+
+  Two routes are emitted when gateway.redirectHttps is true:
+    1. HTTPS route  — forwards matching hosts to the app's ClusterIP service.
+    2. HTTP redirect — issues a 308 PERMANENT_REDIRECT to HTTPS for all hosts,
+                       replacing the FrontendConfig redirectToHttps behaviour.
+
+  routeAnnotations are applied to the HTTPS HTTPRoute only. Use them for
+  external-dns annotations on hosts whose DNS is not managed by Terraform
+  (e.g. Cloudflare for matatika.com, Route53 for meltano.com).
+*/ -}}
+{{- if .Values.gateway.enabled -}}
+{{- $fullName := include "meltano-catalog.fullname" . -}}
+{{- $gatewayName := .Values.gateway.name | default .Release.Name -}}
+{{- $httpPort := .Values.appService.httpPort -}}
+{{- $serviceName := .Values.appService.name -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app.kubernetes.io/name: {{ include "meltano-catalog.name" . }}
+    helm.sh/chart: {{ include "meltano-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.gateway.routeAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+  - name: {{ $gatewayName }}
+    sectionName: https
+  {{- with .Values.gateway.hosts }}
+  hostnames:
+  {{- range . }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: {{ $fullName }}-{{ $serviceName }}
+      port: {{ $httpPort }}
+{{- if .Values.gateway.redirectHttps }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $fullName }}-http-redirect
+  labels:
+    app.kubernetes.io/name: {{ include "meltano-catalog.name" . }}
+    helm.sh/chart: {{ include "meltano-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  parentRefs:
+  - name: {{ $gatewayName }}
+    sectionName: http
+  {{- with .Values.gateway.hosts }}
+  hostnames:
+  {{- range . }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
+{{- end }}
+{{- end }}

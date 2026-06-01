@@ -91,4 +91,5 @@ helm upgrade \
 	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/${APP_NAME}-catalog-values.yaml \
+	${HELM_GCP_OVERRIDES[@]+"${HELM_GCP_OVERRIDES[@]}"} \
 	$BUILD_HELM_HOME/${APP_NAME}-catalog/
