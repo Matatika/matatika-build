@@ -15,3 +15,11 @@ output "acm_dns_validation_records" {
 output "acm_arn" {
   value = module.acm.acm_certificate_arn
 }
+
+output "acm_meltano_dns_validation_records" {
+  value = module.acm_meltano.acm_certificate_domain_validation_options
+}
+
+output "acm_meltano_arn" {
+  value = module.acm_meltano.acm_certificate_arn
+}

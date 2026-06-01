@@ -15,7 +15,7 @@ trap 's=$?; echo >&2 "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 [[ -z "$CATALOG_MATATIKA_ES_ELASTIC_PASSWORD" ]] && { echo "Error: CATALOG_MATATIKA_ES_ELASTIC_PASSWORD not found in env"; exit 1; }
 [[ -z "$CATALOG_MATATIKA_ENCRYPTOR_PASSWORD" ]] && { echo "Error: CATALOG_MATATIKA_ENCRYPTOR_PASSWORD not found in env"; exit 1; }
 
-# Azure specific configuration
+# Azure specific configuration - when deploying to AKE we need to provide a registry password for the Shelltask to run.
 if [[ "$APP_NAME" == "matatika" ]]; then
 	[[ -z "$REGISTRY_PASSWORD" ]] && { echo "Error: REGISTRY_PASSWORD not found in env"; exit 1; }
 fi

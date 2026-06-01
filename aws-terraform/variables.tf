@@ -129,6 +129,18 @@ variable "cloudflare_secret_credentials" {
   default     = "/terraform/cloudflare/credentials"
 }
 
+variable "apps_node_group_subnet_ids" {
+  type        = list(string)
+  description = "Subnet IDs for the apps node group. Defaults to the VPC private subnets if not set."
+  default     = null
+}
+
+variable "apps_node_group_azs" {
+  type        = list(string)
+  description = "Availability zones to restrict the apps node group to. Filters the VPC private subnets to those in the given AZs. Ignored if apps_node_group_subnet_ids is set."
+  default     = null
+}
+
 variable "deploy_prometheus" {
   type        = bool
   description = "Whether to deploy the kube-prometheus-stack Helm chart"

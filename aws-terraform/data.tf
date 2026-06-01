@@ -23,6 +23,12 @@ data "aws_secretsmanager_secret_version" "db_creds" {
   secret_id = data.aws_secretsmanager_secret.db_creds.id
 }
 
+# Node groups
+data "aws_subnet" "private" {
+  for_each = toset(module.vpc.private_subnets)
+  id       = each.value
+}
+
 # EKS
 data "aws_eks_cluster_auth" "cluster_auth" {
   name = module.eks.cluster_name

@@ -100,7 +100,7 @@ resource "kubernetes_deployment" "cluster_autoscaler" {
         service_account_name = kubernetes_service_account.cluster_autoscaler.metadata[0].name
 
         container {
-          image = "registry.k8s.io/autoscaling/cluster-autoscaler:v1.27.3"
+          image = "registry.k8s.io/autoscaling/cluster-autoscaler:v1.32.7"
           name  = "cluster-autoscaler"
 
           resources {

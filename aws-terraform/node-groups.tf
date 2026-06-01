@@ -1,3 +1,13 @@
+locals {
+  apps_node_group_subnet_ids = (
+    var.apps_node_group_subnet_ids != null
+    ? var.apps_node_group_subnet_ids
+    : var.apps_node_group_azs != null
+    ? [for s in data.aws_subnet.private : s.id if contains(var.apps_node_group_azs, s.availability_zone)]
+    : module.vpc.private_subnets
+  )
+}
+
 # Node pool for tasks
 resource "aws_eks_node_group" "nodepool1" {
   cluster_name    = module.eks.cluster_name
@@ -9,7 +19,12 @@ resource "aws_eks_node_group" "nodepool1" {
   scaling_config {
     desired_size = 1
     min_size     = 1
-    max_size     = 3
+    # Raised from 3 -> 6 (2026-05-19). Concurrent shelltask load + the heavier
+    # per-pod memory footprint after the MEL-386 heap bump (Xmx 128M -> 256M)
+    # was filling 3 t3.medium nodes and leaving pods stuck Pending. EKS Auto Mode
+    # cannot absorb overflow because its provisioner does not recognise the
+    # `agentpool` label used here.
+    max_size     = 6
   }
 
   tags = {
@@ -31,7 +46,7 @@ resource "aws_eks_node_group" "apps" {
   cluster_name    = module.eks.cluster_name
   node_group_name = "apps"
   node_role_arn   = aws_iam_role.eks_node_group_role.arn
-  subnet_ids      = module.vpc.private_subnets
+  subnet_ids      = local.apps_node_group_subnet_ids
   instance_types  = ["m5.xlarge"]
 
   scaling_config {
