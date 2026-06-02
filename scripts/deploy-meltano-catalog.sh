@@ -43,6 +43,11 @@ fi
 
 ELASTICSEARCH_REBUILD=${ELASTICSEARCH_REBUILD:-false}
 
+# Build-unique value rendered into a pod-template annotation so every deploy
+# rotates the ReplicaSet, even when image.tag is a mutable tag (e.g. latest-dev)
+# whose underlying image has been rebuilt.
+REDEPLOY_AT=${CODEBUILD_BUILD_ID:-$(date -u +%Y%m%dT%H%M%SZ)}
+
 echo "Upgrading to APP_VERSION: $APP_VERSION, IMAGE_TAG: $IMAGE_TAG"
 
 # ── GKE context discovery ─────────────────────────────────────────────────────
@@ -64,6 +69,12 @@ if [[ "$CONTEXT" == gke_* ]]; then
 	)
 fi
 
+# Adopt tasks namespace into Helm management if it pre-exists
+TASKS_NS="${STAGE}-tasks"
+kubectl label namespace "${TASKS_NS}" app.kubernetes.io/managed-by=Helm --overwrite || true
+kubectl annotate namespace "${TASKS_NS}" meta.helm.sh/release-name="${RELEASE}" --overwrite || true
+kubectl annotate namespace "${TASKS_NS}" meta.helm.sh/release-namespace="${STAGE}" --overwrite || true
+
 echo "Upgrading to APP_VERSION: $APP_VERSION, IMAGE_TAG: $IMAGE_TAG"
 helm upgrade \
 	${RELEASE} \
@@ -73,6 +84,7 @@ helm upgrade \
 	--wait \
 	--timeout 10m0s \
 	--set image.tag="${IMAGE_TAG}" \
+	--set deploy.redeployAt="${REDEPLOY_AT}" \
 	--set appService.version="${APP_VERSION}" \
 	--set appService.auth0ClientSecret="${CATALOG_AUTH0_CLIENT_SECRET}" \
 	--set appService.githubApiPrivateKey="${CATALOG_GITHUB_API_PRIVATE_KEY}" \
@@ -85,4 +97,5 @@ helm upgrade \
 	--set-file applicationProperties="${BUILD_CONFIG_HOME}/${STAGE}/application-${STAGE}.properties" \
 	--debug \
 	--values ${BUILD_CONFIG_HOME}/${STAGE}/${APP_NAME}-catalog-values.yaml \
+	${HELM_GCP_OVERRIDES[@]+"${HELM_GCP_OVERRIDES[@]}"} \
 	$BUILD_HELM_HOME/${APP_NAME}-catalog/

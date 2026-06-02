@@ -8,9 +8,6 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-  annotations:
-    checksum/values: {{ (print $.Values) | sha256sum }}
-    checksum/config: {{ include (print $.Template.BasePath "/application-config.yaml") . | sha256sum }}
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
@@ -26,14 +23,32 @@ spec:
       labels:
         app: {{ include "meltano-catalog.fullname" . }}-app
         version: "v{{ .Values.appService.version }}"
+      annotations:
+        checksum/values: {{ (print $.Values) | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/application-config.yaml") . | sha256sum }}
+        {{- /*
+          Force a rolling restart on every deploy when the upstream image is
+          rebuilt under a mutable tag (e.g. latest-dev). The deploy script
+          passes a build-unique value (CODEBUILD_BUILD_ID, falling back to a
+          UTC timestamp) so the pod template hash always changes, a new
+          ReplicaSet is created, and — combined with imagePullPolicy: Always —
+          kubelet pulls the freshly built image. Skipped when unset so local
+          `helm template` / dev installs stay stable.
+        */}}
+        {{- with .Values.deploy.redeployAt }}
+        deploy.meltano.io/redeployed-at: {{ . | quote }}
+        {{- end }}
     spec:
+{{- if .Values.gcp.enabled }}
+      serviceAccountName: {{ .Values.gcp.serviceAccountName }}
+{{- end }}
 {{- if .Values.image.acr }}
       imagePullSecrets:
         - name: {{ .Chart.Name }}-acr-secret
 {{- end }}
 {{- if .Values.appService.nodePool }}
       nodeSelector:
-        agentpool: "{{ .Values.appService.nodePool }}"
+        {{ .Values.appService.nodeSelectorKey | default "agentpool" }}: "{{ .Values.appService.nodePool }}"
 {{- end }}
       volumes:
       - configMap:
@@ -58,37 +73,37 @@ spec:
           - name: "AUTH0_CLIENT_SECRET"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "auth0_client_secret" "ctx" .) }}
                 key:  auth0_client_secret
           - name: "GITHUB_API_PRIVATE_KEY"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "github_api_private_key" "ctx" .) }}
                 key:  github_api_private_key
           - name: "GITHUB_API_WORKSPACES_PRIVATE_KEY"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "github_api_workspaces_private_key" "ctx" .) }}
                 key:  github_api_workspaces_private_key
           - name: "PERSISTENCE_WAREHOUSE_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "persistence_warehouse_pass" "ctx" .) }}
                 key:  persistence_warehouse_pass
           - name: "PERSISTENCE_CATALOG_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "persistence_catalog_pass" "ctx" .) }}
                 key:  persistence_catalog_pass
           - name: "ELASTICSEARCH_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "es_elastic_pass" "ctx" .) }}
                 key:  es_elastic_pass
           - name: "MATATIKA_ENCRYPTOR_PASSWORD"
             valueFrom:
               secretKeyRef:
-                name: {{ .Release.Name }}-appsecrets
+                name: {{ include "meltano-catalog.appsecret-name" (dict "key" "encryptor_pass" "ctx" .) }}
                 key:  encryptor_pass
 {{- if .Values.image.acr }}
           - name: "SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY-CONFIGURATIONS_AZURECR__SECRET"

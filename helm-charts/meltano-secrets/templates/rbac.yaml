@@ -1,0 +1,32 @@
+# Allow the ESO controller to mint tokens as .Values.serviceAccountName via
+# the K8s TokenRequest API. ESO presents that JWT to GCP STS to get a GCP
+# access token impersonating the GSA bound to the KSA via Workload Identity.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "meltano-secrets.name" . }}-eso-token-requester
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "meltano-secrets.labels" . | nindent 4 }}
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts/token"]
+    resourceNames:
+      - {{ required "serviceAccountName is required" .Values.serviceAccountName | quote }}
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "meltano-secrets.name" . }}-eso-token-requester
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "meltano-secrets.labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.esoController.serviceAccountName }}
+    namespace: {{ .Values.esoController.namespace }}
+roleRef:
+  kind: Role
+  name: {{ include "meltano-secrets.name" . }}-eso-token-requester
+  apiGroup: rbac.authorization.k8s.io

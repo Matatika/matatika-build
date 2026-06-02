@@ -4,6 +4,14 @@
 
 replicaCount: 1
 
+# ── Deploy-time inputs ────────────────────────────────────────────────────────
+# Values populated by the deploy script (not by humans editing values files).
+# `redeployAt` is rendered into a pod-template annotation to force a rolling
+# restart on every deploy when the image tag is mutable (e.g. latest-dev).
+# Leave blank by default so `helm template` / local installs stay idempotent.
+deploy:
+  redeployAt: ""
+
 image:
   name: local/meltano-catalog
   # Specify a specific image version to override default ({{ .Release.appVersion }})
@@ -63,6 +71,61 @@ ingress:
   tls:
     - hosts:
       - staging.meltano.com
+  # GKE-only: configure HTTP→HTTPS redirect at the L7 LB via the
+  # FrontendConfig CRD shipped by the GKE Ingress controller. Disabled by
+  # default — leave off on non-GKE clusters where the CRD isn't installed.
+  # When enabled, the chart also injects the
+  # `networking.gke.io/v1beta1.FrontendConfig` annotation onto the Ingress so
+  # the LB picks up the policy. Keep `kubernetes.io/ingress.allow-http: "true"`
+  # in `annotations` above — the LB needs an :80 listener for the redirect
+  # rule to fire on.
+  frontendConfig:
+    enabled: false
+    redirectToHttps:
+      enabled: false
+      # One of MOVED_PERMANENTLY_DEFAULT (301), FOUND (302), SEE_OTHER (303),
+      # TEMPORARY_REDIRECT (307), PERMANENT_REDIRECT (308). 308 is the modern
+      # preference for HTTP→HTTPS — preserves method, signals permanence.
+      responseCodeName: PERMANENT_REDIRECT
+
+# ── GKE Gateway API (opt-in, replaces Ingress on GKE Autopilot) ──────────────
+# GKE Autopilot does not register the `gce` IngressClass, so Ingresses with
+# ingressClassName: gce are silently ignored. Set ingress.enabled: false and
+# gateway.enabled: true when deploying to GKE Autopilot.
+#
+# gateway.create controls whether this chart owns the Gateway resource. Set
+# false when the Gateway is shared with other charts in the same namespace
+# (e.g. matatika-catalog and meltano-catalog both binding to one Gateway).
+gateway:
+  enabled: false
+  create: true
+  # Defaults to .Release.Name when empty.
+  name: ""
+  # gke-l7-global-external-managed is the recommended Global External
+  # Application LB; gke-l7-gxlb is the equivalent classic path.
+  className: gke-l7-global-external-managed
+  # Annotations on the Gateway resource (GKE-specific config):
+  #   networking.gke.io/certmap:   <cert-map-name>
+  #   networking.gke.io/static-ip: <static-ip-resource-name>
+  annotations: {}
+  # Gateway API spec.addresses — pin the LB VIP. Equivalent to the
+  # `networking.gke.io/static-ip` annotation but uses the upstream Gateway API
+  # field directly. Useful when the annotation is silently ignored by the
+  # controller (observed on some GKE versions). Leave empty to let the
+  # controller allocate a dynamic IP.
+  #   - type: NamedAddress  # value is google_compute_global_address.name
+  #     value: my-static-ip
+  #   - type: IPAddress
+  #     value: 34.102.144.50
+  addresses: []
+  # Annotations on the HTTPS HTTPRoute (external-dns, etc.).
+  routeAnnotations: {}
+  # Hostnames the HTTPRoute matches. All route to the chart's app service.
+  hosts: []
+  # Emit a second HTTPRoute on the :80 listener that issues a 301 redirect to
+  # HTTPS. Equivalent to the FrontendConfig redirectToHttps setting.
+  # (GKE Gateway only supports 301/302 for RequestRedirect — not 308.)
+  redirectHttps: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -81,3 +144,69 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# ── GCP / Secret Manager (opt-in) ─────────────────────────────────────────────
+# When gcp.enabled is true, the chart creates:
+#   - A ServiceAccount annotated with iam.gke.io/gcp-service-account so the
+#     pod (and ESO when impersonating it) can act as the listed GSA via
+#     Workload Identity.
+#   - A SecretStore that authenticates to GCP Secret Manager via Workload
+#     Identity, impersonating the chart's KSA. (Skipped if gcp.createSecretStore
+#     is false — for the case where the SecretStore is provisioned externally
+#     and shared across multiple apps in the namespace.)
+#   - A Role + RoleBinding granting the ESO controller permission to call
+#     the K8s TokenRequest API on the chart's KSA, which is what powers the
+#     workloadIdentity.serviceAccountRef path in the SecretStore.
+#   - An ExternalSecret that pulls each entry in gcp.secrets from GCP Secret
+#     Manager and writes them to a Kubernetes Secret named
+#     "<release>-appsecrets-gcp".
+#
+# Per-key env-var routing: any key listed in gcp.secrets is pulled from the
+# ESO-managed Secret; anything not in this map continues to come from the
+# Helm-managed appsecrets Secret. This lets you migrate one secret at a time.
+#
+# Pre-reqs (cluster bootstrap, NOT provisioned by this chart):
+#   - External Secrets Operator (ESO) installed in the cluster.
+#   - The GSA at gcp.serviceAccountEmail exists and has
+#     roles/secretmanager.secretAccessor on the secrets it needs to read.
+#   - The Workload Identity binding from
+#     <project>.svc.id.goog[<namespace>/<serviceAccountName>] to that GSA
+#     exists in IAM (in Terraform: meltano-infrastructure-gcp/.../iam).
+gcp:
+  enabled: false
+  # GCP project that owns the Secret Manager secrets. Required because secrets
+  # may live in a different project than the cluster.
+  projectId: ""
+  # GKE cluster identity. ESO needs both fields to derive the Workload
+  # Identity pool URL when exchanging KSA tokens for GCP access tokens.
+  # cluster.name defaults to projectId — Matatika's convention has them equal.
+  # cluster.location has no convention to default from; supply it explicitly
+  # (or let the deploy script derive it from `kubectl config current-context`).
+  cluster:
+    location: ""
+    name: ""
+  # GSA bound to the chart's KSA via Workload Identity. The pod uses it to
+  # talk to Cloud SQL, Cloud Storage, etc., and ESO uses it (via KSA
+  # impersonation) to read the secrets listed under gcp.secrets.
+  serviceAccountEmail: ""
+  # Name of the Kubernetes ServiceAccount the deployment runs as. Created by
+  # the chart with the WI annotation pointing at gcp.serviceAccountEmail.
+  # ESO impersonates this KSA when fetching secrets.
+  serviceAccountName: meltano-catalog
+  # Name of the SecretStore that ESO will use to fetch the secrets listed
+  # below. By default the chart creates it; set createSecretStore=false to
+  # use an externally-managed SecretStore by this name (e.g., shared across
+  # multiple apps in the same namespace).
+  secretStoreName: gcp-secret-manager
+  createSecretStore: true
+  # Where the ESO controller runs. The chart creates a RoleBinding granting
+  # the controller's KSA permission to mint tokens for serviceAccountName.
+  # Defaults match the upstream external-secrets helm chart.
+  esoController:
+    namespace: external-secrets
+    serviceAccountName: external-secrets
+  # Map of K8s-secret key (matches existing appsecrets keys) → GCP Secret
+  # Manager secret ID. Only listed keys are pulled from Secret Manager;
+  # anything not in this map continues to come from the Helm appsecrets Secret.
+  secrets: {}
+  #  persistence_catalog_pass: meltanocloud-staging-db-app-password

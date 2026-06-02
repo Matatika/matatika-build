@@ -1,0 +1,51 @@
+{{- if .Values.gcp.enabled }}
+# Allow the ESO controller to mint tokens as the chart's KSA via the K8s
+# TokenRequest API. ESO presents that JWT to GCP STS to get a GCP access
+# token impersonating the GSA the KSA is WI-bound to.
+#
+# Always rendered alongside gcp.enabled (even when createSecretStore=false),
+# because each app's KSA needs its own per-KSA Role — the SecretStore can be
+# shared across apps but the TokenRequest permission can't.
+#
+# helm.sh/resource-policy: keep mirrors the SecretStore — defensive against
+# uninstall-time disruption to anything else relying on this binding.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-eso-token-requester
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    app.kubernetes.io/name: {{ include "meltano-catalog.name" . }}
+    helm.sh/chart: {{ include "meltano-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts/token"]
+    resourceNames:
+      - {{ .Values.gcp.serviceAccountName | quote }}
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-eso-token-requester
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    app.kubernetes.io/name: {{ include "meltano-catalog.name" . }}
+    helm.sh/chart: {{ include "meltano-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.gcp.esoController.serviceAccountName }}
+    namespace: {{ .Values.gcp.esoController.namespace }}
+roleRef:
+  kind: Role
+  name: {{ .Release.Name }}-eso-token-requester
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}

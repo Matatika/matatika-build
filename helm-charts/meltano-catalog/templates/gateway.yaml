@@ -1,0 +1,60 @@
+{{- /*
+  GKE Gateway API — creates the Gateway resource when gateway.create is true.
+
+  GKE Autopilot does not run the legacy GCE Ingress controller so Ingresses
+  with ingressClassName: gce are silently ignored there. Use this +
+  httproute.yaml instead on Autopilot clusters.
+
+  The Gateway fronts one or more HTTPRoutes in the same namespace. It is
+  typically shared — if another chart in the namespace already owns the
+  Gateway, set gateway.create: false and point gateway.name at it.
+
+  GKE-specific annotations used here:
+    networking.gke.io/certmap:   Certificate Manager cert map (handles TLS)
+    networking.gke.io/static-ip: Named static IP resource to pin the VIP
+*/ -}}
+{{- if and .Values.gateway.enabled .Values.gateway.create -}}
+{{- $gatewayName := .Values.gateway.name | default .Release.Name -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: {{ $gatewayName }}
+  labels:
+    app.kubernetes.io/name: {{ include "meltano-catalog.name" . }}
+    helm.sh/chart: {{ include "meltano-catalog.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.gateway.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  gatewayClassName: {{ .Values.gateway.className }}
+  {{- /*
+    Pin the LB to a specific IP via Gateway API spec.addresses. This is the
+    Gateway-API-native equivalent of the legacy `networking.gke.io/static-ip`
+    annotation; on GKE the controller documents both, but the annotation has
+    been observed not to take effect on some cluster versions, so the chart
+    supports either or both.
+
+    Each entry is `{ type, value }`:
+      type: NamedAddress  → value is the name of a google_compute_global_address
+      type: IPAddress     → value is the literal IPv4/IPv6 string
+  */}}
+  {{- with .Values.gateway.addresses }}
+  addresses:
+    {{- range . }}
+    - type: {{ .type }}
+      value: {{ .value | quote }}
+    {{- end }}
+  {{- end }}
+  listeners:
+  - name: https
+    port: 443
+    protocol: HTTPS
+  {{- if .Values.gateway.redirectHttps }}
+  - name: http
+    port: 80
+    protocol: HTTP
+  {{- end }}
+{{- end }}

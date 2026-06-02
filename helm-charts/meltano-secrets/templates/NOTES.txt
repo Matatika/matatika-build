@@ -1,0 +1,30 @@
+meltano-secrets installed in namespace {{ .Release.Namespace }}.
+
+GCP Secret Manager integration provisioned:
+  • SecretStore:    {{ .Values.secretStoreName }}
+  • Project:        {{ .Values.projectId }}
+  • Cluster:        {{ .Values.cluster.name }} ({{ .Values.cluster.location }})
+  • Impersonates:   serviceaccount/{{ .Values.serviceAccountName }} in {{ .Release.Namespace }}
+  • ESO controller: serviceaccount/{{ .Values.esoController.serviceAccountName }} in {{ .Values.esoController.namespace }}
+
+Apps in this namespace can now reference the SecretStore from an
+ExternalSecret:
+
+  spec:
+    secretStoreRef:
+      name: {{ .Values.secretStoreName }}
+      kind: SecretStore
+    ...
+
+Verify health:
+
+  kubectl -n {{ .Release.Namespace }} get secretstore {{ .Values.secretStoreName }}
+  kubectl -n {{ .Release.Namespace }} describe secretstore {{ .Values.secretStoreName }}
+
+A `Ready=True` condition means ESO successfully exchanged a KSA token for a
+GCP access token. If it's not Ready, the usual culprits are:
+  • {{ .Values.serviceAccountName }} doesn't exist yet in {{ .Release.Namespace }} (deploy the
+    consuming app chart that creates it).
+  • {{ .Values.serviceAccountName }} is missing the iam.gke.io/gcp-service-account
+    annotation, or the GSA it points at lacks roles/secretmanager.secretAccessor.
+  • cluster.name / cluster.location don't match the actual GKE cluster.

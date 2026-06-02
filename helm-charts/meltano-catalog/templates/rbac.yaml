@@ -1,6 +1,14 @@
 {{- if .Values.rbac.create -}}
 {{- $serviceName := include "meltano-catalog.fullname" . -}}
 
+{{- if and .Values.appService.dataflowTasksNamespace (ne .Values.appService.dataflowTasksNamespace .Release.Namespace) }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.appService.dataflowTasksNamespace }}
+---
+{{- end }}
+
 # This role is used to allow Matatika Catalog to read configuration from config maps via Kubernetes plugin.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -44,6 +52,19 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Values.appService.dataflowTasksServiceAccountName }}
   namespace: {{ .Release.Namespace }}
+{{- /*
+  When gcp.enabled is set, the chart's serviceaccount.yaml provisions a
+  dedicated KSA for Workload Identity (gcp.serviceAccountName) and the
+  deployment.yaml runs the catalog pod as that KSA instead of `default`.
+  Add it as an explicit subject so the actual pod principal matches this
+  binding. No-op when gcp.enabled is false (AWS/Azure path), so this is
+  safe across all clouds.
+*/}}
+{{- if and .Values.gcp.enabled (ne .Values.gcp.serviceAccountName .Values.appService.dataflowTasksServiceAccountName) }}
+- kind: ServiceAccount
+  name: {{ .Values.gcp.serviceAccountName }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
 
 ---
 
@@ -94,5 +115,16 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Values.appService.dataflowTasksServiceAccountName }}
   namespace: {{ .Release.Namespace }}
+{{- /*
+  See comment on the dataflow-config RoleBinding above. The catalog pod is
+  the principal that talks to the tasks namespace (creates the workspace
+  pod, polls its status, etc.), so its actual KSA must be a subject here
+  too. No-op when gcp.enabled is false.
+*/}}
+{{- if and .Values.gcp.enabled (ne .Values.gcp.serviceAccountName .Values.appService.dataflowTasksServiceAccountName) }}
+- kind: ServiceAccount
+  name: {{ .Values.gcp.serviceAccountName }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
 
 {{- end }}
