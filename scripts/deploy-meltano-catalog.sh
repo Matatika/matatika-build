@@ -43,7 +43,6 @@ fi
 
 ELASTICSEARCH_REBUILD=${ELASTICSEARCH_REBUILD:-false}
 
-<<<<<<< Updated upstream:scripts/deploy-meltano-catalog.sh
 # Build-unique value rendered into a pod-template annotation so every deploy
 # rotates the ReplicaSet, even when image.tag is a mutable tag (e.g. latest-dev)
 # whose underlying image has been rebuilt.
@@ -69,13 +68,12 @@ if [[ "$CONTEXT" == gke_* ]]; then
 		--set gcp.cluster.name="$GCP_CLUSTER"
 	)
 fi
-=======
+
 # Adopt tasks namespace into Helm management if it pre-exists
 TASKS_NS="${STAGE}-tasks"
 kubectl label namespace "${TASKS_NS}" app.kubernetes.io/managed-by=Helm --overwrite || true
 kubectl annotate namespace "${TASKS_NS}" meta.helm.sh/release-name="${RELEASE}" --overwrite || true
 kubectl annotate namespace "${TASKS_NS}" meta.helm.sh/release-namespace="${STAGE}" --overwrite || true
->>>>>>> Stashed changes:aws-scripts/deploy-meltano-catalog.sh
 
 echo "Upgrading to APP_VERSION: $APP_VERSION, IMAGE_TAG: $IMAGE_TAG"
 helm upgrade \
