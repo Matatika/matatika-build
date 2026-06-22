@@ -1,0 +1,80 @@
+{{- /*
+  GKE Gateway API — HTTPRoute(s) binding matatika-www to a shared, externally
+  managed Gateway (created by the meltano-catalog release). This chart never
+  creates a Gateway of its own; set gateway.name to the shared Gateway and
+  gateway.enabled: true.
+
+  Two routes are emitted when gateway.redirectHttps is true:
+    1. HTTPS route  — forwards matching hosts to the www ClusterIP service.
+    2. HTTP redirect — 301 to HTTPS for all hosts.
+
+  TLS is handled by the Gateway's Certificate Manager cert map, so the host
+  must also be added to the `lb` Terragrunt stack's `hostnames` (which creates
+  the managed cert + cert-map entry). routeAnnotations are applied to the
+  HTTPS route only (e.g. external-dns annotations for Cloudflare).
+*/ -}}
+{{- if .Values.gateway.enabled -}}
+{{- $fullName := include "matatika-www.fullname" . -}}
+{{- $gatewayName := .Values.gateway.name | default .Release.Name -}}
+{{- $httpPort := .Values.appService.httpPort -}}
+{{- $serviceName := .Values.appService.name -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-www.name" . }}
+    helm.sh/chart: {{ include "matatika-www.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- with .Values.gateway.routeAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+  - name: {{ $gatewayName }}
+    sectionName: https
+  {{- with .Values.gateway.hosts }}
+  hostnames:
+  {{- range . }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: {{ $fullName }}-{{ $serviceName }}
+      port: {{ $httpPort }}
+{{- if .Values.gateway.redirectHttps }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $fullName }}-http-redirect
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-www.name" . }}
+    helm.sh/chart: {{ include "matatika-www.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  parentRefs:
+  - name: {{ $gatewayName }}
+    sectionName: http
+  {{- with .Values.gateway.hosts }}
+  hostnames:
+  {{- range . }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        statusCode: 301
+{{- end }}
+{{- end }}

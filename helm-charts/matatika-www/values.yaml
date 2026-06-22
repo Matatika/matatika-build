@@ -73,6 +73,19 @@ appService:
     - name: AUTH0_CLIENT_ID
       value: "get from auth0 management dashboard"
 
+# GKE Gateway API. When enabled, the chart emits HTTPRoute(s) that attach to a
+# shared, externally-managed Gateway (it never creates a Gateway itself). Leave
+# disabled for non-GKE installs, which use the ingress block below instead.
+gateway:
+  enabled: false
+  # Name of the shared Gateway to attach to (e.g. the meltano-catalog release).
+  name: ""
+  hosts: []
+  # Annotations applied to the HTTPS HTTPRoute only (e.g. external-dns).
+  routeAnnotations: {}
+  # Emit an HTTP→HTTPS 301 redirect route alongside the HTTPS route.
+  redirectHttps: true
+
 ingress:
   enabled: true
   className: webapprouting.kubernetes.azure.com
