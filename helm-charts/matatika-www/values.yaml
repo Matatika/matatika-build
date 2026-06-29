@@ -85,6 +85,16 @@ gateway:
   routeAnnotations: {}
   # Emit an HTTP→HTTPS 301 redirect route alongside the HTTPS route.
   redirectHttps: true
+  # GKE HealthCheckPolicy for the backend. The .htaccess force-prepends `www.`
+  # for any non-canonical Host, so a default IP-based LB health check gets a 301
+  # and the backend goes UNHEALTHY (503). Set host to the served hostname
+  # (excluded from that redirect) and a path that returns 200 over plain HTTP.
+  healthCheck:
+    enabled: false
+    requestPath: /robots.txt
+    host: ""
+    # Optional — omit to use the backend's serving port.
+    port: null
 
 ingress:
   enabled: true

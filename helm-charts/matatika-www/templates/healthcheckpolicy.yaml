@@ -1,0 +1,40 @@
+{{- /*
+  GKE Gateway API — HealthCheckPolicy for the www backend service.
+
+  Needed because matatika-www's .htaccess 301-redirects any request whose Host
+  header isn't the canonical hostname (it force-prepends `www.`). A default GKE
+  load-balancer health check probes the backend by pod IP, so it gets a 301 and
+  the backend is marked UNHEALTHY → the LB returns 503. Setting the health
+  check's Host to the served hostname (excluded from the redirect) and pointing
+  it at a path that returns 200 over plain HTTP (e.g. /robots.txt) fixes this.
+*/ -}}
+{{- if and .Values.gateway.enabled .Values.gateway.healthCheck.enabled -}}
+{{- $fullName := include "matatika-www.fullname" . -}}
+{{- $serviceName := .Values.appService.name -}}
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app.kubernetes.io/name: {{ include "matatika-www.name" . }}
+    helm.sh/chart: {{ include "matatika-www.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        requestPath: {{ .Values.gateway.healthCheck.requestPath | quote }}
+        {{- with .Values.gateway.healthCheck.host }}
+        host: {{ . | quote }}
+        {{- end }}
+        {{- with .Values.gateway.healthCheck.port }}
+        port: {{ . }}
+        portSpecification: USE_FIXED_PORT
+        {{- end }}
+  targetRef:
+    group: ""
+    kind: Service
+    name: {{ $fullName }}-{{ $serviceName }}
+{{- end }}
