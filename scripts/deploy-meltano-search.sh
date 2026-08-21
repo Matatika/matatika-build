@@ -31,6 +31,10 @@ echo "Upgrading to CHART_VERSION: $CHART_VERSION, APP_VERSION: $APP_VERSION, IMA
 { echo "  setup.sh: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/setup.sh; } >> /tmp/esConfig-values.yaml
 { echo "  es_template_default.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_template_default.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_job_metrics_template.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_job_metrics_template.json; } >> /tmp/esConfig-values.yaml
+# NB: without this line the policy file is never mounted into the pod, so
+# setup.sh's `PUT _ilm/policy/job-metrics` fails and job-metrics gets NO
+# retention. That is how it reached 35.9 GB / 38M docs unmanaged in prod.
+{ echo "  es_job_metrics_policy_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_job_metrics_policy_config.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_datasets_index_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_datasets_index_config.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_logstash_policy_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_logstash_policy_config.json; } >> /tmp/esConfig-values.yaml
 { echo "  es_profiles_datasets_likes_index_config.json: |"; sed -e 's/^/    /' ${CATALOG_HOME}/elastic-search/config/es_profiles_datasets_likes_index_config.json; } >> /tmp/esConfig-values.yaml
