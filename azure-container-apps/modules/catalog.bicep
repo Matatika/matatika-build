@@ -356,6 +356,13 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: 'true'
             }
             {
+              // Container apps runs on managed Kubernetes, so Boot detects the
+              // Kubernetes cloud platform and adds a second TaskPlatform bean.
+              // A consumer that injects one TaskPlatform then fails to start.
+              name: 'SPRING_CLOUD_KUBERNETES_CONFIG_ENABLED'
+              value: 'false'
+            }
+            {
               name: 'CONTAINERAPPS_ENVIRONMENT'
               value: environment.name
             }
