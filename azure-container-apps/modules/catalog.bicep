@@ -338,7 +338,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
                 }
               ]
             {
-              name: 'DATAFLOW_DOCKER_REGISTRY'
+              name: 'CATALOG_TASK_DOCKER_REGISTRY'
               value: useContainerRegistry ? containerRegistry.properties.loginServer : 'docker.io'
             }
             {
@@ -354,6 +354,13 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             {
               name: 'SPRING_CLOUD_CONTAINERAPPS_ENABLED'
               value: 'true'
+            }
+            {
+              // Container apps runs on managed Kubernetes, so Boot detects the
+              // Kubernetes cloud platform and adds a second TaskPlatform bean.
+              // A consumer that injects one TaskPlatform then fails to start.
+              name: 'SPRING_CLOUD_KUBERNETES_CONFIG_ENABLED'
+              value: 'false'
             }
             {
               name: 'CONTAINERAPPS_ENVIRONMENT'
@@ -372,11 +379,11 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               value: logAnalyticsWorkspace.properties.customerId
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_SECRETS'
+              name: 'MELTANO_CLOUD_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_SECRETS'
               secretRef: 'shelltask-secrets'
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_REGISTRIES'
+              name: 'MELTANO_CLOUD_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_REGISTRIES'
               value: string([
                 ...useContainerRegistry ? [
                   {
@@ -388,7 +395,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
               ])
             }
             {
-              name: 'SPRING_CLOUD_DATAFLOW_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT_VARIABLES'
+              name: 'MELTANO_CLOUD_TASK_PLATFORM_CONTAINERAPPS_ACCOUNTS_DEFAULT_ENVIRONMENT_VARIABLES'
               secretRef: 'shelltask-environment' 
             }
             ...useKeyVault
